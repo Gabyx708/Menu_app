@@ -1,3 +1,6 @@
+using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 namespace MenuApi
 {
     public class Program
@@ -12,6 +15,12 @@ namespace MenuApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //custon
+
+            //Database
+            var connectionString = builder.Configuration["ConnectionString"];
+            builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             var app = builder.Build();
 
