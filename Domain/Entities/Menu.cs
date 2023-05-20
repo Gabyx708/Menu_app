@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Menu
     {
@@ -13,6 +7,6 @@ namespace Domain.Entities
         public DateTime FechaCarga { get; set; }
         public DateTime FechaCierre { get; set; }
 
-        public IList<MenuPlatillo> MenuPlatillos { get; set;}
+        public IList<MenuPlatillo> MenuPlatillos { get; set; }
     }
 }

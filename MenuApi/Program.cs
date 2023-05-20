@@ -1,4 +1,8 @@
+using Application.Interfaces.IPersonal;
+using Application.UseCase.Personales;
+using Infraestructure.Commands;
 using Infraestructure.Persistence;
+using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
 
 namespace MenuApi
@@ -16,11 +20,16 @@ namespace MenuApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            //custon
+            //custom
 
             //Database
             var connectionString = builder.Configuration["ConnectionString"];
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
+
+            //Personal
+            builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
+            builder.Services.AddScoped<IPersonalQuery, PersonalQuery>();
+            builder.Services.AddScoped<IPersonalService, PersonalService>();
 
             var app = builder.Build();
 

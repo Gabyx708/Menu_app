@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Infraestructure
+﻿namespace Domain.Entities
 {
     public class Personal
     {
@@ -14,7 +12,7 @@ namespace Infraestructure
         public DateTime FechaIngreso { get; set; }
 
         public string Mail { get; set; }
-        public string Telefono { get; set;}
+        public string Telefono { get; set; }
         public int Privilegio { get; set; }
         public string Password { get; set; }
 

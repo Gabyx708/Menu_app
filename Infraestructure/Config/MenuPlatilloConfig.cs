@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.Entities;
 
 namespace Infraestructure.Config
 {
@@ -18,7 +18,7 @@ namespace Infraestructure.Config
             builder.HasOne(mp => mp.Platillo)
                 .WithMany(p => p.MenuPlatillos)
                 .HasForeignKey(mp => mp.IdPlatillo);
-            
+
         }
     }
 }

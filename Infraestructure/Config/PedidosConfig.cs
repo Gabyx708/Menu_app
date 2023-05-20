@@ -10,7 +10,7 @@ namespace Infraestructure.Config
         public void Configure(EntityTypeBuilder<Pedido> builder)
         {
             builder.ToTable("Pedido");
-            builder.HasKey(p=> p.IdPedido);
+            builder.HasKey(p => p.IdPedido);
 
             builder.HasOne(pe => pe.Personal)
                 .WithMany(p => p.Pedidos)
