@@ -10,6 +10,8 @@ namespace Infraestructure.Config
         {
             builder.ToTable("Platillo");
             builder.HasKey(p => p.IdPlatillo);
+
+            builder.Property(p => p.IdPlatillo).ValueGeneratedOnAdd();
         }
     }
 }

@@ -1,5 +1,7 @@
 using Application.Interfaces.IPersonal;
+using Application.Interfaces.IPlatillo;
 using Application.UseCase.Personales;
+using Application.UseCase.Platillos;
 using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
@@ -30,6 +32,11 @@ namespace MenuApi
             builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
             builder.Services.AddScoped<IPersonalQuery, PersonalQuery>();
             builder.Services.AddScoped<IPersonalService, PersonalService>();
+
+            //Platillos
+            builder.Services.AddScoped<IPlatilloQuery, PlatilloQuery>();
+            builder.Services.AddScoped<IPlatilloCommand, PlatilloCommand>();
+            builder.Services.AddScoped<IPlatilloService, PlatilloService>();
 
             var app = builder.Build();
 
