@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Request
 {
-    public class PlatilloDelMenuRequest
+    public class MenuPlatilloRequest
     {
         public int id { get; set; }
         public int stock { get; set; }

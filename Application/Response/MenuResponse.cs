@@ -13,6 +13,6 @@ namespace Application.Response
         public DateTime fecha_carga { get; set; }
         public DateTime fecha_cierre { get; set; }
 
-        List<MenuPlatilloResponse> platillos { get; set; }
+        public List<MenuPlatilloResponse> platillos { get; set; }
     }
 }

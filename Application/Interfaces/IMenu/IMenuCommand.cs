@@ -6,6 +6,6 @@ namespace Application.Interfaces.IMenu
     {
         Menu CreateMenu(Menu menu);
 
-        Menu AsignarPlatillo(Guid idMenu, Platillo platillo);
+        Menu AsignarPlatillo(MenuPlatillo platillo);
     }
 }

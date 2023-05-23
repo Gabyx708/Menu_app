@@ -1,5 +1,9 @@
+using Application.Interfaces.IMenu;
+using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
+using Application.UseCase.Menues;
+using Application.UseCase.MenuPlatillos;
 using Application.UseCase.Personales;
 using Application.UseCase.Platillos;
 using Infraestructure.Commands;
@@ -37,6 +41,16 @@ namespace MenuApi
             builder.Services.AddScoped<IPlatilloQuery, PlatilloQuery>();
             builder.Services.AddScoped<IPlatilloCommand, PlatilloCommand>();
             builder.Services.AddScoped<IPlatilloService, PlatilloService>();
+
+            //Menu
+            builder.Services.AddScoped<IMenuCommand, MenuCommand>();
+            builder.Services.AddScoped<IMenuQuery, MenuQuery>();
+            builder.Services.AddScoped<IMenuService, MenuService>();
+
+            //MenuPlatillo
+            builder.Services.AddScoped<IMenuPlatilloCommand, MenuPlatilloCommand>();
+            builder.Services.AddScoped<IMenuPlatilloQuery, MenuPlatilloQuery>();
+            builder.Services.AddScoped<IMenuPlatilloService, MenuPlatilloService>();
 
             var app = builder.Build();
 
