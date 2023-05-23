@@ -41,7 +41,7 @@ namespace MenuApi.Controllers
             return new JsonResult(nuevoPlato) { StatusCode = 200 };
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public IActionResult CambiarPrecio(int id,PlatilloRequest request)
         {
             var platoPrecio = _services.UpdatePrecio(id,request.precio);

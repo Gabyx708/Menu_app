@@ -18,6 +18,13 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [HttpGet]
+        public IActionResult GetTodoElpersonal()
+        {
+            var empleados = _services.GetAllPersonal();
+            return new JsonResult(empleados) { StatusCode = 200 };
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(PersonalResponse), 201)]
         [ProducesResponseType(typeof(BadRequestResult), 400)]
