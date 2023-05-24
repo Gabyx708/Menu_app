@@ -3,7 +3,6 @@
     public class Recibo
     {
         public Guid IdRecibo { get; set; }
-        public Guid IdPedido { get; set; }
         public Guid IdDescuento { get; set; }
         public double precioTotal { get; set; }
 

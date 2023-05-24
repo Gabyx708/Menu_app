@@ -1,7 +1,9 @@
+using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
+using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
 using Application.UseCase.MenuPlatillos;
 using Application.UseCase.Personales;
@@ -51,6 +53,11 @@ namespace MenuApi
             builder.Services.AddScoped<IMenuPlatilloCommand, MenuPlatilloCommand>();
             builder.Services.AddScoped<IMenuPlatilloQuery, MenuPlatilloQuery>();
             builder.Services.AddScoped<IMenuPlatilloService, MenuPlatilloService>();
+
+            //Descuento
+            builder.Services.AddScoped<IDescuentoCommand, DescuentoCommand>();
+            builder.Services.AddScoped<IDescuentoQuery, DescuentoQuery>();
+            builder.Services.AddScoped<IDescuentoService, DescuentoService>();
 
             var app = builder.Build();
 
