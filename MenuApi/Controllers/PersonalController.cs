@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IPersonal;
+﻿using Application.Interfaces.IAuthentication;
+using Application.Interfaces.IPersonal;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -12,13 +13,24 @@ namespace MenuApi.Controllers
     public class PersonalController : ControllerBase
     {
         private readonly IPersonalService _services;
+        private readonly IAuthenticationService _authService;
 
-        public PersonalController(IPersonalService services)
+        public PersonalController(IPersonalService services, IAuthenticationService authService)
         {
             _services = services;
+            _authService = authService;
+        }
+
+        [HttpPost("login")]
+        public IActionResult loginUser(UsuarioLoginRequest request)
+        {
+            var usuarioLog = _authService.autenticarUsuario(request);
+            if(usuarioLog == null) { return Unauthorized(); }
+            return Ok(usuarioLog);
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<PersonalResponse>), 200)]
         public IActionResult GetTodoElpersonal()
         {
             var empleados = _services.GetAllPersonal();
@@ -35,9 +47,15 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PersonalResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundObjectResult), 404)]
         public IActionResult GetPersonal(Guid id)
         {
            var personal = _services.GetPersonalById(id);
+           string message = $"no se encontro un usuario con el id: {id}";
+
+            if(personal == null) { return NotFound(message); };
+
             return new JsonResult(personal) { StatusCode = 200 };
         }
     }

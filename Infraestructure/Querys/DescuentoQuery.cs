@@ -26,7 +26,7 @@ namespace Infraestructure.Querys
 
         public Descuento GetById(Guid idDescuento)
         {
-            var descuento = _context.Descuentos.Single(d => d.IdDescuento == idDescuento);
+            var descuento = _context.Descuentos.FirstOrDefault(d => d.IdDescuento == idDescuento);
             return descuento;
         }
 

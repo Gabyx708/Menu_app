@@ -20,7 +20,7 @@ namespace Infraestructure.Querys
 
         public Personal GetPersonalById(Guid idPersonal)
         {
-            var PersonalEncontrado = _context.Personales.Single(p => p.IdPersonal == idPersonal);
+            var PersonalEncontrado = _context.Personales.FirstOrDefault(p => p.IdPersonal == idPersonal);
 
             if (PersonalEncontrado != null)
             {

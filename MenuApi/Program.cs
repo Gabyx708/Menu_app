@@ -1,3 +1,4 @@
+using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
@@ -58,6 +59,10 @@ namespace MenuApi
             builder.Services.AddScoped<IDescuentoCommand, DescuentoCommand>();
             builder.Services.AddScoped<IDescuentoQuery, DescuentoQuery>();
             builder.Services.AddScoped<IDescuentoService, DescuentoService>();
+
+            //autenticacion
+            builder.Services.AddScoped<IAuthenticacionQuery, AutehenticationQuery>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             var app = builder.Build();
 

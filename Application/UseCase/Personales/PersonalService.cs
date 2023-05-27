@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IPersonal;
 using Application.Request;
 using Application.Response;
+using Application.Tools.Encrypt;
 using Domain.Entities;
 
 namespace Application.UseCase.Personales
@@ -29,7 +30,7 @@ namespace Application.UseCase.Personales
                 Mail = personalNuevo.mail,
                 Telefono = personalNuevo.telefono,
                 Privilegio = personalNuevo.privilegio,
-                Password = personalNuevo.dni
+                Password = Encrypt256.GetSHA256(personalNuevo.dni)
 
             };
 
