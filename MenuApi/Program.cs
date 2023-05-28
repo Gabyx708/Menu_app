@@ -12,6 +12,7 @@ using Application.UseCase.Platillos;
 using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace MenuApi
@@ -64,6 +65,17 @@ namespace MenuApi
             builder.Services.AddScoped<IAuthenticacionQuery, AutehenticationQuery>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+            //CORS deshabilitar
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -73,6 +85,7 @@ namespace MenuApi
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
