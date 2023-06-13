@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.IMenuPlatillo;
+using Application.Interfaces.IPlatillo;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -14,11 +15,13 @@ namespace Application.UseCase.MenuPlatillos
     {
         private readonly IMenuPlatilloQuery _query;
         private readonly IMenuPlatilloCommand _command;
+        private readonly IPlatilloService _platilloService;
 
-        public MenuPlatilloService(IMenuPlatilloQuery query, IMenuPlatilloCommand command)
+        public MenuPlatilloService(IMenuPlatilloQuery query, IMenuPlatilloCommand command, IPlatilloService platilloService)
         {
             _query = query;
             _command = command;
+            _platilloService = platilloService;
         }
 
         public List<MenuPlatilloResponse> AsignarPlatillosAMenu(Guid idMenu, List<MenuPlatilloRequest> platillos)
@@ -60,16 +63,17 @@ namespace Application.UseCase.MenuPlatillos
             };
         }
 
-        public List<MenuPlatilloResponse> GetMenuPlatilloDelMenu(Guid idMenu)
+        public List<MenuPlatilloGetResponse> GetMenuPlatilloDelMenu(Guid idMenu)
         {
             var platillosDelMenu = _query.GetMenuPlatilloByMenuId(idMenu);
-            List<MenuPlatilloResponse> menuPlatillos = new List<MenuPlatilloResponse>();
+            List<MenuPlatilloGetResponse> menuPlatillos = new List<MenuPlatilloGetResponse>();
 
             foreach (var plato in platillosDelMenu)
             {
-                var response = new MenuPlatilloResponse
+                var response = new MenuPlatilloGetResponse
                 {
                     id = plato.IdPlatillo,
+                    descripcion = _platilloService.GetPlatilloById(plato.IdPlatillo).descripcion,
                     precio = plato.PrecioActual,
                     stock = plato.Stock,
                     pedido = plato.Solicitados

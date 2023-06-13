@@ -12,7 +12,7 @@ namespace Application.Interfaces.IMenuPlatillo
     public interface IMenuPlatilloService
     {
         MenuPlatilloResponse GetMenuPlatilloById(Guid id);
-        List<MenuPlatilloResponse> GetMenuPlatilloDelMenu(Guid idMenu);
+        List<MenuPlatilloGetResponse> GetMenuPlatilloDelMenu(Guid idMenu);
 
         List<MenuPlatilloResponse> AsignarPlatillosAMenu(Guid idMenu, List<MenuPlatilloRequest> platillos);
     }

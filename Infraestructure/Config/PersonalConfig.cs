@@ -14,7 +14,7 @@ namespace Infraestructure.Config
             entityBuilder.Property(p => p.Nombre).HasMaxLength(50).IsRequired();
             entityBuilder.Property(p => p.Apellido).HasMaxLength(20).IsRequired();
             entityBuilder.Property(p => p.Dni).HasMaxLength(15).IsRequired();
-            entityBuilder.Property(p => p.Mail).HasMaxLength(30);
+            entityBuilder.Property(p => p.Mail).HasMaxLength(100);
             entityBuilder.Property(p => p.Telefono).HasMaxLength(30);
             entityBuilder.Property(p => p.Privilegio).HasMaxLength(2).IsRequired();
             entityBuilder.Property(p => p.Password).IsRequired();
