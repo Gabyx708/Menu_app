@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Infraestructure.Config;
+using Infraestructure.Config.TestData;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure.Persistence
@@ -34,6 +35,7 @@ namespace Infraestructure.Persistence
             modelBuilder.ApplyConfiguration(new ReciboConfig());
             modelBuilder.ApplyConfiguration(new MenuConfig());
             modelBuilder.ApplyConfiguration(new PlatilloConfig());
+            modelBuilder.ApplyConfiguration(new PersonalTest());
         }
     }
 }
