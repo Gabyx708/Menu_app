@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.IMenuPlatillo;
 using Domain.Entities;
 using Infraestructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
@@ -20,7 +15,7 @@ namespace Infraestructure.Querys
 
         public MenuPlatillo GetById(Guid idMenuPlatillo)
         {
-            var menuPlatilloRecuperado = _context.MenuPlatillos.Single(mp => mp.IdMenuPlatillo ==  idMenuPlatillo);
+            var menuPlatilloRecuperado = _context.MenuPlatillos.Single(mp => mp.IdMenuPlatillo == idMenuPlatillo);
             return menuPlatilloRecuperado;
         }
 

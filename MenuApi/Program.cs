@@ -12,7 +12,6 @@ using Application.UseCase.Platillos;
 using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace MenuApi

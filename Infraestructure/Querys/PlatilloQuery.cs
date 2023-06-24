@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.IPlatillo;
 using Domain.Entities;
 using Infraestructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
@@ -22,7 +17,7 @@ namespace Infraestructure.Querys
         {
             var platilloEncontrado = _context.Platillos.Single(p => p.IdPlatillo == id);
 
-            if(platilloEncontrado != null) { return platilloEncontrado; }
+            if (platilloEncontrado != null) { return platilloEncontrado; }
 
             return null;
         }

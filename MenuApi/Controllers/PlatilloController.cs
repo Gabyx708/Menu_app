@@ -1,9 +1,5 @@
-using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Request;
-using Application.Response;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -24,7 +20,7 @@ namespace MenuApi.Controllers
         public IActionResult GetAll()
         {
             var platillos = _services.GetAll();
-            return new JsonResult(platillos) { StatusCode = 200};
+            return new JsonResult(platillos) { StatusCode = 200 };
         }
 
         [HttpGet("{id}")]
@@ -42,9 +38,9 @@ namespace MenuApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult CambiarPrecio(int id,PlatilloRequest request)
+        public IActionResult CambiarPrecio(int id, PlatilloRequest request)
         {
-            var platoPrecio = _services.UpdatePrecio(id,request.precio);
+            var platoPrecio = _services.UpdatePrecio(id, request.precio);
             return new JsonResult(platoPrecio) { StatusCode = 200 };
         }
     }

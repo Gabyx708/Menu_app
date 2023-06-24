@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.IMenu;
 using Domain.Entities;
 using Infraestructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
@@ -26,7 +21,7 @@ namespace Infraestructure.Querys
 
         public List<MenuPlatillo> PlatillosDelMenu(Guid idMenu)
         {
-           return _context.MenuPlatillos.Where(mp => mp.IdMenu == idMenu).ToList();
+            return _context.MenuPlatillos.Where(mp => mp.IdMenu == idMenu).ToList();
         }
     }
 }

@@ -2,12 +2,6 @@
 using Application.Interfaces.IPlatillo;
 using Application.Request;
 using Application.Response;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.MenuPlatillos
 {
@@ -31,7 +25,7 @@ namespace Application.UseCase.MenuPlatillos
                 _command.AsignarPlatilloAMenu(idMenu, platillo.id, platillo.stock);
             }
 
-           var platillosDelMenu = _query.GetMenuPlatilloByMenuId(idMenu);
+            var platillosDelMenu = _query.GetMenuPlatilloByMenuId(idMenu);
             List<MenuPlatilloResponse> menuPlatillos = new List<MenuPlatilloResponse>();
 
             foreach (var platilloMapear in platillosDelMenu)
@@ -52,7 +46,7 @@ namespace Application.UseCase.MenuPlatillos
 
         public MenuPlatilloResponse GetMenuPlatilloById(Guid id)
         {
-            var menuPlatillo =  _query.GetById(id);
+            var menuPlatillo = _query.GetById(id);
 
             return new MenuPlatilloResponse
             {

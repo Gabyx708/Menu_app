@@ -2,11 +2,6 @@
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.Platillos
 {
@@ -59,8 +54,8 @@ namespace Application.UseCase.Platillos
         public PlatilloResponse GetPlatilloById(int idPlatillo)
         {
             var platilloRecuperado = _query.GetPlatilloById(idPlatillo);
-           
-            if(platilloRecuperado == null) { return null; };
+
+            if (platilloRecuperado == null) { return null; };
 
             return new PlatilloResponse
             {

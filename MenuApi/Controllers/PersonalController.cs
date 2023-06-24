@@ -2,8 +2,6 @@
 using Application.Interfaces.IPersonal;
 using Application.Request;
 using Application.Response;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -25,7 +23,7 @@ namespace MenuApi.Controllers
         public IActionResult loginUser(UsuarioLoginRequest request)
         {
             var usuarioLog = _authService.autenticarUsuario(request);
-            if(usuarioLog == null) { return Unauthorized(); }
+            if (usuarioLog == null) { return Unauthorized(); }
             return Ok(usuarioLog);
         }
 
@@ -43,7 +41,7 @@ namespace MenuApi.Controllers
         public IActionResult CreatePersonal(PersonalRequest request)
         {
             var personalNuevo = _services.createPersonal(request);
-            return new JsonResult(personalNuevo) { StatusCode = 201};
+            return new JsonResult(personalNuevo) { StatusCode = 201 };
         }
 
         [HttpGet("{id}")]
@@ -51,10 +49,10 @@ namespace MenuApi.Controllers
         [ProducesResponseType(typeof(NotFoundObjectResult), 404)]
         public IActionResult GetPersonal(Guid id)
         {
-           var personal = _services.GetPersonalById(id);
-           string message = $"no se encontro un usuario con el id: {id}";
+            var personal = _services.GetPersonalById(id);
+            string message = $"no se encontro un usuario con el id: {id}";
 
-            if(personal == null) { return NotFound(message); };
+            if (personal == null) { return NotFound(message); };
 
             return new JsonResult(personal) { StatusCode = 200 };
         }

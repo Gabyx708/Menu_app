@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces.IMenu;
 using Application.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers

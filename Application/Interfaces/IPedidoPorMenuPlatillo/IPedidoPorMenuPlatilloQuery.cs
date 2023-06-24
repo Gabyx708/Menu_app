@@ -4,7 +4,7 @@ namespace Application.Interfaces.IPedidoPorMenuPlatillo
 {
     public interface IPedidoPorMenuPlatilloQuery
     {
-        PedidoPorMenuPlatillo GetPedidoPorMenuPlatilloB(Guid idPedido, Guid idMenuPlatillo);
+        PedidoPorMenuPlatillo GetPedidoPorMenuPlatillo(Guid idPedido, Guid idMenuPlatillo);
 
         List<PedidoPorMenuPlatillo> GetPedidoMenuPlatilloByMenu(Guid idMenu);
 

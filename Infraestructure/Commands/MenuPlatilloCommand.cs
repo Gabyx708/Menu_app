@@ -13,8 +13,8 @@ namespace Infraestructure.Commands
             _context = context;
         }
 
-        public MenuPlatillo AsignarPlatilloAMenu(Guid idMenu,int idPlatillo,int stock)
-        {   
+        public MenuPlatillo AsignarPlatilloAMenu(Guid idMenu, int idPlatillo, int stock)
+        {
             var platillo = _context.Platillos.Single(p => p.IdPlatillo == idPlatillo);
 
             var NuevoMenuPlatillo = new MenuPlatillo

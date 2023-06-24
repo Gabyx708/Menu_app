@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
-using Application.Interfaces.IPlatillo;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -31,7 +30,7 @@ namespace Application.UseCase.Menues
 
             _command.CreateMenu(nuevoMenu);
 
-            _serviceMenuPlatillo.AsignarPlatillosAMenu(nuevoMenu.IdMenu,request.platillosDelMenu);
+            _serviceMenuPlatillo.AsignarPlatillosAMenu(nuevoMenu.IdMenu, request.platillosDelMenu);
 
             return new MenuResponse
             {

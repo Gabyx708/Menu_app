@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IPersonal;
-using Infraestructure.Persistence;
 using Domain.Entities;
+using Infraestructure.Persistence;
 
 namespace Infraestructure.Querys
 {
