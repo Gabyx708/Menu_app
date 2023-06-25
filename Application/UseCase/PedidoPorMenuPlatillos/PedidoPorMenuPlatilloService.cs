@@ -70,7 +70,7 @@ namespace Application.UseCase.PedidoPorMenuPlatillos
 
         public List<PedidoPorMenuPlatilloResponse> GetPedidosMenuPlatilloDePedido(Guid idPedido)
         {
-            List<PedidoPorMenuPlatillo> pedidoPorMenuPlatillos = _query.GetPedidoMenuPlatilloByMenu(idPedido);
+            List<PedidoPorMenuPlatillo> pedidoPorMenuPlatillos = _query.GetPedidoMenuPlatilloByPedido(idPedido);
             List<PedidoPorMenuPlatilloResponse> pedidoPorMenuPlatilloResponses = new List<PedidoPorMenuPlatilloResponse>();
 
             foreach (var pedidoPorMenuPlatillo in pedidoPorMenuPlatillos)

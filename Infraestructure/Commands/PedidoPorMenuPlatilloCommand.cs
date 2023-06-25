@@ -16,6 +16,7 @@ namespace Infraestructure.Commands
         public PedidoPorMenuPlatillo CreatePedidoPorMenuPlatillo(PedidoPorMenuPlatillo pedidoPorMenuPlatillo)
         {
             _context.PedidosPorMenuPlatillo.Add(pedidoPorMenuPlatillo);
+            _context.SaveChanges();
             return pedidoPorMenuPlatillo;
         }
 

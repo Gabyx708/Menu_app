@@ -2,11 +2,15 @@ using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
+using Application.Interfaces.IPedido;
+using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
 using Application.UseCase.MenuPlatillos;
+using Application.UseCase.PedidoPorMenuPlatillos;
+using Application.UseCase.Pedidos;
 using Application.UseCase.Personales;
 using Application.UseCase.Platillos;
 using Infraestructure.Commands;
@@ -63,6 +67,17 @@ namespace MenuApi
             //autenticacion
             builder.Services.AddScoped<IAuthenticacionQuery, AutehenticationQuery>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            //Pedido
+            builder.Services.AddScoped<IPedidoCommand, PedidoCommand>();
+            builder.Services.AddScoped<IPedidoQuery, PedidoQuery>();
+            builder.Services.AddScoped<IPedidoService, PedidoService>();
+
+            //PedidoPorMenuPlatillo
+            builder.Services.AddScoped<IPedidoPorMenuPlatilloCommand, PedidoPorMenuPlatilloCommand>();
+            builder.Services.AddScoped<IPedidoPorMenuPlatilloQuery, PedidoPorMenuPlatilloQuery>();
+            builder.Services.AddScoped<IPedidoPorMenuPlatilloService, PedidoPorMenuPlatilloService>();
+
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>
