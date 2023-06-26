@@ -6,6 +6,7 @@ using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
+using Application.Interfaces.IRecibo;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
 using Application.UseCase.MenuPlatillos;
@@ -13,6 +14,7 @@ using Application.UseCase.PedidoPorMenuPlatillos;
 using Application.UseCase.Pedidos;
 using Application.UseCase.Personales;
 using Application.UseCase.Platillos;
+using Application.UseCase.Recibos;
 using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
@@ -78,6 +80,10 @@ namespace MenuApi
             builder.Services.AddScoped<IPedidoPorMenuPlatilloQuery, PedidoPorMenuPlatilloQuery>();
             builder.Services.AddScoped<IPedidoPorMenuPlatilloService, PedidoPorMenuPlatilloService>();
 
+            //Recibo
+            builder.Services.AddScoped<IReciboCommand, ReciboCommand>();
+            builder.Services.AddScoped<IReciboQuery, ReciboQuery>();
+            builder.Services.AddScoped<IReciboService, ReciboService>();
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>

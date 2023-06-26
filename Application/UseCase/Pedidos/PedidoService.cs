@@ -3,6 +3,7 @@ using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
+using Application.Interfaces.IRecibo;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -23,7 +24,8 @@ namespace Application.UseCase.Pedidos
         private readonly IPedidoPorMenuPlatilloService _pedidoPorMenuPlatilloService;
         private readonly IMenuPlatilloService _menuPlatilloService;
         private readonly IPlatilloService _platilloService;
-        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService)
+        private readonly IReciboService _reciboService;
+        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService)
         {
             _command = command;
             _query = query;
@@ -31,6 +33,7 @@ namespace Application.UseCase.Pedidos
             _pedidoPorMenuPlatilloService = pedidoPorMenuPlatilloService;
             _menuPlatilloService = menuPlatilloService;
             _platilloService = platilloService;
+            _reciboService = reciboService;
         }
 
         public PedidoResponse GetPedidoById(Guid idPedido)
@@ -74,19 +77,26 @@ namespace Application.UseCase.Pedidos
             throw new NotImplementedException();
         }
 
+
+
         public PedidoResponse HacerUnpedido(PedidoRequest request)
         {
+            double precioTotal = 0;
+
             Pedido nuevoPedido = new Pedido
             {
                 IdPersonal = request.idUsuario,
                 FechaDePedido = DateTime.Now,
-                IdRecibo = new Guid("a60274f8-f08a-40f5-473e-08db751d11d2")
+                IdRecibo = _reciboService.CrearRecibo().id
             };
 
             _command.createPedido(nuevoPedido);
 
             foreach (var menuPlatillos in request.MenuPlatillos)
             {
+                double precioPlatillo = _menuPlatilloService.GetMenuPlatilloById(menuPlatillos).precio;
+                precioTotal = precioTotal + precioPlatillo;
+                
                 PedidoPorMenuPlatilloRequest requestPedidoPorMenuPlatillo = new PedidoPorMenuPlatilloRequest
                 {
                     idPedido = nuevoPedido.IdPedido,
@@ -96,8 +106,13 @@ namespace Application.UseCase.Pedidos
                 _pedidoPorMenuPlatilloService.CreatePedidoPorMenuPlatillo(requestPedidoPorMenuPlatillo);
             }
 
+            _reciboService.CambiarPrecio(nuevoPedido.IdRecibo, precioTotal);
+
             return GetPedidoById(nuevoPedido.IdPedido);
         }
+
+
+
 
         public List<PedidoResponse> PedidosDelMenu(Guid idMenu)
         {

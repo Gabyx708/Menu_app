@@ -4,7 +4,7 @@ using Infraestructure.Persistence;
 
 namespace Infraestructure.Querys
 {
-    internal class ReciboQuery : IReciboQuery
+    public class ReciboQuery : IReciboQuery
     {
         private readonly MenuAppContext _context;
 
