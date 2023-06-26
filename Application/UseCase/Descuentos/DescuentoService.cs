@@ -65,6 +65,12 @@ namespace Application.UseCase.Descuentos
         public DescuentoResponse GetDescuentoVigente()
         {
             var vigente = _query.GetVigente();
+
+            if(vigente == null)
+            {
+                return null;
+            }
+
             return GetDescuentoById(vigente.IdDescuento);
         }
     }
