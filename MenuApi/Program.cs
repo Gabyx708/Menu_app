@@ -19,6 +19,7 @@ using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi
 {
