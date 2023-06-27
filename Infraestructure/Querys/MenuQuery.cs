@@ -15,13 +15,25 @@ namespace Infraestructure.Querys
 
         public Menu GetMenuById(Guid idMenu)
         {
-            var menuEncontrado = _context.Menues.Single(m => m.IdMenu == idMenu);
+            var menuEncontrado = _context.Menues.FirstOrDefault(m => m.IdMenu == idMenu);
             return menuEncontrado;
         }
 
         public List<MenuPlatillo> PlatillosDelMenu(Guid idMenu)
         {
             return _context.MenuPlatillos.Where(mp => mp.IdMenu == idMenu).ToList();
+        }
+
+        public Menu GetByDateConsumo(DateTime fechaConsumo)
+        {
+            var found = _context.Menues.FirstOrDefault(m => m.FechaConsumo.Date == fechaConsumo);
+
+            if(found != null)
+            {
+                return found;
+            }
+
+            return null;
         }
     }
 }

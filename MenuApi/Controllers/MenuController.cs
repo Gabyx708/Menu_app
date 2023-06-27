@@ -22,6 +22,15 @@ namespace MenuApi.Controllers
             return new JsonResult(personal) { StatusCode = 200 };
         }
 
+        [HttpGet("fecha/{fechaConsumo}")]
+        public IActionResult GetMenuByFecha(string fechaConsumo)
+        {   
+            var fecha = DateTime.Parse(fechaConsumo);
+
+            var menu = _services.GetNextMenu(fecha);
+            return new JsonResult(menu) { StatusCode = 200 };
+        }
+
         [HttpPost]
         public IActionResult CreateMenu(MenuRequest request)
         {

@@ -58,7 +58,14 @@ namespace Application.UseCase.Menues
 
         public MenuResponse GetNextMenu(DateTime date)
         {
-            throw new NotImplementedException();
+            var menuFechaConsumo = _query.GetByDateConsumo(date);
+
+            if(menuFechaConsumo != null)
+            {
+                return GetMenuById(menuFechaConsumo.IdMenu);
+            }
+
+            return null;
         }
     }
 }

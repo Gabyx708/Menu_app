@@ -74,7 +74,16 @@ namespace Application.UseCase.Pedidos
         }
         public PedidoResponse EliminarPedido(Guid idPedido)
         {
-            throw new NotImplementedException();
+            var found = _query.GetPedidoById(idPedido);
+            var auxResponse = GetPedidoById(idPedido);
+
+            if(found != null)
+            {
+                _command.DeletePedido(idPedido);
+                return auxResponse;
+            }
+
+            return auxResponse;
         }
 
 

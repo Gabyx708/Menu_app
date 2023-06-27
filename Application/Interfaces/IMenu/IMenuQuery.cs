@@ -7,5 +7,7 @@ namespace Application.Interfaces.IMenu
         Menu GetMenuById(Guid idMenu);
 
         List<MenuPlatillo> PlatillosDelMenu(Guid idMenu);
+        Menu GetByDateConsumo(DateTime fechaConsumo);
+
     }
 }
