@@ -35,7 +35,11 @@ namespace Infraestructure.Persistence
             modelBuilder.ApplyConfiguration(new ReciboConfig());
             modelBuilder.ApplyConfiguration(new MenuConfig());
             modelBuilder.ApplyConfiguration(new PlatilloConfig());
+
+            //test data
             modelBuilder.ApplyConfiguration(new PersonalTest());
+            modelBuilder.ApplyConfiguration(new DescuentoTest());
+            modelBuilder.ApplyConfiguration(new PlatilloTest());
         }
     }
 }
