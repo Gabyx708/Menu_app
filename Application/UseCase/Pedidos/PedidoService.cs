@@ -66,7 +66,8 @@ namespace Application.UseCase.Pedidos
                     idPedido = idPedido,
                     Nombre = _personalService.GetPersonalById(pedido.IdPersonal).nombre,
                     fecha = pedido.FechaDePedido,
-                    platillos = platillosDelMenu
+                    platillos = platillosDelMenu,
+                    recibo = _reciboService.GetReciboById(pedido.IdRecibo)
                 };
             }
 

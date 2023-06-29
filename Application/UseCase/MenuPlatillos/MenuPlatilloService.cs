@@ -67,6 +67,7 @@ namespace Application.UseCase.MenuPlatillos
                 var response = new MenuPlatilloGetResponse
                 {
                     id = plato.IdPlatillo,
+                    idMenuPlato = plato.IdMenuPlatillo,
                     descripcion = _platilloService.GetPlatilloById(plato.IdPlatillo).descripcion,
                     precio = plato.PrecioActual,
                     stock = plato.Stock,
