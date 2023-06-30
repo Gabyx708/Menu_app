@@ -1,5 +1,7 @@
 ﻿using Application.Interfaces.IMenu;
 using Application.Request;
+using Application.Response;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -15,19 +17,25 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetMenu(Guid id)
+        [HttpGet]
+        public IActionResult GetMenu(string? id)
         {
-            var personal = _services.GetMenuById(id);
-            return new JsonResult(personal) { StatusCode = 200 };
+            MenuResponse? resultado = null;
+
+            if (id != null)
+            {
+                resultado = _services.GetMenuById(Guid.Parse(id));
+                return new JsonResult(resultado) { StatusCode = 200 };
+            }
+
+            resultado = _services.GetUltimoMenu();
+            return new JsonResult(resultado) { StatusCode = 200 };
         }
 
         [HttpGet("fecha/{fechaConsumo}")]
         public IActionResult GetMenuByFecha(string fechaConsumo)
         {   
-            var fecha = DateTime.Parse(fechaConsumo);
-
-            var menu = _services.GetNextMenu(fecha);
+            var menu = _services.GetUltimoMenu();
             return new JsonResult(menu) { StatusCode = 200 };
         }
 
@@ -36,6 +44,13 @@ namespace MenuApi.Controllers
         {
             var nuevoMenu = _services.CreateMenu(request);
             return new JsonResult(nuevoMenu) { StatusCode = 200 };
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMenu(Guid id)
+        {
+            var menuBorrado = _services.BorrarMenu(id);
+            return new JsonResult(menuBorrado) { StatusCode = 200 };
         }
     }
 }

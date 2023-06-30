@@ -35,5 +35,23 @@ namespace Infraestructure.Commands
             _context.SaveChanges();
             return menuPlatillo;
         }
+
+        public MenuPlatillo UpdateMenuPlatillo(Guid idMenuPlatillo,MenuPlatillo menuPlatillo)
+        {
+            var found = _context.MenuPlatillos.FirstOrDefault(mp => mp.IdMenuPlatillo == idMenuPlatillo);
+
+            if(found != null)
+            {
+                found.IdMenuPlatillo = found.IdMenuPlatillo;
+                found.IdPlatillo = found.IdPlatillo;
+                found.PrecioActual = found.PrecioActual;
+                found.Stock = menuPlatillo.Stock;
+                found.Solicitados = menuPlatillo.Solicitados;
+                _context.Update(found);
+                _context.SaveChanges();
+            };
+
+            return null;
+        }
     }
 }

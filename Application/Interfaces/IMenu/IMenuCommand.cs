@@ -7,5 +7,7 @@ namespace Application.Interfaces.IMenu
         Menu CreateMenu(Menu menu);
 
         Menu AsignarPlatillo(MenuPlatillo platillo);
+        Menu DeleteMenu(Menu menu);
+
     }
 }

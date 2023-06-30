@@ -27,5 +27,12 @@ namespace Infraestructure.Commands
             _context.SaveChanges();
             return menu;
         }
+
+        public Menu DeleteMenu(Menu menu)
+        {
+            _context.Remove(menu);
+            _context.SaveChanges();
+            return menu;
+        }
     }
 }

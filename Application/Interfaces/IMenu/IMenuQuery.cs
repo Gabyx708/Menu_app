@@ -8,6 +8,8 @@ namespace Application.Interfaces.IMenu
 
         List<MenuPlatillo> PlatillosDelMenu(Guid idMenu);
         Menu GetByDateConsumo(DateTime fechaConsumo);
+        Menu GetUltimoMenu();
+
 
     }
 }

@@ -35,5 +35,11 @@ namespace Infraestructure.Querys
 
             return null;
         }
+
+        public Menu GetUltimoMenu()
+        {
+            var found = _context.Menues.OrderByDescending(m => m.FechaConsumo).FirstOrDefault();
+            return found;
+        }
     }
 }

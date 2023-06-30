@@ -3,6 +3,7 @@ using Application.Interfaces.IMenuPlatillo;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
+using System.Text;
 
 namespace Application.UseCase.Menues
 {
@@ -56,9 +57,9 @@ namespace Application.UseCase.Menues
             };
         }
 
-        public MenuResponse GetNextMenu(DateTime date)
+        public MenuResponse GetUltimoMenu()
         {
-            var menuFechaConsumo = _query.GetByDateConsumo(date);
+            var menuFechaConsumo = _query.GetUltimoMenu();
 
             if(menuFechaConsumo != null)
             {
@@ -66,6 +67,20 @@ namespace Application.UseCase.Menues
             }
 
             return null;
+        }
+
+        public MenuResponse BorrarMenu(Guid idMenu)
+        {
+            var found = _query.GetMenuById(idMenu);
+            var foundResponse = GetMenuById(idMenu);
+
+            if(found != null)
+            {
+                _command.DeleteMenu(found);
+                return foundResponse;
+            }
+
+            return foundResponse;
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Application.Interfaces.IMenuPlatillo
         MenuPlatillo CreateMenuPlatillo(MenuPlatillo menuPlatillo);
 
         MenuPlatillo AsignarPlatilloAMenu(Guid idMenu, int idPlatillo, int stock);
+        MenuPlatillo UpdateMenuPlatillo(Guid id,MenuPlatillo menuPlatillo);
+
     }
 }

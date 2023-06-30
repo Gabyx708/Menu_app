@@ -2,6 +2,7 @@
 using Application.Interfaces.IPlatillo;
 using Application.Request;
 using Application.Response;
+using Domain.Entities;
 
 namespace Application.UseCase.MenuPlatillos
 {
@@ -78,6 +79,18 @@ namespace Application.UseCase.MenuPlatillos
             }
 
             return menuPlatillos;
+        }
+
+        public MenuPlatilloResponse ModificarMenuPlatillo(Guid idMenuPlatillo,MenuPlatilloRequest menuPlatillo)
+        {
+            var menuPlato = new MenuPlatillo
+            {
+                Stock = menuPlatillo.stock,
+                Solicitados = menuPlatillo.solicitados
+            };
+
+            var found =  _command.UpdateMenuPlatillo(idMenuPlatillo,menuPlato);
+            return GetMenuPlatilloById(idMenuPlatillo);
         }
     }
 }

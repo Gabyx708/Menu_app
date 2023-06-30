@@ -8,6 +8,7 @@ namespace Application.Interfaces.IMenu
         MenuResponse CreateMenu(MenuRequest request);
         MenuResponse GetMenuById(Guid id);
 
-        MenuResponse GetNextMenu(DateTime date);
+        MenuResponse GetUltimoMenu();
+        MenuResponse BorrarMenu(Guid idMenu);
     }
 }
