@@ -13,7 +13,7 @@ namespace Application.Interfaces.IPedido
         PedidoResponse HacerUnpedido(PedidoRequest request);
         PedidoResponse EliminarPedido(Guid idPedido);
         PedidoResponse GetPedidoById(Guid idPedido);
-        List<PedidoResponse> PedidosPersonal(Guid idPersonal);
+        List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? fecha, int? cantidad);
         List<PedidoResponse> PedidosDelMenu(Guid idMenu);
         List<PedidoResponse> PedidosPorFecha(DateTime fecha);
 

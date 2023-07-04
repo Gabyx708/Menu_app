@@ -18,6 +18,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult GetMenu(string? id)
         {
             MenuResponse? resultado = null;
@@ -33,6 +34,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet("fecha/{fechaConsumo}")]
+        [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult GetMenuByFecha(string fechaConsumo)
         {   
             var menu = _services.GetUltimoMenu();
@@ -40,13 +42,15 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(MenuResponse), 201)]
         public IActionResult CreateMenu(MenuRequest request)
         {
             var nuevoMenu = _services.CreateMenu(request);
-            return new JsonResult(nuevoMenu) { StatusCode = 200 };
+            return new JsonResult(nuevoMenu) { StatusCode = 201 };
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult DeleteMenu(Guid id)
         {
             var menuBorrado = _services.BorrarMenu(id);

@@ -1,5 +1,6 @@
 using Application.Interfaces.IDescuento;
 using Application.Request;
+using Application.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -16,6 +17,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(DescuentoResponse), 200)]
         public IActionResult GetDescuento(Guid id)
         {
             var descuento = _services.GetDescuentoById(id);
@@ -23,6 +25,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(DescuentoResponse), 200)]
         public IActionResult GetVigente()
         {
             var vigente = _services.GetDescuentoVigente();
@@ -30,10 +33,11 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(DescuentoResponse), 201)]
         public IActionResult CreateDescuento(DescuentoRequest request)
         {
             var nuevoDescuento = _services.crearDescuento(request);
-            return new JsonResult(nuevoDescuento) { StatusCode = 200 };
+            return new JsonResult(nuevoDescuento) { StatusCode = 201 };
         }
     }
 }

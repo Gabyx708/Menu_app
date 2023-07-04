@@ -20,6 +20,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(typeof(PersonalResponse), 200)]
         public IActionResult loginUser(UsuarioLoginRequest request)
         {
             var usuarioLog = _authService.autenticarUsuario(request);

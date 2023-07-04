@@ -30,11 +30,6 @@ namespace Infraestructure.Querys
             return null;
         }
 
-        public List<Pedido> GetPedidosByFecha(DateTime fecha)
-        {
-            return _context.Pedidos.Where(p => p.FechaDePedido.Date == fecha.Date).ToList();
-        }
-
         public List<Pedido> GetPedidosMenu(Guid idMenu)
         {
             List<Guid> menuPlatillo = _context.MenuPlatillos.Where(mp => mp.IdMenu == idMenu).
@@ -63,9 +58,29 @@ namespace Infraestructure.Querys
             return pedidosDelMenuEncontrados;
         }
 
-        public List<Pedido> GetPedidosPersonal(Guid idPersonal)
+        public List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fecha,int? ultimos)
         {
-            return _context.Pedidos.Where(p => p.IdPersonal == idPersonal).ToList();
+            List<Pedido> pedidos = new List<Pedido>();
+
+            pedidos = _context.Pedidos.ToList();
+
+            if (fecha != null)
+            {
+                pedidos = pedidos.Where(p => p.FechaDePedido.Date == fecha).ToList();
+            }
+            
+            if(idPersonal != null)
+            {
+                pedidos = pedidos.Where(p => p.IdPersonal == idPersonal).ToList();
+            }
+
+            if (ultimos != null)
+            {
+                pedidos = pedidos.OrderByDescending(p => p.FechaDePedido).Take((int)ultimos).ToList();
+            }
+
+
+            return pedidos;
         }
     }
 }

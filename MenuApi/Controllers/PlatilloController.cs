@@ -1,5 +1,6 @@
 using Application.Interfaces.IPlatillo;
 using Application.Request;
+using Application.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -17,6 +18,7 @@ namespace MenuApi.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<PlatilloResponse>), 200)]
         public IActionResult GetAll()
         {
             var platillos = _services.GetAll();
@@ -24,6 +26,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PlatilloResponse), 200)]
         public IActionResult GetPersonal(int id)
         {
             var platillo = _services.GetPlatilloById(id);
@@ -31,13 +34,15 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(PlatilloResponse), 201)]
         public IActionResult CrearPlatillo(PlatilloRequest request)
         {
             var nuevoPlato = _services.CreatePlatillo(request);
-            return new JsonResult(nuevoPlato) { StatusCode = 200 };
+            return new JsonResult(nuevoPlato) { StatusCode = 201 };
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(PlatilloResponse), 200)]
         public IActionResult CambiarPrecio(int id, PlatilloRequest request)
         {
             var platoPrecio = _services.UpdatePrecio(id, request.precio);

@@ -7,12 +7,6 @@ using Application.Interfaces.IRecibo;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.Pedidos
 {
@@ -49,7 +43,7 @@ namespace Application.UseCase.Pedidos
 
                 foreach (var pedidoPorMenuPlatillo in pedidosPorMenuPlatillo)
                 {
-                   var recuperado = _menuPlatilloService.GetMenuPlatilloById(pedidoPorMenuPlatillo.IdMenuPlatillo);
+                    var recuperado = _menuPlatilloService.GetMenuPlatilloById(pedidoPorMenuPlatillo.IdMenuPlatillo);
 
                     MenuPlatilloGetResponse menuPlatilloResponse = new MenuPlatilloGetResponse
                     {
@@ -80,7 +74,7 @@ namespace Application.UseCase.Pedidos
             var found = _query.GetPedidoById(idPedido);
             var auxResponse = GetPedidoById(idPedido);
 
-            if(found != null)
+            if (found != null)
             {
                 _command.DeletePedido(idPedido);
                 return auxResponse;
@@ -109,7 +103,7 @@ namespace Application.UseCase.Pedidos
                 var menuPlatilloEcontrado = _menuPlatilloService.GetMenuPlatilloById(menuPlatilloId);
                 double precioPlatillo = menuPlatilloEcontrado.precio;
                 precioTotal = precioTotal + precioPlatillo;
-                
+
                 PedidoPorMenuPlatilloRequest requestPedidoPorMenuPlatillo = new PedidoPorMenuPlatilloRequest
                 {
                     idPedido = nuevoPedido.IdPedido,
@@ -117,13 +111,13 @@ namespace Application.UseCase.Pedidos
                 };
 
                 if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
-                {   
+                {
                     return EliminarPedido(nuevoPedido.IdPedido);
                 }
 
                 MenuPlatilloRequest modificacion = new MenuPlatilloRequest
                 {
-                    stock = menuPlatilloEcontrado.stock ,
+                    stock = menuPlatilloEcontrado.stock,
                     solicitados = _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados + 1
                 };
 
@@ -144,9 +138,25 @@ namespace Application.UseCase.Pedidos
             throw new NotImplementedException();
         }
 
-        public List<PedidoResponse> PedidosPersonal(Guid idPersonal)
+        public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? fecha,int? cantidad)
         {
-            throw new NotImplementedException();
+            List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, fecha,cantidad);
+            List<PedidoGetResponse> pedidosResponse = new List<PedidoGetResponse>();
+
+            foreach (var pedido in pedidos)
+            {
+                var nuevo = new PedidoGetResponse
+                {
+                    id = pedido.IdPedido,
+                    Personal = pedido.IdPersonal,
+                    Fecha = pedido.FechaDePedido,
+                    Recibo = pedido.IdRecibo
+                };
+
+                pedidosResponse.Add(nuevo);
+            }
+
+            return pedidosResponse;
         }
 
         public List<PedidoResponse> PedidosPorFecha(DateTime fecha)
