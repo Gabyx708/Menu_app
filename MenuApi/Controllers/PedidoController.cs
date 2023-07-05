@@ -18,12 +18,22 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(PedidoResponse),201)]
+        [ProducesResponseType(typeof(PedidoResponse), 201)]
         public IActionResult HacerUnPedido(PedidoRequest request)
         {
-            var nuevoPedido = _services.HacerUnpedido(request);
+            PedidoResponse result = new PedidoResponse();
 
-            return Ok(nuevoPedido);
+            try {
+                result = _services.HacerUnpedido(request);
+            }
+            catch(InvalidOperationException e)
+            {
+                return new JsonResult(new { message = "error"} ) { StatusCode = 409 };
+            }
+
+            result = _services.HacerUnpedido(request);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

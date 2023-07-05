@@ -87,6 +87,12 @@ namespace Application.UseCase.Pedidos
 
         public PedidoResponse HacerUnpedido(PedidoRequest request)
         {
+            List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date, 1);
+
+            if (existePedido.Count > 0) {
+                throw new InvalidOperationException();
+            }
+
             double precioTotal = 0;
 
             Pedido nuevoPedido = new Pedido
