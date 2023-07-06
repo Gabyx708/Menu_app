@@ -25,15 +25,14 @@ namespace MenuApi.Controllers
 
             try {
                 result = _services.HacerUnpedido(request);
+                return Ok(result);
             }
             catch(InvalidOperationException e)
             {
                 return new JsonResult(new { message = "error"} ) { StatusCode = 409 };
             }
 
-            result = _services.HacerUnpedido(request);
 
-            return Ok(result);
         }
 
         [HttpGet("{id}")]
