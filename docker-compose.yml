@@ -1,0 +1,25 @@
+version: '1.0'
+
+services:
+  menuapi:
+    image: menuapi:alpha
+    ports:
+      - "80:80"
+    networks:
+      - menuapp_network
+    depends_on:
+      - mysql 
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 4275
+      MYSQL_DATABASE: menuAppDB
+    ports:
+      - "3306:3306"
+    networks:
+      - menuapp_network
+    hostname: DBmenu
+
+networks:
+  menuapp_network:
