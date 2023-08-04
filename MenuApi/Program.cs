@@ -100,21 +100,21 @@ namespace MenuApi
             var app = builder.Build();
 
             //aplica migraciones automaticas
-            //using (var scope = app.Services.CreateScope())
-            //{ 
-            //    var dbContext = scope.ServiceProvider.GetRequiredService<MenuAppContext>();
-            //    dbContext.Database.Migrate();
-            //}
+            using (var scope = app.Services.CreateScope())
+            { 
+                var dbContext = scope.ServiceProvider.GetRequiredService<MenuAppContext>();
+                dbContext.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
             app.UseCors("AllowAll");
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

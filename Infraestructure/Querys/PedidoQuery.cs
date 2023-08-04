@@ -58,28 +58,34 @@ namespace Infraestructure.Querys
             return pedidosDelMenuEncontrados;
         }
 
-        public List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fecha,int? ultimos)
+        public List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fechaDesde,DateTime? fechaHasta,int? ultimos)
         {
-            List<Pedido> pedidos = new List<Pedido>();
+            IQueryable<Pedido> query = _context.Pedidos.AsQueryable();
 
-            pedidos = _context.Pedidos.ToList();
-
-            if (fecha != null)
+            if (fechaDesde != null && fechaHasta != null)
             {
-                pedidos = pedidos.Where(p => p.FechaDePedido.Date == fecha).ToList();
+                query = query.Where(p => p.FechaDePedido >= fechaDesde && p.FechaDePedido <= fechaHasta);
             }
-            
-            if(idPersonal != null)
+            else if (fechaDesde != null)
             {
-                pedidos = pedidos.Where(p => p.IdPersonal == idPersonal).ToList();
+                query = query.Where(p => p.FechaDePedido >= fechaDesde);
+            }
+            else if (fechaHasta != null)
+            {
+                query = query.Where(p => p.FechaDePedido <= fechaHasta);
+            }
+
+            if (idPersonal != null)
+            {
+                query = query.Where(p => p.IdPersonal == idPersonal);
             }
 
             if (ultimos != null)
             {
-                pedidos = pedidos.OrderByDescending(p => p.FechaDePedido).Take((int)ultimos).ToList();
+                query = query.OrderByDescending(p => p.FechaDePedido).Take((int)ultimos);
             }
 
-
+            List<Pedido> pedidos = query.ToList();
             return pedidos;
         }
     }

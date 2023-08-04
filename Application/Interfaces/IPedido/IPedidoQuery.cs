@@ -11,6 +11,6 @@ namespace Application.Interfaces.IPedido
     {
         Pedido GetPedidoById(Guid idPedido);
         List<Pedido> GetAll();
-        List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fecha,int? ultimos);
+        List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fechaDesde,DateTime? fechaHasta,int? ultimos);
     }
 }
