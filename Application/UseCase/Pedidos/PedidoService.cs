@@ -145,7 +145,8 @@ namespace Application.UseCase.Pedidos
         }
 
         public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? Desde,DateTime? Hasta, int? cantidad)
-        {
+        {   
+
             List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde,Hasta,cantidad);
             List<PedidoGetResponse> pedidosResponse = new List<PedidoGetResponse>();
 
