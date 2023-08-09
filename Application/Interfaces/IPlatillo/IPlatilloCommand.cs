@@ -6,6 +6,6 @@ namespace Application.Interfaces.IPlatillo
     {
         Platillo CreatePlatillo(Platillo platillo);
 
-        Platillo UpdatePrecio(int idPlatillo, double nuevoPrecio);
+        Platillo UpdatePrecio(int idPlatillo, decimal nuevoPrecio);
     }
 }

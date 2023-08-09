@@ -13,7 +13,7 @@ namespace Infraestructure.Commands
             _context = context;
         }
 
-        public Recibo CambiarPrecioTotal(Guid idRecibo, double precioTotal)
+        public Recibo CambiarPrecioTotal(Guid idRecibo, decimal precioTotal)
         {
             var found = _context.Recibos.FirstOrDefault(r => r.IdRecibo == idRecibo);
 

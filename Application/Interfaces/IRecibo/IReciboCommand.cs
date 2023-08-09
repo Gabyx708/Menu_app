@@ -8,6 +8,6 @@ namespace Application.Interfaces.IRecibo
 
         Recibo EliminarRecibo(Guid idRecibo);
 
-        Recibo CambiarPrecioTotal(Guid idRecibo, double precioTotal);
+        Recibo CambiarPrecioTotal(Guid idRecibo, decimal precioTotal);
     }
 }

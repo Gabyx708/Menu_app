@@ -66,7 +66,7 @@ namespace Application.UseCase.Platillos
             };
         }
 
-        public PlatilloResponse UpdatePrecio(int idPlatillo, double nuevoPrecio)
+        public PlatilloResponse UpdatePrecio(int idPlatillo, decimal nuevoPrecio)
         {
             var platilloActualizado = _command.UpdatePrecio(idPlatillo, nuevoPrecio);
 

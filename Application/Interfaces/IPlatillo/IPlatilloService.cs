@@ -7,7 +7,7 @@ namespace Application.Interfaces.IPlatillo
     {
         PlatilloResponse GetPlatilloById(int idPlatillo);
         PlatilloResponse CreatePlatillo(PlatilloRequest request);
-        PlatilloResponse UpdatePrecio(int idPlatillo, double nuevoPrecio);
+        PlatilloResponse UpdatePrecio(int idPlatillo, decimal nuevoPrecio);
         List<PlatilloResponse> GetAll();
     }
 }

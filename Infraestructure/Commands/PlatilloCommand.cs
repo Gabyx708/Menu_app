@@ -20,7 +20,7 @@ namespace Infraestructure.Commands
             return platillo;
         }
 
-        public Platillo UpdatePrecio(int idPlatillo, double nuevoPrecio)
+        public Platillo UpdatePrecio(int idPlatillo, decimal nuevoPrecio)
         {
             Platillo platilloOriginal = _context.Platillos.Single(p => p.IdPlatillo == idPlatillo);
 
