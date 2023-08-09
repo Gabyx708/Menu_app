@@ -7,7 +7,7 @@
         public Menu Menu { get; set; }
         public int IdPlatillo { get; set; }
         public Platillo Platillo { get; set; }
-        public double PrecioActual { get; set; }
+        public decimal PrecioActual { get; set; }
         public int Stock { get; set; }
         public int Solicitados { get; set; }
 

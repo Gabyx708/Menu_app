@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.IPedido;
-using Application.Response;
+using Application.Response.PedidoResponses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers

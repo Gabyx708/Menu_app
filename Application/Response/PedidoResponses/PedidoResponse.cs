@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Response.MenuPlatilloResponses;
+using Application.Response.ReciboResponses;
 
-namespace Application.Response
+namespace Application.Response.PedidoResponses
 {
     public class PedidoResponse
     {

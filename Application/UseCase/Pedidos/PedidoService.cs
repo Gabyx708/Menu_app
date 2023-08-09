@@ -5,7 +5,8 @@ using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
 using Application.Request;
-using Application.Response;
+using Application.Response.MenuPlatilloResponses;
+using Application.Response.PedidoResponses;
 using Domain.Entities;
 
 namespace Application.UseCase.Pedidos
