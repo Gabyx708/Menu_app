@@ -94,7 +94,7 @@ namespace Application.UseCase.Pedidos
                 throw new InvalidOperationException();
             }
 
-            double precioTotal = 0;
+            decimal precioTotal = 0;
 
             Pedido nuevoPedido = new Pedido
             {
@@ -108,7 +108,7 @@ namespace Application.UseCase.Pedidos
             foreach (var menuPlatilloId in request.MenuPlatillos)
             {
                 var menuPlatilloEcontrado = _menuPlatilloService.GetMenuPlatilloById(menuPlatilloId);
-                double precioPlatillo = menuPlatilloEcontrado.precio;
+                decimal precioPlatillo = menuPlatilloEcontrado.precio;
                 precioTotal = precioTotal + precioPlatillo;
 
                 PedidoPorMenuPlatilloRequest requestPedidoPorMenuPlatillo = new PedidoPorMenuPlatilloRequest

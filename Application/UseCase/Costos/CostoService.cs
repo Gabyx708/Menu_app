@@ -34,7 +34,7 @@ namespace Application.UseCase.Costos
             foreach (var pedido in pedidosDelDia)
             {
                 Recibo reciboDelPedido = _reciboQuery.GetById(pedido.IdRecibo);
-                double descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje
+                decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
                 CostototalDescuento = descuentoDelPedido + CostototalDescuento;
                 Costototal = reciboDelPedido.precioTotal + Costototal;
             }

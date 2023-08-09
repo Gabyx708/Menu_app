@@ -4,6 +4,6 @@
     {
         public Guid id { get; set; }
         public DateTime fecha_inicio { get; set; }
-        public int porcentaje { get; set; }
+        public decimal porcentaje { get; set; }
     }
 }

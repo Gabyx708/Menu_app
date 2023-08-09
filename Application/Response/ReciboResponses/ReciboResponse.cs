@@ -3,7 +3,7 @@
     public class ReciboResponse
     {
         public Guid id { get; set; }
-        public double descuento { get; set; }
-        public double precio { get; set; }
+        public decimal descuento { get; set; }
+        public decimal precio { get; set; }
     }
 }
