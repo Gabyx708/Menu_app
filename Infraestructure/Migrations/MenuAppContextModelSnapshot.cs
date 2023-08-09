@@ -38,8 +38,8 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdDescuento = new Guid("8d832d28-e1b2-46af-bc4b-c4937431a01d"),
-                            FechaInicioVigencia = new DateTime(2023, 8, 9, 13, 42, 51, 176, DateTimeKind.Local).AddTicks(3128),
+                            IdDescuento = new Guid("9cee74a5-3e88-4769-9bd8-b74b15ad120c"),
+                            FechaInicioVigencia = new DateTime(2023, 8, 9, 13, 47, 14, 904, DateTimeKind.Local).AddTicks(3722),
                             Porcentaje = 50m
                         });
                 });
@@ -188,7 +188,7 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdPersonal = new Guid("62398b7a-6a43-4167-a488-4d916db65b78"),
+                            IdPersonal = new Guid("d01636e5-c6e0-4c4f-ab59-8f8a43d2c07c"),
                             Apellido = "Pérez",
                             Dni = "123456789",
                             FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -202,7 +202,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("ae2db51f-ecc3-457e-92d8-13ae5ba9009c"),
+                            IdPersonal = new Guid("f8ea11eb-e2a1-47c3-8052-bd031ac7cd9d"),
                             Apellido = "González",
                             Dni = "987654321",
                             FechaAlta = new DateTime(2021, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -216,7 +216,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("11160e3a-dda3-4a4f-82b0-c8d1fcb55ffc"),
+                            IdPersonal = new Guid("87f44a40-33af-4a45-96f6-f28f41b72f77"),
                             Apellido = "López",
                             Dni = "456789123",
                             FechaAlta = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -230,7 +230,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("58f5f2e5-8bf3-4f18-afd6-8b4462077821"),
+                            IdPersonal = new Guid("7ea258c3-3c61-4c61-a8d7-60013f45196b"),
                             Apellido = "Ramírez",
                             Dni = "321654987",
                             FechaAlta = new DateTime(2020, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -244,7 +244,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("acb21e8f-faca-4eab-9165-1a2bca318bee"),
+                            IdPersonal = new Guid("892c9951-c571-4402-b8fd-e885d64e2c93"),
                             Apellido = "Martínez",
                             Dni = "789456123",
                             FechaAlta = new DateTime(2021, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -258,7 +258,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("6243ed47-44d7-485c-9dec-1907df78d8c5"),
+                            IdPersonal = new Guid("99d70ae9-6506-4e06-ad72-925e65c8b895"),
                             Apellido = "Hernández",
                             Dni = "654123987",
                             FechaAlta = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -272,7 +272,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("f79bfeb8-add2-4e29-83e8-22f3ba81deae"),
+                            IdPersonal = new Guid("6fe91755-1404-42b9-9645-411f4eeaf491"),
                             Apellido = "Fernández",
                             Dni = "258963147",
                             FechaAlta = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -286,7 +286,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("d4d7aea3-ec46-46a1-8300-5bc3dca56170"),
+                            IdPersonal = new Guid("9527b880-5fab-4c5b-b1fb-f8d53f803f8e"),
                             Apellido = "López",
                             Dni = "741852963",
                             FechaAlta = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -300,7 +300,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("c224a669-f744-4833-b65c-60d5ed78f2fc"),
+                            IdPersonal = new Guid("67d18743-b657-4289-b756-a238c3f7fe1d"),
                             Apellido = "Gómez",
                             Dni = "963852741",
                             FechaAlta = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -314,7 +314,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("9ab05c2b-6348-4637-845b-db58a4ccf414"),
+                            IdPersonal = new Guid("61bbfebf-958c-496c-ba6d-c38398afa981"),
                             Apellido = "Díaz",
                             Dni = "159357852",
                             FechaAlta = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),

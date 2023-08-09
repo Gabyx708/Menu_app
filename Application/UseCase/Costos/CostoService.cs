@@ -27,7 +27,13 @@ namespace Application.UseCase.Costos
 
         public CostoDiaResponse GetCostosDia(DateTime fecha)
         {
-            List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(null, fecha, null, null);
+            List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(null, fecha, fecha, null);
+
+            if (pedidosDelDia.Count == 0)
+            {
+                return null;
+            }
+
             decimal Costototal = 0;
             decimal CostototalDescuento = 0;
 
@@ -35,7 +41,7 @@ namespace Application.UseCase.Costos
             {
                 Recibo reciboDelPedido = _reciboQuery.GetById(pedido.IdRecibo);
                 decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
-                CostototalDescuento = descuentoDelPedido + CostototalDescuento;
+                CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal,descuentoDelPedido) + CostototalDescuento;
                 Costototal = reciboDelPedido.precioTotal + Costototal;
             }
 
@@ -56,5 +62,19 @@ namespace Application.UseCase.Costos
         {
             throw new NotImplementedException();
         }
-    }
+
+        private decimal CalcularDescuento(decimal total, decimal porcentaje)
+        {
+            if (porcentaje < 0 || porcentaje > 100)
+            {
+                throw new ArgumentException("El porcentaje debe estar entre 0 y 100.");
+            }
+
+            decimal descuento = total * (porcentaje / 100);
+            decimal resultado = total - descuento;
+
+            return resultado;
+        }
+    }   
+
 }

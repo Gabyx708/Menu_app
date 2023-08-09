@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IPedido;
 using Domain.Entities;
 using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure.Querys
 {
@@ -60,39 +61,38 @@ namespace Infraestructure.Querys
 
         public List<Pedido> GetPedidosFiltrado(Guid? idPersonal, DateTime? fechaDesde, DateTime? fechaHasta, int? ultimos)
         {
-            IQueryable<Pedido> query = _context.Pedidos.AsQueryable();
+            IQueryable<Pedido> query = _context.Pedidos.Include(p => p.Personal).Include(p => p.Recibo).AsQueryable();
 
-            if (idPersonal != null)
+            if (idPersonal.HasValue)
             {
                 query = query.Where(p => p.IdPersonal == idPersonal);
             }
 
-
-            if (fechaDesde != null && fechaHasta != null)
+            if (fechaDesde.HasValue)
             {
-                query = query.Where(p => p.FechaDePedido >= fechaDesde && p.FechaDePedido <= fechaHasta);
-            }
-            else
-            {
-                if (fechaDesde != null)
+                if (!fechaHasta.HasValue || fechaDesde.Value.Date == fechaHasta.Value.Date)
+                {
+                    query = query.Where(p => p.FechaDePedido.Date == fechaDesde.Value.Date);
+                }
+                else
                 {
                     query = query.Where(p => p.FechaDePedido >= fechaDesde);
                 }
-
-                if (fechaHasta != null)
-                {
-                    query = query.Where(p => p.FechaDePedido <= fechaHasta);
-                }
             }
-        
 
-            if (ultimos != null)
+            if (fechaHasta.HasValue && (!fechaDesde.HasValue || fechaDesde.Value.Date != fechaHasta.Value.Date))
             {
-                query = query.OrderByDescending(p => p.FechaDePedido).Take((int)ultimos);
+                query = query.Where(p => p.FechaDePedido <= fechaHasta);
             }
 
-            List<Pedido> pedidos = query.ToList();
-            return pedidos;
+            if (ultimos.HasValue)
+            {
+                query = query.OrderByDescending(p => p.FechaDePedido).Take(ultimos.Value);
+            }
+
+            List<Pedido> pedidosFiltrados = query.ToList();
+
+            return pedidosFiltrados;
         }
 
     }

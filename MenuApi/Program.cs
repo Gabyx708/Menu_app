@@ -1,4 +1,5 @@
 using Application.Interfaces.IAuthentication;
+using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
@@ -7,6 +8,7 @@ using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
+using Application.UseCase.Costos;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
 using Application.UseCase.MenuPlatillos;
@@ -85,6 +87,9 @@ namespace MenuApi
             builder.Services.AddScoped<IReciboCommand, ReciboCommand>();
             builder.Services.AddScoped<IReciboQuery, ReciboQuery>();
             builder.Services.AddScoped<IReciboService, ReciboService>();
+
+            //Costos
+            builder.Services.AddScoped<ICostoService, CostoService>();
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>

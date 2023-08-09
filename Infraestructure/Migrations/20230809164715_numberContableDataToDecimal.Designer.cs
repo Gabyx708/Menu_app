@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(MenuAppContext))]
-    [Migration("20230624222139_datos-personal-prueba")]
-    partial class datospersonalprueba
+    [Migration("20230809164715_numberContableDataToDecimal")]
+    partial class numberContableDataToDecimal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,12 +31,20 @@ namespace Infraestructure.Migrations
                     b.Property<DateTime>("FechaInicioVigencia")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Porcentaje")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Porcentaje")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdDescuento");
 
                     b.ToTable("Descuento", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            IdDescuento = new Guid("9cee74a5-3e88-4769-9bd8-b74b15ad120c"),
+                            FechaInicioVigencia = new DateTime(2023, 8, 9, 13, 47, 14, 904, DateTimeKind.Local).AddTicks(3722),
+                            Porcentaje = 50m
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Menu", b =>
@@ -71,8 +79,8 @@ namespace Infraestructure.Migrations
                     b.Property<int>("IdPlatillo")
                         .HasColumnType("int");
 
-                    b.Property<double>("PrecioActual")
-                        .HasColumnType("double");
+                    b.Property<decimal>("PrecioActual")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Solicitados")
                         .HasColumnType("int");
@@ -183,7 +191,7 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdPersonal = new Guid("361d4854-d063-4295-bf29-6f2228d8bee5"),
+                            IdPersonal = new Guid("d01636e5-c6e0-4c4f-ab59-8f8a43d2c07c"),
                             Apellido = "Pérez",
                             Dni = "123456789",
                             FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -197,7 +205,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("b928beeb-1e74-41d4-9c4e-bb7ca33a5f41"),
+                            IdPersonal = new Guid("f8ea11eb-e2a1-47c3-8052-bd031ac7cd9d"),
                             Apellido = "González",
                             Dni = "987654321",
                             FechaAlta = new DateTime(2021, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -211,7 +219,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("43a22ea3-ae69-42ed-98a9-dcf1536906af"),
+                            IdPersonal = new Guid("87f44a40-33af-4a45-96f6-f28f41b72f77"),
                             Apellido = "López",
                             Dni = "456789123",
                             FechaAlta = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -225,7 +233,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("3d0842eb-a90e-4e8a-a2a3-6813753715e6"),
+                            IdPersonal = new Guid("7ea258c3-3c61-4c61-a8d7-60013f45196b"),
                             Apellido = "Ramírez",
                             Dni = "321654987",
                             FechaAlta = new DateTime(2020, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -239,7 +247,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("a1a24b38-75c6-475c-a699-28717db4b931"),
+                            IdPersonal = new Guid("892c9951-c571-4402-b8fd-e885d64e2c93"),
                             Apellido = "Martínez",
                             Dni = "789456123",
                             FechaAlta = new DateTime(2021, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -253,7 +261,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("8dc213b9-4990-4c93-8237-c45a975725ad"),
+                            IdPersonal = new Guid("99d70ae9-6506-4e06-ad72-925e65c8b895"),
                             Apellido = "Hernández",
                             Dni = "654123987",
                             FechaAlta = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -267,7 +275,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("34b500e4-67dd-4a97-8b6b-0c71805b91e0"),
+                            IdPersonal = new Guid("6fe91755-1404-42b9-9645-411f4eeaf491"),
                             Apellido = "Fernández",
                             Dni = "258963147",
                             FechaAlta = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -281,7 +289,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("f2488ffb-81fa-4db9-9460-ad33fdbea6a8"),
+                            IdPersonal = new Guid("9527b880-5fab-4c5b-b1fb-f8d53f803f8e"),
                             Apellido = "López",
                             Dni = "741852963",
                             FechaAlta = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -295,7 +303,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("7951fc17-1b43-4a08-8643-af09445ae8b2"),
+                            IdPersonal = new Guid("67d18743-b657-4289-b756-a238c3f7fe1d"),
                             Apellido = "Gómez",
                             Dni = "963852741",
                             FechaAlta = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -309,7 +317,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            IdPersonal = new Guid("824a4151-f41d-41ef-8705-c4167cf0df8f"),
+                            IdPersonal = new Guid("61bbfebf-958c-496c-ba6d-c38398afa981"),
                             Apellido = "Díaz",
                             Dni = "159357852",
                             FechaAlta = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -336,12 +344,70 @@ namespace Infraestructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Precio")
-                        .HasColumnType("double");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdPlatillo");
 
                     b.ToTable("Platillo", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            IdPlatillo = 1,
+                            Activado = true,
+                            Descripcion = "Ravioli de ricotta y espinacas con salsa de tomate",
+                            Precio = 1000m
+                        },
+                        new
+                        {
+                            IdPlatillo = 2,
+                            Activado = true,
+                            Descripcion = "milanesa a la napolitana",
+                            Precio = 3000m
+                        },
+                        new
+                        {
+                            IdPlatillo = 3,
+                            Activado = true,
+                            Descripcion = "Ceviche de camarón y pescado",
+                            Precio = 2800m
+                        },
+                        new
+                        {
+                            IdPlatillo = 4,
+                            Activado = true,
+                            Descripcion = "Costillas de cerdo a la barbacoa con salsa ahumada",
+                            Precio = 357m
+                        },
+                        new
+                        {
+                            IdPlatillo = 5,
+                            Activado = true,
+                            Descripcion = "Paella mixta de mariscos y pollo",
+                            Precio = 1890m
+                        },
+                        new
+                        {
+                            IdPlatillo = 6,
+                            Activado = true,
+                            Descripcion = "Salmón con verduras salteadas y arroz jazmín",
+                            Precio = 100m
+                        },
+                        new
+                        {
+                            IdPlatillo = 7,
+                            Activado = true,
+                            Descripcion = "Lasaña de carne y verduras con capas de pasta",
+                            Precio = 1200m
+                        },
+                        new
+                        {
+                            IdPlatillo = 8,
+                            Activado = true,
+                            Descripcion = "Pechuga de pollo rellena de queso de cabra ",
+                            Precio = 1500m
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Recibo", b =>
@@ -353,8 +419,8 @@ namespace Infraestructure.Migrations
                     b.Property<Guid>("IdDescuento")
                         .HasColumnType("char(36)");
 
-                    b.Property<double>("precioTotal")
-                        .HasColumnType("double");
+                    b.Property<decimal>("precioTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdRecibo");
 
