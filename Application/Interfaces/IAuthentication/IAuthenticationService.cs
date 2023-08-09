@@ -1,5 +1,5 @@
 ﻿using Application.Request;
-using Application.Response;
+using Application.Response.PersonalResponses;
 
 namespace Application.Interfaces.IAuthentication
 {

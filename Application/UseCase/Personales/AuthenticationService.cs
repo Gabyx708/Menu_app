@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IPersonal;
 using Application.Request;
-using Application.Response;
+using Application.Response.PersonalResponses;
 
 namespace Application.UseCase.Personales
 {

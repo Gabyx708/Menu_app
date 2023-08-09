@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPlatillo;
 using Application.Request;
-using Application.Response;
+using Application.Response.MenuPlatilloResponses;
 using Domain.Entities;
 
 namespace Application.UseCase.MenuPlatillos

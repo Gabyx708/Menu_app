@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IPersonal;
 using Application.Request;
-using Application.Response;
+using Application.Response.PersonalResponses;
 using Application.Tools.Encrypt;
 using Domain.Entities;
 

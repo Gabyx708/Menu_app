@@ -1,0 +1,27 @@
+﻿using Application.Interfaces.IPedido;
+using Application.Response;
+using Microsoft.AspNetCore.Mvc;
+
+namespace MenuApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PedidosController : ControllerBase
+    {
+        private IPedidoService _services;
+
+        public PedidosController(IPedidoService services)
+        {
+            _services = services;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PedidoGetResponse>), 200)]
+        public IActionResult ConsultarPedidos(Guid? idPersonal, DateTime? Desde, DateTime? Hasta, int? cantidad)
+        {
+            var pedidosConsultados = _services.PedidoFiltrado(idPersonal, Desde, Hasta, cantidad);
+            return Ok(pedidosConsultados);
+        }
+    }
+
+}

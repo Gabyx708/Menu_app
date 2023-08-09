@@ -157,7 +157,7 @@ namespace Application.UseCase.Pedidos
                     id = pedido.IdPedido,
                     Personal = pedido.IdPersonal,
                     Fecha = pedido.FechaDePedido,
-                    Recibo = pedido.IdRecibo
+                    Recibo = pedido.IdRecibo 
                 };
 
                 pedidosResponse.Add(nuevo);

@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Request;
-using Application.Response;
+using Application.Response.PedidoPorMenuPlatilloResponses;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

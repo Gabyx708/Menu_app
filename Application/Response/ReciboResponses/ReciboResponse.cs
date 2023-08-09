@@ -1,4 +1,4 @@
-﻿namespace Application.Response
+﻿namespace Application.Response.ReciboResponses
 {
     public class ReciboResponse
     {

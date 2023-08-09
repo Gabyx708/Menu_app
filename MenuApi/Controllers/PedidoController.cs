@@ -43,13 +43,5 @@ namespace MenuApi.Controllers
             return Ok(pedidoConsultado);
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<PedidoGetResponse>), 200)]
-        public IActionResult ConsularPedidos(Guid? idPersonal, DateTime? Desde,DateTime? Hasta,int? cantidad)
-        {
-
-            var pedidosConsultados = _services.PedidoFiltrado(idPersonal, Desde,Hasta, cantidad);
-            return Ok(pedidosConsultados);
-        }
     }
 }

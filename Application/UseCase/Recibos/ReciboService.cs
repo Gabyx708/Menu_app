@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IDescuento;
 using Application.Interfaces.IRecibo;
-using Application.Response;
+using Application.Response.ReciboResponses;
 using Domain.Entities;
 
 namespace Application.UseCase.Recibos

@@ -1,5 +1,5 @@
 ﻿using Application.Request;
-using Application.Response;
+using Application.Response.MenuResponses;
 
 namespace Application.Interfaces.IMenu
 {

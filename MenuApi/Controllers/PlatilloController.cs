@@ -1,6 +1,6 @@
 using Application.Interfaces.IPlatillo;
 using Application.Request;
-using Application.Response;
+using Application.Response.PlatilloResponses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers

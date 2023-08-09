@@ -1,4 +1,4 @@
-﻿using Application.Response;
+﻿using Application.Response.ReciboResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

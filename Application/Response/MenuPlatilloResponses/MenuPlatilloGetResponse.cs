@@ -1,4 +1,4 @@
-﻿namespace Application.Response
+﻿namespace Application.Response.MenuPlatilloResponses
 {
     public class MenuPlatilloGetResponse
     {

@@ -1,5 +1,5 @@
 ﻿using Application.Request;
-using Application.Response;
+using Application.Response.DescuentoResponse;
 
 namespace Application.Interfaces.IDescuento
 {

@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IMenu;
 using Application.Request;
-using Application.Response;
+using Application.Response.MenuResponses;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 

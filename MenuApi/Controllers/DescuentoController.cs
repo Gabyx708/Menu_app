@@ -1,6 +1,6 @@
 using Application.Interfaces.IDescuento;
 using Application.Request;
-using Application.Response;
+using Application.Response.DescuentoResponse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers

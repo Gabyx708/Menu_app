@@ -1,4 +1,4 @@
-﻿namespace Application.Response
+﻿namespace Application.Response.PedidoResponses
 {
     public class PedidoGetResponse
     {
