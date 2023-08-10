@@ -32,11 +32,7 @@ namespace Application.UseCase.Costos
         {
             List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(null, fecha, fecha, null);
 
-            if (pedidosDelDia.Count == 0)
-            {
-                return null;
-            }
-
+            int CantidadDePedidos = 0;
             decimal Costototal = 0;
             decimal CostototalDescuento = 0;
 
@@ -46,13 +42,15 @@ namespace Application.UseCase.Costos
                 decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
                 CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal,descuentoDelPedido) + CostototalDescuento;
                 Costototal = reciboDelPedido.precioTotal + Costototal;
+                CantidadDePedidos++;
             }
 
             return new CostoDiaResponse
             {
                 Fecha = fecha,
-                CostoconDescuento = CostototalDescuento,
-                CostosinDescuento = Costototal
+                CostoConDescuento = CostototalDescuento,
+                CostoSinDescuento = Costototal,
+                CantidadPedidos = CantidadDePedidos
             };
         }
 
