@@ -20,10 +20,26 @@ namespace MenuApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CostoDiaResponse), 200)]
-        public IActionResult GetDescuento(DateTime fecha)
+        public IActionResult GetCostoDia(DateTime fecha)
         {
-            var descuento = _services.GetCostosDia(fecha);
-            return new JsonResult(descuento) { StatusCode = 200 };
+            var costo = _services.GetCostosDia(fecha);
+            return new JsonResult(costo) { StatusCode = 200 };
+        }
+
+        [HttpGet("personal")]
+        [ProducesResponseType(typeof(CostoPersonalResponse), 200)]
+        public IActionResult GetCostosPersonal(DateTime fechaInicio,DateTime fechaFin,Guid idPersonal)
+        {
+            var costos = _services.GetCostosPersonal(fechaInicio, fechaFin, idPersonal);
+            return new JsonResult(costos) { StatusCode = 200 };
+        }
+
+        [HttpGet("periodo")]
+        [ProducesResponseType(typeof(CostoPeriodoResponse), 200)]
+        public IActionResult GetCostosPeriodo(DateTime fechaInicio,DateTime fechaFin)
+        {
+            var costosPeriodo = _services.GetCostosPeriodo(fechaInicio,fechaFin);
+            return new JsonResult(costosPeriodo) { StatusCode = 200 };
         }
     }
 }

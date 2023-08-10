@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IPedido;
+using Application.Interfaces.IPersonal;
 using Application.Interfaces.IRecibo;
 using Application.Response.CostoResponses;
 using Domain.Entities;
@@ -17,12 +18,14 @@ namespace Application.UseCase.Costos
         private readonly IPedidoQuery _pedidoQuery;
         private readonly IReciboQuery _reciboQuery;
         private readonly IDescuentoQuery _descuentoQuery;
+        private readonly IPersonalQuery _personalQuery;
 
-        public CostoService(IPedidoQuery pedidoQuery, IReciboQuery reciboQuery, IDescuentoQuery descuentoQuery)
+        public CostoService(IPedidoQuery pedidoQuery, IReciboQuery reciboQuery, IDescuentoQuery descuentoQuery, IPersonalQuery personalQuery)
         {
             _pedidoQuery = pedidoQuery;
             _reciboQuery = reciboQuery;
             _descuentoQuery = descuentoQuery;
+            _personalQuery = personalQuery;
         }
 
         public CostoDiaResponse GetCostosDia(DateTime fecha)
@@ -55,12 +58,66 @@ namespace Application.UseCase.Costos
 
         public CostoPeriodoResponse GetCostosPeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
-            throw new NotImplementedException();
+            List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(null, fechaInicio, fechaFin, null);
+
+            if (pedidosDelDia.Count == 0)
+            {
+                return null;
+            }
+
+            decimal Costototal = 0;
+            decimal CostototalDescuento = 0;
+
+            foreach (var pedido in pedidosDelDia)
+            {
+                Recibo reciboDelPedido = _reciboQuery.GetById(pedido.IdRecibo);
+                decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
+                CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal, descuentoDelPedido) + CostototalDescuento;
+                Costototal = reciboDelPedido.precioTotal + Costototal;
+            }
+
+            return new CostoPeriodoResponse
+            {
+                Inicio = fechaInicio,
+                Fin = fechaFin,
+                CostoTotal = Costototal,
+                TotalDescuentos =CostototalDescuento
+            };
         }
 
-        public CostoPersonalResponse GetCostosPersonal(DateTime fecha, Guid idPersonal)
-        {
-            throw new NotImplementedException();
+        public CostoPersonalResponse GetCostosPersonal(DateTime fechaInicio,DateTime fechaHasta, Guid idPersonal)
+        {   
+            Personal persona = _personalQuery.GetPersonalById(idPersonal);
+            List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(idPersonal, fechaInicio, fechaHasta, null);
+
+            if (pedidosDelDia.Count == 0)
+            {
+                return null;
+            }
+
+            decimal Costototal = 0;
+            decimal CostototalDescuento = 0;
+
+            foreach (var pedido in pedidosDelDia)
+            {
+                Recibo reciboDelPedido = _reciboQuery.GetById(pedido.IdRecibo);
+                decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
+                CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal, descuentoDelPedido) + CostototalDescuento;
+                Costototal = reciboDelPedido.precioTotal + Costototal;
+            }
+
+            return new CostoPersonalResponse
+            {
+                Id = idPersonal,
+                Nombre = persona.Nombre,
+                Apellido = persona.Apellido,
+                Dni = persona.Dni,
+                InicioPeriodo = fechaInicio,
+                FinPeriodo = fechaHasta,
+                CostoTotal = Costototal,
+                Descuento = CostototalDescuento
+                
+            };
         }
 
         private decimal CalcularDescuento(decimal total, decimal porcentaje)
