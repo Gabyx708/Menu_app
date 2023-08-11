@@ -58,10 +58,12 @@ namespace Application.UseCase.Pedidos
                     platillosDelMenu.Add(menuPlatilloResponse);
                 }
 
+                var personal = _personalService.GetPersonalById(pedido.IdPersonal);
+
                 return new PedidoResponse
                 {
                     idPedido = idPedido,
-                    Nombre = _personalService.GetPersonalById(pedido.IdPersonal).nombre,
+                    Nombre = personal.nombre+" "+personal.apellido,
                     fecha = pedido.FechaDePedido,
                     platillos = platillosDelMenu,
                     recibo = _reciboService.GetReciboById(pedido.IdRecibo)
