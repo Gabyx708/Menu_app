@@ -42,7 +42,7 @@ namespace MenuApi
 
             //Database
             var connectionString = builder.Configuration["ConnectionString"];
-            builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
+            builder.Services.AddDbContext<MenuAppContext>(options => options.UseNpgsql(connectionString));
 
             //Personal
             builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
