@@ -12,5 +12,7 @@ namespace Application.Response.CostoResponses
         public DateTime Fin { get; set; }
         public decimal CostoTotal { get; set; }
         public decimal TotalDescuentos { get; set; }
+        public int CantPedidos { get; set; }
+
     }
 }

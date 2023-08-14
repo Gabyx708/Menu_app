@@ -16,5 +16,6 @@ namespace Application.Response.CostoResponses
         public DateTime FinPeriodo { get; set; }
         public decimal CostoTotal { get; set; }
         public decimal Descuento { get; set; }
+        public int CantidadPedidos { get; set; }
     }
 }

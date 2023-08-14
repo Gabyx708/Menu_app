@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IMenuPlatillo;
+﻿using Application.Interfaces.IMenu;
+using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
@@ -8,6 +9,7 @@ using Application.Request;
 using Application.Response.MenuPlatilloResponses;
 using Application.Response.PedidoResponses;
 using Domain.Entities;
+using System.Linq.Expressions;
 
 namespace Application.UseCase.Pedidos
 {
@@ -21,7 +23,8 @@ namespace Application.UseCase.Pedidos
         private readonly IPlatilloService _platilloService;
         private readonly IReciboService _reciboService;
         private readonly IMenuPlatilloQuery _menuPlatilloQuery;
-        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery)
+        private readonly IMenuService _menuService;
+        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService)
         {
             _command = command;
             _query = query;
@@ -31,6 +34,7 @@ namespace Application.UseCase.Pedidos
             _platilloService = platilloService;
             _reciboService = reciboService;
             _menuPlatilloQuery = menuPlatilloQuery;
+            _menuService = menuService;
         }
 
         public PedidoResponse GetPedidoById(Guid idPedido)
@@ -91,10 +95,18 @@ namespace Application.UseCase.Pedidos
         public PedidoResponse HacerUnpedido(PedidoRequest request)
         {
             List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date,DateTime.Now.Date, 1);
+            var fechaActual = DateTime.Now;
+            var fechaCierreMenu = _menuService.GetUltimoMenu().fecha_cierre;
 
             if (existePedido.Count > 0) {
                 throw new InvalidOperationException();
             }
+
+            if(fechaActual < fechaCierreMenu)
+            {
+                throw new InvalidOperationException();
+            }
+
 
             decimal precioTotal = 0;
 

@@ -63,6 +63,7 @@ namespace Application.UseCase.Costos
                 return null;
             }
 
+            int CantPedidos = pedidosDelDia.Count;
             decimal Costototal = 0;
             decimal CostototalDescuento = 0;
 
@@ -79,7 +80,8 @@ namespace Application.UseCase.Costos
                 Inicio = fechaInicio,
                 Fin = fechaFin,
                 CostoTotal = Costototal,
-                TotalDescuentos =CostototalDescuento
+                TotalDescuentos =CostototalDescuento,
+                CantPedidos = CantPedidos
             };
         }
 
@@ -92,6 +94,8 @@ namespace Application.UseCase.Costos
             {
                 return null;
             }
+
+            int CantidadPedidos = pedidosDelDia.Count;
 
             decimal Costototal = 0;
             decimal CostototalDescuento = 0;
@@ -113,7 +117,8 @@ namespace Application.UseCase.Costos
                 InicioPeriodo = fechaInicio,
                 FinPeriodo = fechaHasta,
                 CostoTotal = Costototal,
-                Descuento = CostototalDescuento
+                Descuento = CostototalDescuento,
+                CantidadPedidos = CantidadPedidos
                 
             };
         }
