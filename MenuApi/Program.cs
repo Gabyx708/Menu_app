@@ -41,7 +41,7 @@ namespace MenuApi
             //custom
 
             //Database
-            var connectionString = builder.Configuration["ConnectionString"];
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             //Personal
@@ -119,7 +119,7 @@ namespace MenuApi
             }
 
             app.UseCors("AllowAll");
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

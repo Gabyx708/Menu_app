@@ -38,8 +38,8 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdDescuento = new Guid("9cee74a5-3e88-4769-9bd8-b74b15ad120c"),
-                            FechaInicioVigencia = new DateTime(2023, 8, 9, 13, 47, 14, 904, DateTimeKind.Local).AddTicks(3722),
+                            IdDescuento = new Guid("f9ed571c-94b2-41d5-8ecb-16096d915051"),
+                            FechaInicioVigencia = new DateTime(2023, 8, 15, 12, 5, 59, 282, DateTimeKind.Local).AddTicks(7992),
                             Porcentaje = 50m
                         });
                 });
@@ -188,143 +188,17 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdPersonal = new Guid("d01636e5-c6e0-4c4f-ab59-8f8a43d2c07c"),
-                            Apellido = "Pérez",
-                            Dni = "123456789",
+                            IdPersonal = new Guid("8d4614a4-07c9-4622-af68-08d7627f82fe"),
+                            Apellido = "Aker",
+                            Dni = "administrador",
                             FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaIngreso = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaNac = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "juanperez@example.com",
-                            Nombre = "Juan",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
+                            Mail = "sistemas@tecnaingenieria.com",
+                            Nombre = "Administrador",
+                            Password = "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d",
+                            Privilegio = 1,
                             Telefono = "1234567890"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("f8ea11eb-e2a1-47c3-8052-bd031ac7cd9d"),
-                            Apellido = "González",
-                            Dni = "987654321",
-                            FechaAlta = new DateTime(2021, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2021, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1988, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "mariagonzalez@example.com",
-                            Nombre = "María",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "0987654321"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("87f44a40-33af-4a45-96f6-f28f41b72f77"),
-                            Apellido = "López",
-                            Dni = "456789123",
-                            FechaAlta = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1995, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "carloslopez@example.com",
-                            Nombre = "Carlos",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "678912345"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("7ea258c3-3c61-4c61-a8d7-60013f45196b"),
-                            Apellido = "Ramírez",
-                            Dni = "321654987",
-                            FechaAlta = new DateTime(2020, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2020, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1992, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "anaramirez@example.com",
-                            Nombre = "Ana",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "543216549"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("892c9951-c571-4402-b8fd-e885d64e2c93"),
-                            Apellido = "Martínez",
-                            Dni = "789456123",
-                            FechaAlta = new DateTime(2021, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2021, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1985, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "pedromartinez@example.com",
-                            Nombre = "Pedro",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "987654321"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("99d70ae9-6506-4e06-ad72-925e65c8b895"),
-                            Apellido = "Hernández",
-                            Dni = "654123987",
-                            FechaAlta = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1991, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "laurahernandez@example.com",
-                            Nombre = "Laura",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "876543219"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("6fe91755-1404-42b9-9645-411f4eeaf491"),
-                            Apellido = "Fernández",
-                            Dni = "258963147",
-                            FechaAlta = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1987, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "diegofernandez@example.com",
-                            Nombre = "Diego",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "741852963"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("9527b880-5fab-4c5b-b1fb-f8d53f803f8e"),
-                            Apellido = "López",
-                            Dni = "741852963",
-                            FechaAlta = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1993, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "sofialopez@example.com",
-                            Nombre = "Sofía",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "369258147"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("67d18743-b657-4289-b756-a238c3f7fe1d"),
-                            Apellido = "Gómez",
-                            Dni = "963852741",
-                            FechaAlta = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1986, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "javiergomez@example.com",
-                            Nombre = "Javier",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "159357852"
-                        },
-                        new
-                        {
-                            IdPersonal = new Guid("61bbfebf-958c-496c-ba6d-c38398afa981"),
-                            Apellido = "Díaz",
-                            Dni = "159357852",
-                            FechaAlta = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1994, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "isabelladiaz@example.com",
-                            Nombre = "Isabella",
-                            Password = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-                            Privilegio = 2,
-                            Telefono = "852963741"
                         });
                 });
 
@@ -347,64 +221,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdPlatillo");
 
                     b.ToTable("Platillo", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdPlatillo = 1,
-                            Activado = true,
-                            Descripcion = "Ravioli de ricotta y espinacas con salsa de tomate",
-                            Precio = 1000m
-                        },
-                        new
-                        {
-                            IdPlatillo = 2,
-                            Activado = true,
-                            Descripcion = "milanesa a la napolitana",
-                            Precio = 3000m
-                        },
-                        new
-                        {
-                            IdPlatillo = 3,
-                            Activado = true,
-                            Descripcion = "Ceviche de camarón y pescado",
-                            Precio = 2800m
-                        },
-                        new
-                        {
-                            IdPlatillo = 4,
-                            Activado = true,
-                            Descripcion = "Costillas de cerdo a la barbacoa con salsa ahumada",
-                            Precio = 357m
-                        },
-                        new
-                        {
-                            IdPlatillo = 5,
-                            Activado = true,
-                            Descripcion = "Paella mixta de mariscos y pollo",
-                            Precio = 1890m
-                        },
-                        new
-                        {
-                            IdPlatillo = 6,
-                            Activado = true,
-                            Descripcion = "Salmón con verduras salteadas y arroz jazmín",
-                            Precio = 100m
-                        },
-                        new
-                        {
-                            IdPlatillo = 7,
-                            Activado = true,
-                            Descripcion = "Lasaña de carne y verduras con capas de pasta",
-                            Precio = 1200m
-                        },
-                        new
-                        {
-                            IdPlatillo = 8,
-                            Activado = true,
-                            Descripcion = "Pechuga de pollo rellena de queso de cabra ",
-                            Precio = 1500m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Recibo", b =>
