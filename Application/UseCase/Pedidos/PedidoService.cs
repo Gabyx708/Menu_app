@@ -102,7 +102,7 @@ namespace Application.UseCase.Pedidos
                 throw new InvalidOperationException();
             }
 
-            if(fechaActual < fechaCierreMenu)
+            if(fechaActual > fechaCierreMenu)
             {
                 throw new InvalidOperationException();
             }
