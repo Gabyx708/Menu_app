@@ -7,5 +7,6 @@ namespace Application.Interfaces.IPlatillo
         Platillo GetPlatilloById(int id);
 
         List<Platillo> GetAll();
+
     }
 }

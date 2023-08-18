@@ -9,5 +9,7 @@ namespace Application.Interfaces.IPlatillo
         PlatilloResponse CreatePlatillo(PlatilloRequest request);
         PlatilloResponse UpdatePrecio(int idPlatillo, decimal nuevoPrecio);
         List<PlatilloResponse> GetAll();
+
+        bool AlterarPreciosMasivamente(decimal precio);
     }
 }

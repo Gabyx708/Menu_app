@@ -27,7 +27,7 @@ namespace MenuApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PlatilloResponse), 200)]
-        public IActionResult GetPersonal(int id)
+        public IActionResult GetPLatillo(int id)
         {
             var platillo = _services.GetPlatilloById(id);
             return new JsonResult(platillo) { StatusCode = 200 };

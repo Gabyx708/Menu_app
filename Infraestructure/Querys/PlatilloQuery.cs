@@ -26,5 +26,6 @@ namespace Infraestructure.Querys
         {
             return _context.Platillos.ToList();
         }
+
     }
 }

@@ -78,5 +78,25 @@ namespace Application.UseCase.Platillos
                 activado = platilloActualizado.Activado
             };
         }
+
+        public bool AlterarPreciosMasivamente(decimal nuevoPrecio)
+        {
+            List<PlatilloResponse> todosLosPlatillos = GetAll();
+
+            foreach (var plato in todosLosPlatillos)
+            {
+                try
+                {
+                    UpdatePrecio(plato.id, nuevoPrecio);
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
     }
 }
