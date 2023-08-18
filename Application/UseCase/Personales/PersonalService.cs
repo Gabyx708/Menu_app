@@ -88,7 +88,23 @@ namespace Application.UseCase.Personales
 
         public PersonalResponse UpdatePersonal(Guid personalId, PersonalRequest personal)
         {
-            throw new NotImplementedException();
+
+            var personalCambiado = new Personal
+            {
+                Nombre = personal.nombre,
+                Apellido = personal.apellido,
+                Dni = personal.dni,
+                FechaNac = personal.fecha_nacimiento,
+                FechaIngreso = personal.fecha_ingreso,
+                Mail = personal.mail,
+                Telefono = personal.telefono,
+                Privilegio = personal.privilegio
+
+            };
+
+            _command.updatePersonal(personalId,personalCambiado);
+
+            return GetPersonalById(personalId);
         }
     }
 }

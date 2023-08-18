@@ -57,5 +57,13 @@ namespace MenuApi.Controllers
 
             return new JsonResult(personal) { StatusCode = 200 };
         }
+
+        [HttpPatch("{id}")]
+        public IActionResult AlterarPersonal(Guid id,PersonalRequest request)
+        {
+            var personalAlterado = _services.UpdatePersonal(id, request);
+
+            return Ok(personalAlterado);
+        }
     }
 }

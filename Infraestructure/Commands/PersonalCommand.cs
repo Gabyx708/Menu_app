@@ -22,16 +22,15 @@ namespace Infraestructure.Commands
 
         public Personal updatePersonal(Guid idPersonal, Personal personal)
         {
-            Personal personalOriginal = _context.Personales.Single(p => p.IdPersonal == idPersonal);
+            var personalOriginal = _context.Personales.Single(p => p.IdPersonal == idPersonal);
 
             personalOriginal.Nombre = personal.Nombre;
+            personalOriginal.Apellido = personal.Apellido;
             personalOriginal.Mail = personal.Mail;
             personalOriginal.Telefono = personal.Telefono;
             personalOriginal.Privilegio = personal.Privilegio;
 
-            _context.Update<Personal>(personalOriginal);
             _context.SaveChanges();
-
             return _context.Personales.Single(p => p.IdPersonal == personalOriginal.IdPersonal);
         }
     }

@@ -43,5 +43,12 @@ namespace MenuApi.Controllers
             return Ok(pedidoConsultado);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeletePedido(Guid id)
+        {
+            var pedidoEliminado = _services.EliminarPedido(id);
+            return new JsonResult(pedidoEliminado);
+        }
+
     }
 }
