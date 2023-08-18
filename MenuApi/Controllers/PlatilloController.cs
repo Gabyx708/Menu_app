@@ -17,13 +17,6 @@ namespace MenuApi.Controllers
         }
 
 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<PlatilloResponse>), 200)]
-        public IActionResult GetAll()
-        {
-            var platillos = _services.GetAll();
-            return new JsonResult(platillos) { StatusCode = 200 };
-        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PlatilloResponse), 200)]
