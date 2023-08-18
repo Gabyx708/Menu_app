@@ -17,5 +17,6 @@
         public string Password { get; set; }
 
         public ICollection<Pedido> Pedidos { get; set; }
+        public ICollection<Pago> pagos { get; set; }
     }
 }

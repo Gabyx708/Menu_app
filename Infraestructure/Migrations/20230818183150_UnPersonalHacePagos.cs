@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class mariaBDproduccion : Migration
+    public partial class UnPersonalHacePagos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -83,22 +83,23 @@ namespace Infraestructure.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Recibo",
+                name: "Pagos",
                 columns: table => new
                 {
-                    IdRecibo = table.Column<Guid>(type: "char(36)", nullable: false),
-                    IdDescuento = table.Column<Guid>(type: "char(36)", nullable: false),
-                    precioTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    NumeroPago = table.Column<string>(type: "varchar(255)", nullable: false, comment: "Número de pago formateado con ceros a la izquierda"),
+                    idPersonal = table.Column<Guid>(type: "char(36)", nullable: false),
+                    FechaPago = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    MontoPagado = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recibo", x => x.IdRecibo);
+                    table.PrimaryKey("PK_Pagos", x => x.NumeroPago);
                     table.ForeignKey(
-                        name: "FK_Recibo_Descuento_IdDescuento",
-                        column: x => x.IdDescuento,
-                        principalTable: "Descuento",
-                        principalColumn: "IdDescuento",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_Pagos_Personal_idPersonal",
+                        column: x => x.idPersonal,
+                        principalTable: "Personal",
+                        principalColumn: "IdPersonal",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -128,6 +129,32 @@ namespace Infraestructure.Migrations
                         principalTable: "Platillo",
                         principalColumn: "IdPlatillo",
                         onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Recibo",
+                columns: table => new
+                {
+                    IdRecibo = table.Column<Guid>(type: "char(36)", nullable: false),
+                    IdDescuento = table.Column<Guid>(type: "char(36)", nullable: false),
+                    precioTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NumeroPago = table.Column<string>(type: "varchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recibo", x => x.IdRecibo);
+                    table.ForeignKey(
+                        name: "FK_Recibo_Descuento_IdDescuento",
+                        column: x => x.IdDescuento,
+                        principalTable: "Descuento",
+                        principalColumn: "IdDescuento",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Recibo_Pagos_NumeroPago",
+                        column: x => x.NumeroPago,
+                        principalTable: "Pagos",
+                        principalColumn: "NumeroPago");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -183,16 +210,6 @@ namespace Infraestructure.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.InsertData(
-                table: "Descuento",
-                columns: new[] { "IdDescuento", "FechaInicioVigencia", "Porcentaje" },
-                values: new object[] { new Guid("f9ed571c-94b2-41d5-8ecb-16096d915051"), new DateTime(2023, 8, 15, 12, 5, 59, 282, DateTimeKind.Local).AddTicks(7992), 50m });
-
-            migrationBuilder.InsertData(
-                table: "Personal",
-                columns: new[] { "IdPersonal", "Apellido", "Dni", "FechaAlta", "FechaIngreso", "FechaNac", "Mail", "Nombre", "Password", "Privilegio", "Telefono" },
-                values: new object[] { new Guid("8d4614a4-07c9-4622-af68-08d7627f82fe"), "Aker", "administrador", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "sistemas@tecnaingenieria.com", "Administrador", "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d", 1, "1234567890" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_MenuPlatillo_IdMenu",
                 table: "MenuPlatillo",
@@ -202,6 +219,11 @@ namespace Infraestructure.Migrations
                 name: "IX_MenuPlatillo_IdPlatillo",
                 table: "MenuPlatillo",
                 column: "IdPlatillo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pagos_idPersonal",
+                table: "Pagos",
+                column: "idPersonal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedido_IdPersonal",
@@ -222,6 +244,11 @@ namespace Infraestructure.Migrations
                 name: "IX_Recibo_IdDescuento",
                 table: "Recibo",
                 column: "IdDescuento");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recibo_NumeroPago",
+                table: "Recibo",
+                column: "NumeroPago");
         }
 
         /// <inheritdoc />
@@ -243,13 +270,16 @@ namespace Infraestructure.Migrations
                 name: "Platillo");
 
             migrationBuilder.DropTable(
-                name: "Personal");
-
-            migrationBuilder.DropTable(
                 name: "Recibo");
 
             migrationBuilder.DropTable(
                 name: "Descuento");
+
+            migrationBuilder.DropTable(
+                name: "Pagos");
+
+            migrationBuilder.DropTable(
+                name: "Personal");
         }
     }
 }

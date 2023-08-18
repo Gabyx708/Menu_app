@@ -22,6 +22,7 @@ namespace Infraestructure.Persistence
         public DbSet<MenuPlatillo> MenuPlatillos { get; set; }
         public DbSet<Platillo> Platillos { get; set; }
         public DbSet<Menu> Menues { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
 
 
         //config
@@ -35,10 +36,11 @@ namespace Infraestructure.Persistence
             modelBuilder.ApplyConfiguration(new ReciboConfig());
             modelBuilder.ApplyConfiguration(new MenuConfig());
             modelBuilder.ApplyConfiguration(new PlatilloConfig());
+            modelBuilder.ApplyConfiguration(new PagoConfig());
 
             //test data
-              modelBuilder.ApplyConfiguration(new AdministradorTest());
-              modelBuilder.ApplyConfiguration(new DescuentoTest());
+             // modelBuilder.ApplyConfiguration(new AdministradorTest());
+             // modelBuilder.ApplyConfiguration(new DescuentoTest());
             //modelBuilder.ApplyConfiguration(new PlatilloTest());
         }
     }

@@ -1,0 +1,39 @@
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infraestructure.Config
+{
+    public class PagoConfig : IEntityTypeConfiguration<Pago>
+    {
+        public void Configure(EntityTypeBuilder<Pago> builder)
+        {
+            long result;
+
+            builder.ToTable("Pagos");
+            builder.HasKey(p => p.NumeroPago);
+
+            builder.Property(p => p.NumeroPago)
+          .ValueGeneratedOnAdd()
+          .HasConversion(
+              v => v.ToString("0000000"), // Formato con ceros a la izquierda
+              v => long.TryParse(v, out  result) ? result : 0)
+          .HasComment("Número de pago formateado con ceros a la izquierda");
+
+
+            builder.HasMany(p => p.Recibos)
+           .WithOne(r => r.pago)
+           .HasForeignKey(r => r.NumeroPago);
+
+            // Relación uno a muchos con Personal
+            builder.HasOne(p => p.Personal)
+                .WithMany(p => p.pagos) // Propiedad de navegación en Personal
+                .HasForeignKey(p => p.idPersonal);
+        }
+    }
+}

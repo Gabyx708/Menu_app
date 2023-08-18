@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(MenuAppContext))]
-    [Migration("20230815150559_mariaBD-produccion")]
-    partial class mariaBDproduccion
+    [Migration("20230818183150_UnPersonalHacePagos")]
+    partial class UnPersonalHacePagos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,14 +37,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdDescuento");
 
                     b.ToTable("Descuento", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdDescuento = new Guid("f9ed571c-94b2-41d5-8ecb-16096d915051"),
-                            FechaInicioVigencia = new DateTime(2023, 8, 15, 12, 5, 59, 282, DateTimeKind.Local).AddTicks(7992),
-                            Porcentaje = 50m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Menu", b =>
@@ -95,6 +87,29 @@ namespace Infraestructure.Migrations
                     b.HasIndex("IdPlatillo");
 
                     b.ToTable("MenuPlatillo", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Pago", b =>
+                {
+                    b.Property<string>("NumeroPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(255)")
+                        .HasComment("Número de pago formateado con ceros a la izquierda");
+
+                    b.Property<DateTime>("FechaPago")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("MontoPagado")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("idPersonal")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("NumeroPago");
+
+                    b.HasIndex("idPersonal");
+
+                    b.ToTable("Pagos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Pedido", b =>
@@ -187,22 +202,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdPersonal");
 
                     b.ToTable("Personal", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdPersonal = new Guid("8d4614a4-07c9-4622-af68-08d7627f82fe"),
-                            Apellido = "Aker",
-                            Dni = "administrador",
-                            FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "sistemas@tecnaingenieria.com",
-                            Nombre = "Administrador",
-                            Password = "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d",
-                            Privilegio = 1,
-                            Telefono = "1234567890"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Platillo", b =>
@@ -235,12 +234,17 @@ namespace Infraestructure.Migrations
                     b.Property<Guid>("IdDescuento")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("NumeroPago")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<decimal>("precioTotal")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdRecibo");
 
                     b.HasIndex("IdDescuento");
+
+                    b.HasIndex("NumeroPago");
 
                     b.ToTable("Recibo", (string)null);
                 });
@@ -262,6 +266,17 @@ namespace Infraestructure.Migrations
                     b.Navigation("Menu");
 
                     b.Navigation("Platillo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Pago", b =>
+                {
+                    b.HasOne("Domain.Entities.Personal", "Personal")
+                        .WithMany("pagos")
+                        .HasForeignKey("idPersonal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personal");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pedido", b =>
@@ -310,7 +325,13 @@ namespace Infraestructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Pago", "pago")
+                        .WithMany("Recibos")
+                        .HasForeignKey("NumeroPago");
+
                     b.Navigation("descuento");
+
+                    b.Navigation("pago");
                 });
 
             modelBuilder.Entity("Domain.Entities.Descuento", b =>
@@ -328,6 +349,11 @@ namespace Infraestructure.Migrations
                     b.Navigation("PedidosPorMenuPlatillo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Pago", b =>
+                {
+                    b.Navigation("Recibos");
+                });
+
             modelBuilder.Entity("Domain.Entities.Pedido", b =>
                 {
                     b.Navigation("PedidosPorMenuPlatillo");
@@ -336,6 +362,8 @@ namespace Infraestructure.Migrations
             modelBuilder.Entity("Domain.Entities.Personal", b =>
                 {
                     b.Navigation("Pedidos");
+
+                    b.Navigation("pagos");
                 });
 
             modelBuilder.Entity("Domain.Entities.Platillo", b =>
