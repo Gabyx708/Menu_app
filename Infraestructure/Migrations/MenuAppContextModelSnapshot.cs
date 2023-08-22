@@ -88,13 +88,15 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Pago", b =>
                 {
-                    b.Property<string>("NumeroPago")
+                    b.Property<long>("NumeroPago")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)")
-                        .HasComment("Número de pago formateado con ceros a la izquierda");
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsAnulado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("MontoPagado")
                         .HasColumnType("decimal(18,2)");
@@ -231,8 +233,8 @@ namespace Infraestructure.Migrations
                     b.Property<Guid>("IdDescuento")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("NumeroPago")
-                        .HasColumnType("varchar(255)");
+                    b.Property<long?>("NumeroPago")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("precioTotal")
                         .HasColumnType("decimal(18,2)");

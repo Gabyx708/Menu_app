@@ -19,11 +19,7 @@ namespace Infraestructure.Config
             builder.HasKey(p => p.NumeroPago);
 
             builder.Property(p => p.NumeroPago)
-          .ValueGeneratedOnAdd()
-          .HasConversion(
-              v => v.ToString("0000000"), // Formato con ceros a la izquierda
-              v => long.TryParse(v, out  result) ? result : 0)
-          .HasComment("Número de pago formateado con ceros a la izquierda");
+            .ValueGeneratedOnAdd();
 
 
             builder.HasMany(p => p.Recibos)

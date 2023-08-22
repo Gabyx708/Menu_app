@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.IPagos;
+using Application.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,14 @@ namespace MenuApi.Controllers
         public PagoController(IPagoService services)
         {
             _services = services;
+        }
+
+        [HttpPost]
+        public IActionResult RegistrarUnPago(PagoRequest request)
+        {
+            var result = _services.HacerUnPago(request);
+
+            return new JsonResult(result);
         }
     }
 }

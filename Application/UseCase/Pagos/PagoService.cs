@@ -47,20 +47,22 @@ namespace Application.UseCase.Pagos
 
         public PagoResponse HacerUnPago(PagoRequest request)
         {
-            Pago nuevo = new Pago();
-            nuevo.idPersonal = request.idPersonal;
-            nuevo.FechaPago = DateTime.Now;
+            Pago nuevoPago = new Pago();
+            nuevoPago.Recibos = new List<Recibo>();
+
+            nuevoPago.idPersonal = request.idPersonal;
+            nuevoPago.FechaPago = DateTime.Now;
 
             foreach (var recibo in request.Recibos)
             {
                 var reciboAsignado = new Recibo();
                 reciboAsignado.IdRecibo = recibo;
-                nuevo.Recibos.Add(reciboAsignado);
+                nuevoPago.Recibos.Add(reciboAsignado);
             }
 
-            _command.InsertPago(nuevo);
+            _command.InsertPago(nuevoPago);
 
-            return GetPagoResponseById(nuevo.NumeroPago);
+            return GetPagoResponseById(nuevoPago.NumeroPago);
         }
 
         public PagoResponse ModificarAnulacion(long NumeroPago, bool IsAnulado)

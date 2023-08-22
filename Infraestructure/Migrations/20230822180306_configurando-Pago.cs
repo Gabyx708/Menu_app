@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UnPersonalHacePagos : Migration
+    public partial class configurandoPago : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,10 +86,12 @@ namespace Infraestructure.Migrations
                 name: "Pagos",
                 columns: table => new
                 {
-                    NumeroPago = table.Column<string>(type: "varchar(255)", nullable: false, comment: "Número de pago formateado con ceros a la izquierda"),
+                    NumeroPago = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     idPersonal = table.Column<Guid>(type: "char(36)", nullable: false),
                     FechaPago = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    MontoPagado = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    MontoPagado = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsAnulado = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,7 +141,7 @@ namespace Infraestructure.Migrations
                     IdRecibo = table.Column<Guid>(type: "char(36)", nullable: false),
                     IdDescuento = table.Column<Guid>(type: "char(36)", nullable: false),
                     precioTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NumeroPago = table.Column<string>(type: "varchar(255)", nullable: true)
+                    NumeroPago = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {

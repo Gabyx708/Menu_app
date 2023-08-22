@@ -3,6 +3,7 @@ using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
+using Application.Interfaces.IPagos;
 using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
@@ -12,6 +13,7 @@ using Application.UseCase.Costos;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
 using Application.UseCase.MenuPlatillos;
+using Application.UseCase.Pagos;
 using Application.UseCase.PedidoPorMenuPlatillos;
 using Application.UseCase.Pedidos;
 using Application.UseCase.Personales;
@@ -90,6 +92,12 @@ namespace MenuApi
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();
+
+            //Pagos
+            builder.Services.AddScoped<IPagoQuery, PagoQuery>();
+            builder.Services.AddScoped<IPagoCommand, PagoCommand>();
+            builder.Services.AddScoped<IPagoService, PagoService>();
+
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>
