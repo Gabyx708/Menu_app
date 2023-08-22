@@ -1,0 +1,43 @@
+﻿using Application.Interfaces.IPagos;
+using Domain.Entities;
+using Infraestructure.Persistence;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infraestructure.Querys
+{
+    public class PagoQuery : IPagoQuery
+    {
+        private readonly MenuAppContext _context;
+
+        public PagoQuery(MenuAppContext context)
+        {
+            _context = context;
+        }
+
+        public List<Pago> GetAllPagos()
+        {
+            return _context.Pagos.ToList();
+        }
+
+        public Pago GetPagoById(long NPago)
+        {
+            var pago = _context.Pagos.FirstOrDefault(p => p.NumeroPago == NPago);
+
+            if(pago == null) { return null; }
+
+            return null;
+        }
+
+        public List<Pago> GetPagoFiltrado(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            List<Pago> pagosFiltrados = _context.Pagos.Where(p => p.FechaPago.Date >= fechaDesde.Date && p.FechaPago <= fechaHasta.Date)
+                                        .ToList();
+
+            return pagosFiltrados;
+        }
+    }
+}
