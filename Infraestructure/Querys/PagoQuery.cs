@@ -29,7 +29,9 @@ namespace Infraestructure.Querys
 
             if(pago == null) { return null; }
 
-            return null;
+            pago.Recibos = _context.Recibos.Where(r => r.NumeroPago == NPago).ToList();
+
+            return pago;
         }
 
         public List<Pago> GetPagoFiltrado(DateTime fechaDesde, DateTime fechaHasta)

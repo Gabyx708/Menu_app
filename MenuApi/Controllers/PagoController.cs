@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IPagos;
 using Application.Request;
+using Application.Response.PagoResponses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,19 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(PagoResponse), 201)]
         public IActionResult RegistrarUnPago(PagoRequest request)
         {
             var result = _services.HacerUnPago(request);
+
+            return new JsonResult(result) { StatusCode = 201};
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PagoResponse), 200)]
+        public IActionResult ConsultarPago(long id)
+        {
+            var result = _services.GetPagoResponseById(id);
 
             return new JsonResult(result);
         }

@@ -13,23 +13,25 @@ namespace Infraestructure.Commands
             _context = context;
         }
 
-        public Pago InsertPago(Pago NuevoPago)
-        {   
+        public Pago InsertPago(Pago NuevoPago, List<Guid> idRecibos)
+        {
             _context.Add(NuevoPago);
+            _context.SaveChanges(); // Guardar el pago en la base de datos
 
-            foreach (var recibo in NuevoPago.Recibos)
+            foreach (var recibo in idRecibos)
             {
-               var reciboEncontrado = _context.Recibos.FirstOrDefault(r => r.IdRecibo == recibo.IdRecibo);
+                var reciboEncontrado = _context.Recibos.FirstOrDefault(r => r.IdRecibo == recibo);
 
-                if(reciboEncontrado == null) { return null; }
+                if (reciboEncontrado == null) { return null; }
 
                 reciboEncontrado.NumeroPago = NuevoPago.NumeroPago;
                 _context.Update(reciboEncontrado);
             }
 
-            _context.SaveChanges();
+            _context.SaveChanges(); // Actualizar los recibos con el número de pago
             return NuevoPago;
         }
+
 
         public Pago ModificarEstadoAnulado(long NPago, bool estadoAnulado)
         {

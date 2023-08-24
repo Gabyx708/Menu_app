@@ -35,32 +35,31 @@ namespace Application.UseCase.Pagos
             string nombrePersonal = personalDelPago.Nombre +" "+personalDelPago.Apellido;
             string dniPersonal = personalDelPago.Dni;
 
+            List<Guid> idRecibos = new List<Guid>();
+
+            foreach (var reciboId in pagoRecuperado.Recibos)
+            {
+                idRecibos.Add(reciboId.IdRecibo);
+            }
+
             return new PagoResponse
             {
                 NumeroPago = pagoRecuperado.NumeroPago,
                 NombreRegistrador = nombrePersonal,
                 DniRegistrador = dniPersonal,
                 Fecha = pagoRecuperado.FechaPago,
-                Pedidos = null
+                Recibos = idRecibos
             };
         }
 
         public PagoResponse HacerUnPago(PagoRequest request)
         {
             Pago nuevoPago = new Pago();
-            nuevoPago.Recibos = new List<Recibo>();
-
             nuevoPago.idPersonal = request.idPersonal;
             nuevoPago.FechaPago = DateTime.Now;
 
-            foreach (var recibo in request.Recibos)
-            {
-                var reciboAsignado = new Recibo();
-                reciboAsignado.IdRecibo = recibo;
-                nuevoPago.Recibos.Add(reciboAsignado);
-            }
 
-            _command.InsertPago(nuevoPago);
+            _command.InsertPago(nuevoPago,request.Recibos);
 
             return GetPagoResponseById(nuevoPago.NumeroPago);
         }

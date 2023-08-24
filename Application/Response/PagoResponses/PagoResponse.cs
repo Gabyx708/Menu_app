@@ -12,7 +12,7 @@ namespace Application.Response.PagoResponses
         public DateTime Fecha { get; set; }
         public string NombreRegistrador { get; set; }
         public string DniRegistrador { get; set; }
-         public List<Guid>? Pedidos { get; set; }
+         public List<Guid>? Recibos { get; set; }
 
     }
 }
