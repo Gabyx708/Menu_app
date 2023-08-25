@@ -28,9 +28,15 @@ namespace MenuApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PagoResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public IActionResult ConsultarPago(long id)
         {
             var result = _services.GetPagoResponseById(id);
+
+            if(result == null)
+            {
+                return NotFound();
+            }
 
             return new JsonResult(result);
         }

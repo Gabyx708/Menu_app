@@ -48,7 +48,8 @@ namespace Application.UseCase.Pagos
                 NombreRegistrador = nombrePersonal,
                 DniRegistrador = dniPersonal,
                 Fecha = pagoRecuperado.FechaPago,
-                Recibos = idRecibos
+                Recibos = idRecibos,
+                Monto = pagoRecuperado.MontoPagado
             };
         }
 

@@ -15,6 +15,7 @@ namespace Infraestructure.Commands
 
         public Pago InsertPago(Pago NuevoPago, List<Guid> idRecibos)
         {
+            decimal montoPagado = 0;
             _context.Add(NuevoPago);
             _context.SaveChanges(); // Guardar el pago en la base de datos
 
@@ -24,10 +25,12 @@ namespace Infraestructure.Commands
 
                 if (reciboEncontrado == null) { return null; }
 
+                montoPagado = montoPagado + reciboEncontrado.precioTotal;
                 reciboEncontrado.NumeroPago = NuevoPago.NumeroPago;
                 _context.Update(reciboEncontrado);
             }
 
+            NuevoPago.MontoPagado = montoPagado;
             _context.SaveChanges(); // Actualizar los recibos con el número de pago
             return NuevoPago;
         }
