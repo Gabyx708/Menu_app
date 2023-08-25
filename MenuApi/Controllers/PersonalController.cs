@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IPersonal;
-using Application.Request;
+using Application.Request.PersonalRequests;
+using Application.Request.UsuarioLoginRequests;
 using Application.Response.PersonalResponses;
 using Microsoft.AspNetCore.Mvc;
 

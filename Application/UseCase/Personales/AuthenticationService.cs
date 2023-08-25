@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IPersonal;
-using Application.Request;
+using Application.Request.UsuarioLoginRequests;
 using Application.Response.PersonalResponses;
 
 namespace Application.UseCase.Personales

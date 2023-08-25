@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.IPedido;
-using Application.Request;
+using Application.Request.PedidoRequests;
 using Application.Response.PedidoResponses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.DescuestoRequests;
 using Application.Response.DescuentoResponse;
 
 namespace Application.Interfaces.IDescuento

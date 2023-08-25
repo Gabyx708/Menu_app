@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.MenuRequests;
 using Application.Response.MenuResponses;
 
 namespace Application.Interfaces.IMenu

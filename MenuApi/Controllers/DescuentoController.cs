@@ -1,5 +1,5 @@
 using Application.Interfaces.IDescuento;
-using Application.Request;
+using Application.Request.DescuestoRequests;
 using Application.Response.DescuentoResponse;
 using Microsoft.AspNetCore.Mvc;
 

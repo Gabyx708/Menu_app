@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
 
 namespace Application.Interfaces.IPagos

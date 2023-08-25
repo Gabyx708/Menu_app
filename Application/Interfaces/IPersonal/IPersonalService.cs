@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.PersonalRequests;
 using Application.Response.PersonalResponses;
 
 namespace Application.Interfaces.IPersonal

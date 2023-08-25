@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.PedidoRequests;
 using Application.Response.PedidoResponses;
 using System;
 using System.Collections.Generic;

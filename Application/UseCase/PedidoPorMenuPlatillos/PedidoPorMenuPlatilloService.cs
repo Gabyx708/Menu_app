@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.IPedidoPorMenuPlatillo;
-using Application.Request;
+using Application.Request.PedidoRequests;
 using Application.Response.PedidoPorMenuPlatilloResponses;
 using Domain.Entities;
 using System;

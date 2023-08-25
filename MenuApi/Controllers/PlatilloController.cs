@@ -1,5 +1,5 @@
 using Application.Interfaces.IPlatillo;
-using Application.Request;
+using Application.Request.PlatilloRequests;
 using Application.Response.PlatilloResponses;
 using Microsoft.AspNetCore.Mvc;
 

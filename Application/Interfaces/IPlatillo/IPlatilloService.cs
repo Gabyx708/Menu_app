@@ -1,4 +1,4 @@
-﻿using Application.Request;
+﻿using Application.Request.PlatilloRequests;
 using Application.Response.PlatilloResponses;
 
 namespace Application.Interfaces.IPlatillo
