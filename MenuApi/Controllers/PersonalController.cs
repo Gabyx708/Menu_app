@@ -39,7 +39,6 @@ namespace MenuApi.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(PersonalResponse), 201)]
-        [ProducesResponseType(typeof(BadRequestResult), 400)]
         public IActionResult CreatePersonal(PersonalRequest request)
         {
             var personalNuevo = _services.createPersonal(request);
@@ -48,7 +47,7 @@ namespace MenuApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PersonalResponse), 200)]
-        [ProducesResponseType(typeof(NotFoundObjectResult), 404)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public IActionResult GetPersonal(Guid id)
         {
             var personal = _services.GetPersonalById(id);

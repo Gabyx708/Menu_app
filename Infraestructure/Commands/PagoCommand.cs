@@ -43,6 +43,18 @@ namespace Infraestructure.Commands
             if (pagoOriginal == null) { return null; }
 
             pagoOriginal.IsAnulado = estadoAnulado;
+
+            if(estadoAnulado == true) 
+            {
+                var recibosDeEsePago = _context.Recibos.Where(r => r.NumeroPago == NPago).ToList();
+
+                foreach (var recibo in recibosDeEsePago)
+                {
+                    recibo.NumeroPago = null;
+                }
+            }
+
+
             _context.Update(pagoOriginal);
             _context.SaveChanges();
             return pagoOriginal;

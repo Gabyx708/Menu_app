@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.IPagos;
 using Application.Interfaces.IPersonal;
-using Application.Request;
+using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
 using Domain.Entities;
 using System;
@@ -67,7 +67,11 @@ namespace Application.UseCase.Pagos
 
         public PagoResponse ModificarAnulacion(long NumeroPago, bool IsAnulado)
         {
-            throw new NotImplementedException();
+          var pagoModificado =  _command.ModificarEstadoAnulado(NumeroPago, IsAnulado);
+
+            if(pagoModificado == null) { return null; }
+
+            return GetPagoResponseById(pagoModificado.NumeroPago);
         }
 
         public List<PagoResponse> ObtenerPagosFiltrados(DateTime fechaDesde, DateTime fechaHasta)

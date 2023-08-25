@@ -1,8 +1,9 @@
 ﻿using Application.Interfaces.IPagos;
-using Application.Request;
+using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi.Controllers
 {
@@ -39,6 +40,16 @@ namespace MenuApi.Controllers
             }
 
             return new JsonResult(result);
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult AnularPago(long id, PagoAnularRequest request)
+        {
+            var result = _services.ModificarAnulacion(id, request.IsAnulado);
+
+            if(result == null) { return NotFound(); }
+
+            return NoContent();
         }
     }
 }
