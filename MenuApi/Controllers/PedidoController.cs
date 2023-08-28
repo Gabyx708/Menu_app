@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IPedido;
 using Application.Request.PedidoRequests;
+using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,16 @@ namespace MenuApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletePedido(Guid id)
         {
-            var pedidoEliminado = _services.EliminarPedido(id);
+            PedidoResponse pedidoEliminado = new PedidoResponse();
+            try
+            {
+                pedidoEliminado = _services.EliminarPedido(id);
+            }
+            catch (InvalidOperationException)
+            {
+                return new JsonResult(new SystemResponse { Message = "fecha excedida", StatusCode = 409 });
+            }
+             
             return new JsonResult(pedidoEliminado);
         }
 

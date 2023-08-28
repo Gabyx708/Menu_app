@@ -29,6 +29,14 @@ namespace Infraestructure.Commands
 
             if (found != null)
             {
+                var pedidosPorMenuPlatillo = _context.PedidosPorMenuPlatillo.Where(pmp => pmp.IdPedido == found.IdPedido).ToList();
+
+                foreach (var MenuPlatillo in pedidosPorMenuPlatillo)
+                {
+                   var menuPlatilloModificar = _context.MenuPlatillos.FirstOrDefault(mp => mp.IdMenuPlatillo == MenuPlatillo.IdMenuPlatillo);
+                    menuPlatilloModificar.Solicitados = menuPlatilloModificar.Solicitados - 1;
+                }
+
                 _context.Remove(found);
                 _context.SaveChanges();
                 _reciboCommand.EliminarRecibo(found.IdRecibo);

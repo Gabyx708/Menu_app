@@ -84,6 +84,15 @@ namespace Application.UseCase.Pedidos
 
             if (found != null)
             {
+               Guid idMenuPlatilloPrimero = found.PedidosPorMenuPlatillo[0].IdMenuPlatillo;
+               DateTime fechaCierreMenu = _menuPlatilloQuery.GetById(idMenuPlatilloPrimero).Menu.FechaCierre;
+               DateTime fechaActual = DateTime.Now;
+
+                if (fechaActual > fechaCierreMenu)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 _command.DeletePedido(idPedido);
                 return auxResponse;
             }

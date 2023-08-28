@@ -9,5 +9,6 @@ namespace Application.Interfaces.IPagos
         PagoResponse HacerUnPago(PagoRequest request);
         PagoResponse ModificarAnulacion(long NumeroPago, bool IsAnulado);
         List<PagoResponse> ObtenerPagosFiltrados(DateTime fechaDesde, DateTime fechaHasta);
+        List<PagoResponse> GetAll();
     }
 }

@@ -29,6 +29,8 @@ namespace Infraestructure.Commands
             personalOriginal.Mail = personal.Mail;
             personalOriginal.Telefono = personal.Telefono;
             personalOriginal.Privilegio = personal.Privilegio;
+            personalOriginal.FechaIngreso = personal.FechaIngreso;
+            personalOriginal.FechaNac = personal.FechaNac;
 
             _context.SaveChanges();
             return _context.Personales.Single(p => p.IdPersonal == personalOriginal.IdPersonal);

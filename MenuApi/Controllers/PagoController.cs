@@ -43,9 +43,10 @@ namespace MenuApi.Controllers
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(NoContentResult),204)]
         public IActionResult AnularPago(long id, PagoAnularRequest request)
         {
-            var result = _services.ModigitficarAnulacion(id, request.IsAnulado);
+            var result = _services.ModificarAnulacion(id, request.IsAnulado);
 
             if(result == null) { return NotFound(); }
 

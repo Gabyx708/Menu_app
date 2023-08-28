@@ -90,5 +90,20 @@ namespace Application.UseCase.Pagos
 
             return pagosMapeados;
         }
+
+
+        public List<PagoResponse> GetAll()
+        {
+            var pagosMapear = _query.GetAllPagos();
+            List<PagoResponse> pagosMapeador = new List<PagoResponse>();
+
+            foreach (var pago in pagosMapear)
+            {
+                var pagoMapeado = GetPagoResponseById(pago.NumeroPago);
+                pagosMapeador.Add(pagoMapeado);
+            }
+
+            return pagosMapeador;
+        }
     }
 }
