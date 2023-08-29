@@ -54,7 +54,7 @@ namespace MenuApi.Controllers
             }
             catch (InvalidOperationException)
             {
-                return new JsonResult(new SystemResponse { Message = "fecha excedida", StatusCode = 409 });
+                return new JsonResult(new SystemResponse { Message = "fecha excedida", StatusCode = 409 }) { StatusCode = 409 };
             }
              
             return new JsonResult(pedidoEliminado);
