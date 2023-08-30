@@ -29,19 +29,19 @@ namespace Infraestructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PersonalConfig());
-            modelBuilder.ApplyConfiguration(new PedidosConfig());
-            modelBuilder.ApplyConfiguration(new DescuentoConfig());
+            modelBuilder.ApplyConfiguration(new PedidosConfig());          
             modelBuilder.ApplyConfiguration(new MenuPlatilloConfig());
             modelBuilder.ApplyConfiguration(new PedidoPorMenuPlatilloConfig());
             modelBuilder.ApplyConfiguration(new ReciboConfig());
             modelBuilder.ApplyConfiguration(new MenuConfig());
             modelBuilder.ApplyConfiguration(new PlatilloConfig());
             modelBuilder.ApplyConfiguration(new PagoConfig());
+            modelBuilder.ApplyConfiguration(new DescuentoConfig());
 
             //test data
-             // modelBuilder.ApplyConfiguration(new AdministradorTest());
-             // modelBuilder.ApplyConfiguration(new DescuentoTest());
-            //modelBuilder.ApplyConfiguration(new PlatilloTest());
+             modelBuilder.ApplyConfiguration(new AdministradorTest());
+             modelBuilder.ApplyConfiguration(new DescuentoTest());
+             modelBuilder.ApplyConfiguration(new PlatilloTest());
         }
     }
 }

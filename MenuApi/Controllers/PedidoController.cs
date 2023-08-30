@@ -26,7 +26,7 @@ namespace MenuApi.Controllers
 
             try {
                 result = _services.HacerUnpedido(request);
-                return Ok(result);
+                return new JsonResult(result) { StatusCode = 201};
             }
             catch(InvalidOperationException e)
             {

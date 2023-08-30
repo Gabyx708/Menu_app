@@ -43,7 +43,8 @@ namespace MenuApi
             //custom
 
             //Database
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            Console.Write(connectionString+"\n");
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             //Personal
