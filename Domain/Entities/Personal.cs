@@ -16,6 +16,9 @@
         public int Privilegio { get; set; }
         public string Password { get; set; }
 
+        //para el bot de menu
+        public bool isAutomatico { get; set; }
+
         public ICollection<Pedido> Pedidos { get; set; }
     }
 }
