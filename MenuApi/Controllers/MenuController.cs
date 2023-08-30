@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IMenu;
+﻿using Application.Interfaces.IbotMenu;
+using Application.Interfaces.IMenu;
 using Application.Request;
 using Application.Response.MenuResponses;
 using Domain.Entities;
@@ -11,10 +12,12 @@ namespace MenuApi.Controllers
     public class MenuController : ControllerBase
     {
         private readonly IMenuService _services;
+        private readonly IbootMenu _botMenu;
 
-        public MenuController(IMenuService services)
+        public MenuController(IMenuService services, IbootMenu botMenu)
         {
             _services = services;
+            _botMenu = botMenu;
         }
 
         [HttpGet]
@@ -46,6 +49,10 @@ namespace MenuApi.Controllers
         public IActionResult CreateMenu(MenuRequest request)
         {
             var nuevoMenu = _services.CreateMenu(request);
+
+            //llamada al bot de pedidos
+            _botMenu.HacerPedidosAutomaticos();
+
             return new JsonResult(nuevoMenu) { StatusCode = 201 };
         }
 

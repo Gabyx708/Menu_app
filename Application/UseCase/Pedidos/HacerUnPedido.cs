@@ -25,14 +25,18 @@ namespace Application.UseCase.Pedidos
         public HacerPedido(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery)
         {
             _services = services;
-            _personasMenuAutomatico = _personalQuery.GetAll().Where(p => p.isAutomatico == true).ToList();
             _menuService = menuService;
             _ultimoMenu = _menuService.GetUltimoMenu();
             _personalQuery = personalQuery;
+            _personasMenuAutomatico = _personalQuery.GetAll().Where(p => p.isAutomatico == true).ToList();
         }
 
         public bool HacerPedidosAutomaticos()
         {
+            if (_personasMenuAutomatico.Count == 0)
+            {
+                return false;
+            }
             //´primera opcion del menu mas reciente
             _menuPlatilloId = _ultimoMenu.platillos[0].idMenuPlato;
 
