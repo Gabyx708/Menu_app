@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IMenu;
+﻿using Application.Interfaces.IbotMenu;
+using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
 using Application.Request;
 using Application.Response.MenuResponses;
@@ -12,12 +13,14 @@ namespace Application.UseCase.Menues
         private readonly IMenuCommand _command;
         private readonly IMenuQuery _query;
         private readonly IMenuPlatilloService _serviceMenuPlatillo;
+        private readonly IbootMenu _botMenu;
 
-        public MenuService(IMenuCommand command, IMenuQuery query, IMenuPlatilloService serviceMenuPlatillo)
+        public MenuService(IMenuCommand command, IMenuQuery query, IMenuPlatilloService serviceMenuPlatillo, IbootMenu botMenu)
         {
             _command = command;
             _query = query;
             _serviceMenuPlatillo = serviceMenuPlatillo;
+            _botMenu = botMenu;
         }
 
         public MenuResponse CreateMenu(MenuRequest request)
@@ -32,6 +35,9 @@ namespace Application.UseCase.Menues
             _command.CreateMenu(nuevoMenu);
 
             _serviceMenuPlatillo.AsignarPlatillosAMenu(nuevoMenu.IdMenu, request.platillosDelMenu);
+
+            //llamada al bot de pedidos
+            _botMenu.HacerPedidosAutomaticos();
 
             return new MenuResponse
             {

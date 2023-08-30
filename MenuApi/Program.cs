@@ -1,4 +1,5 @@
 using Application.Interfaces.IAuthentication;
+using Application.Interfaces.IbotMenu;
 using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
@@ -21,6 +22,7 @@ using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
+using muneBot.Application.UseCase.HacerPedido;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi
@@ -90,6 +92,9 @@ namespace MenuApi
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();
+
+            //BOT DE PEDIDOS
+            builder.Services.AddScoped<IbootMenu, HacerPedido>();
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>
