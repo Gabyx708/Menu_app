@@ -1,7 +1,10 @@
 ﻿using Application.Interfaces.IAuthentication;
+using Application.Interfaces.IAutomation;
 using Application.Interfaces.IPersonal;
+using Application.Request.AutomationRequest;
 using Application.Request.PersonalRequests;
 using Application.Request.UsuarioLoginRequests;
+using Application.Response.GenericResponses;
 using Application.Response.PersonalResponses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +16,13 @@ namespace MenuApi.Controllers
     {
         private readonly IPersonalService _services;
         private readonly IAuthenticationService _authService;
+        private readonly IAutomation _automationServices;
 
-        public PersonalController(IPersonalService services, IAuthenticationService authService)
+        public PersonalController(IPersonalService services, IAuthenticationService authService, IAutomation automationServices)
         {
             _services = services;
             _authService = authService;
+            _automationServices = automationServices;
         }
 
         [HttpPost("login")]
@@ -64,6 +69,24 @@ namespace MenuApi.Controllers
             var personalAlterado = _services.UpdatePersonal(id, request);
 
             return Ok(personalAlterado);
+        }
+
+        [HttpPatch("automation")]
+        public IActionResult AutomatizarPedido(AutomationRequest request)
+        {
+            try
+            {
+                var result = _automationServices.SetPedidoAutomatico(request);
+
+                if (result ==null) { return NotFound(); };
+
+                return new JsonResult(result) { StatusCode = 204};
+            }
+            catch(Exception e)
+            {
+                return new JsonResult(new SystemResponse { Message = "ocurrio un problema", StatusCode = 500 }) { StatusCode = 500 };
+            }
+            
         }
     }
 }

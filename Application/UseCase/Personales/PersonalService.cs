@@ -56,7 +56,8 @@ namespace Application.UseCase.Personales
                     fecha_ingreso = personal.FechaIngreso,
                     fecha_alta = personal.FechaAlta,
                     mail = personal.Mail,
-                    telefono = personal.Telefono
+                    telefono = personal.Telefono,
+                    isAutomatico = personal.isAutomatico
 
                 };
 
@@ -82,7 +83,8 @@ namespace Application.UseCase.Personales
                 fecha_alta = personalBuscado.FechaAlta,
                 fecha_ingreso = personalBuscado.FechaIngreso,
                 mail = personalBuscado.Mail,
-                telefono = personalBuscado.Telefono
+                telefono = personalBuscado.Telefono,
+                isAutomatico = personalBuscado.isAutomatico
             };
         }
 

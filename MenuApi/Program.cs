@@ -1,4 +1,5 @@
 using Application.Interfaces.IAuthentication;
+using Application.Interfaces.IAutomation;
 using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
@@ -9,6 +10,7 @@ using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
+using Application.Tools.Automation;
 using Application.UseCase.Costos;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
@@ -23,7 +25,6 @@ using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi
 {
@@ -44,7 +45,7 @@ namespace MenuApi
 
             //Database
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            Console.Write(connectionString+"\n");
+            Console.Write(connectionString + "\n");
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             //Personal
@@ -98,6 +99,9 @@ namespace MenuApi
             builder.Services.AddScoped<IPagoQuery, PagoQuery>();
             builder.Services.AddScoped<IPagoCommand, PagoCommand>();
             builder.Services.AddScoped<IPagoService, PagoService>();
+
+            //Automatizacion de pedidos
+            builder.Services.AddScoped<IAutomation, AutomationDelivery>();
 
 
             //CORS deshabilitar
