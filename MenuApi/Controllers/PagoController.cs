@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.2/[controller]")]
     [ApiController]
     public class PagoController : ControllerBase
     {

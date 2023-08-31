@@ -13,5 +13,6 @@
 
         public string mail { get; set; }
         public string telefono { get; set; }
+        public bool isAutomatico { get; set; }
     }
 }

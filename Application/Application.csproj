@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Response\GenericResponses\" />
+    <Folder Include="Tools\Automation\" />
   </ItemGroup>
 
 </Project>

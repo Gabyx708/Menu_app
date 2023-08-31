@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.2/[controller]")]
     [ApiController]
     public class CostoController : Controller
     {

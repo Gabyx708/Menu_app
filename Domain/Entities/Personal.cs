@@ -15,6 +15,7 @@
         public string Telefono { get; set; }
         public int Privilegio { get; set; }
         public string Password { get; set; }
+        public bool isAutomatico { get; set; }
 
         public ICollection<Pedido> Pedidos { get; set; }
         public ICollection<Pago> pagos { get; set; }

@@ -38,8 +38,8 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdDescuento = new Guid("fc03d46d-484f-43f0-a1bc-33aa47972f01"),
-                            FechaInicioVigencia = new DateTime(2023, 8, 30, 11, 57, 26, 80, DateTimeKind.Local).AddTicks(6701),
+                            IdDescuento = new Guid("b0975168-efaf-4ae1-b8e8-5481c335abf6"),
+                            FechaInicioVigencia = new DateTime(2023, 8, 31, 13, 25, 25, 777, DateTimeKind.Local).AddTicks(5414),
                             Porcentaje = 50m
                         });
                 });
@@ -206,6 +206,9 @@ namespace Infraestructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<bool>("isAutomatico")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("IdPersonal");
 
                     b.ToTable("Personal", (string)null);
@@ -213,7 +216,7 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            IdPersonal = new Guid("380b2cdf-84ce-4108-bd68-ef6cfdd88d76"),
+                            IdPersonal = new Guid("530e4ba3-9664-4375-bbcc-7c59094d25ae"),
                             Apellido = "Aker",
                             Dni = "administrador",
                             FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -223,7 +226,8 @@ namespace Infraestructure.Migrations
                             Nombre = "Administrador",
                             Password = "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d",
                             Privilegio = 1,
-                            Telefono = "1234567890"
+                            Telefono = "1234567890",
+                            isAutomatico = false
                         });
                 });
 

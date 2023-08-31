@@ -9,6 +9,7 @@ using Application.Request.MenuPlatilloRequests;
 using Application.Request.PedidoRequests;
 using Application.Response.MenuPlatilloResponses;
 using Application.Response.PedidoResponses;
+using Application.Response.PersonalResponses;
 using Domain.Entities;
 using System.Linq.Expressions;
 
@@ -175,14 +176,19 @@ namespace Application.UseCase.Pedidos
             List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde,Hasta,cantidad);
             List<PedidoGetResponse> pedidosResponse = new List<PedidoGetResponse>();
 
+            
             foreach (var pedido in pedidos)
             {
+                PersonalResponse persona = _personalService.GetPersonalById(pedido.IdPersonal);
+
+
                 var nuevo = new PedidoGetResponse
                 {
                     id = pedido.IdPedido,
                     Personal = pedido.IdPersonal,
                     Fecha = pedido.FechaDePedido,
-                    Recibo = pedido.IdRecibo 
+                    Recibo = pedido.IdRecibo,
+                    Nombre = persona.nombre +" "+persona.apellido
                 };
 
                 pedidosResponse.Add(nuevo);

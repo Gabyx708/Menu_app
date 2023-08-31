@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class DBPAGOS : Migration
+    public partial class isAutomatico : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,7 +60,8 @@ namespace Infraestructure.Migrations
                     Mail = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Telefono = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     Privilegio = table.Column<int>(type: "int", maxLength: 2, nullable: false),
-                    Password = table.Column<string>(type: "longtext", nullable: false)
+                    Password = table.Column<string>(type: "longtext", nullable: false),
+                    isAutomatico = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,12 +218,12 @@ namespace Infraestructure.Migrations
             migrationBuilder.InsertData(
                 table: "Descuento",
                 columns: new[] { "IdDescuento", "FechaInicioVigencia", "Porcentaje" },
-                values: new object[] { new Guid("fc03d46d-484f-43f0-a1bc-33aa47972f01"), new DateTime(2023, 8, 30, 11, 57, 26, 80, DateTimeKind.Local).AddTicks(6701), 50m });
+                values: new object[] { new Guid("b0975168-efaf-4ae1-b8e8-5481c335abf6"), new DateTime(2023, 8, 31, 13, 25, 25, 777, DateTimeKind.Local).AddTicks(5414), 50m });
 
             migrationBuilder.InsertData(
                 table: "Personal",
-                columns: new[] { "IdPersonal", "Apellido", "Dni", "FechaAlta", "FechaIngreso", "FechaNac", "Mail", "Nombre", "Password", "Privilegio", "Telefono" },
-                values: new object[] { new Guid("380b2cdf-84ce-4108-bd68-ef6cfdd88d76"), "Aker", "administrador", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "sistemas@tecnaingenieria.com", "Administrador", "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d", 1, "1234567890" });
+                columns: new[] { "IdPersonal", "Apellido", "Dni", "FechaAlta", "FechaIngreso", "FechaNac", "Mail", "Nombre", "Password", "Privilegio", "Telefono", "isAutomatico" },
+                values: new object[] { new Guid("530e4ba3-9664-4375-bbcc-7c59094d25ae"), "Aker", "administrador", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "sistemas@tecnaingenieria.com", "Administrador", "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d", 1, "1234567890", false });
 
             migrationBuilder.InsertData(
                 table: "Platillo",
