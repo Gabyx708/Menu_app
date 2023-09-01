@@ -4,6 +4,7 @@ using Application.Interfaces.IPedido;
 using Application.Interfaces.IPersonal;
 using Application.Request.AutomationRequest;
 using Application.Request.PedidoRequests;
+using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
 using Application.Response.PersonalResponses;
 using Domain.Entities;
@@ -43,13 +44,7 @@ namespace Application.Tools.Automation
             {
                 return false;
             }
-            //´primera opcion del menu mas reciente
-            Random random = new Random();
-
-            int cantidadOpciones = _ultimoMenu.platillos.Count;
-            int opcionAleatoria = random.Next(0, cantidadOpciones);
-
-            _menuPlatilloId = _ultimoMenu.platillos[opcionAleatoria].idMenuPlato;
+ 
 
             //cantidad de pedidos automaticos
             int cantPedidos = _personasMenuAutomatico.Count;
@@ -57,11 +52,25 @@ namespace Application.Tools.Automation
 
             foreach (var persona in _personasMenuAutomatico)
             {
+                int opcion = randomMenuOpcion();
+
+                MenuPlatilloGetResponse opcionElegida = _ultimoMenu.platillos[opcion];
+
+              
+                while(opcionElegida.stock <= opcionElegida.pedido)
+                {
+                    opcion = randomMenuOpcion();
+                    opcionElegida = _ultimoMenu.platillos[opcion];
+                }
+
+                _menuPlatilloId = opcionElegida.idMenuPlato;
+
                 var request = new PedidoRequest
                 {
                     idUsuario = persona.IdPersonal,
                     MenuPlatillos = new List<Guid> { _menuPlatilloId }
                 };
+
 
                 try
                 {
@@ -95,6 +104,16 @@ namespace Application.Tools.Automation
                 return null;
             }
            
+        }
+
+        private int randomMenuOpcion()
+        {
+            //´primera opcion del menu mas reciente
+            Random random = new Random();
+
+            int cantidadOpciones = _ultimoMenu.platillos.Count;
+            int opcionAleatoria = random.Next(0, cantidadOpciones);
+            return opcionAleatoria;
         }
     }
 }

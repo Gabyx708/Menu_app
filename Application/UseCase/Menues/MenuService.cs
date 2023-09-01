@@ -29,6 +29,11 @@ namespace Application.UseCase.Menues
                 FechaCarga = DateTime.Now
             };
 
+            if (nuevoMenu.FechaConsumo < nuevoMenu.FechaCarga || nuevoMenu.FechaConsumo < nuevoMenu.FechaCierre)
+            {
+                throw new InvalidOperationException();
+            }
+
             _command.CreateMenu(nuevoMenu);
 
             _serviceMenuPlatillo.AsignarPlatillosAMenu(nuevoMenu.IdMenu, request.platillosDelMenu);

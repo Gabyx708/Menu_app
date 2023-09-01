@@ -81,6 +81,7 @@ namespace Application.UseCase.Platillos
 
         public bool AlterarPreciosMasivamente(decimal nuevoPrecio)
         {
+
             List<PlatilloResponse> todosLosPlatillos = GetAll();
 
             foreach (var plato in todosLosPlatillos)

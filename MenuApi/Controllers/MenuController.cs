@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IAutomation;
 using Application.Interfaces.IMenu;
 using Application.Request.MenuRequests;
+using Application.Response.GenericResponses;
 using Application.Response.MenuResponses;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -48,11 +49,21 @@ namespace MenuApi.Controllers
         [ProducesResponseType(typeof(MenuResponse), 201)]
         public IActionResult CreateMenu(MenuRequest request)
         {
-            var nuevoMenu = _services.CreateMenu(request);
+            MenuResponse nuevoMenu;
 
-            //Hacer pedidos automaticos
-            _automationService.HacerPedidosAutomatico();
+            try
+            {
+               nuevoMenu = _services.CreateMenu(request);
 
+                //Hacer pedidos automaticos
+                _automationService.HacerPedidosAutomatico();
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new SystemResponse { Message = "error en fechas de menu", StatusCode = 400 }) { StatusCode = 400 };
+            }
+             
             return new JsonResult(nuevoMenu) { StatusCode = 201 };
         }
 
