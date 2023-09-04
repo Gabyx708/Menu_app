@@ -4,12 +4,10 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class isAutomatico : Migration
+    public partial class versionv2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -214,31 +212,6 @@ namespace Infraestructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "Descuento",
-                columns: new[] { "IdDescuento", "FechaInicioVigencia", "Porcentaje" },
-                values: new object[] { new Guid("b0975168-efaf-4ae1-b8e8-5481c335abf6"), new DateTime(2023, 8, 31, 13, 25, 25, 777, DateTimeKind.Local).AddTicks(5414), 50m });
-
-            migrationBuilder.InsertData(
-                table: "Personal",
-                columns: new[] { "IdPersonal", "Apellido", "Dni", "FechaAlta", "FechaIngreso", "FechaNac", "Mail", "Nombre", "Password", "Privilegio", "Telefono", "isAutomatico" },
-                values: new object[] { new Guid("530e4ba3-9664-4375-bbcc-7c59094d25ae"), "Aker", "administrador", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "sistemas@tecnaingenieria.com", "Administrador", "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d", 1, "1234567890", false });
-
-            migrationBuilder.InsertData(
-                table: "Platillo",
-                columns: new[] { "IdPlatillo", "Activado", "Descripcion", "Precio" },
-                values: new object[,]
-                {
-                    { 1, true, "Ravioli de ricotta y espinacas con salsa de tomate", 1000m },
-                    { 2, true, "milanesa a la napolitana", 3000m },
-                    { 3, true, "Ceviche de camarón y pescado", 2800m },
-                    { 4, true, "Costillas de cerdo a la barbacoa con salsa ahumada", 357m },
-                    { 5, true, "Paella mixta de mariscos y pollo", 1890m },
-                    { 6, true, "Salmón con verduras salteadas y arroz jazmín", 100m },
-                    { 7, true, "Lasaña de carne y verduras con capas de pasta", 1200m },
-                    { 8, true, "Pechuga de pollo rellena de queso de cabra ", 1500m }
-                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuPlatillo_IdMenu",

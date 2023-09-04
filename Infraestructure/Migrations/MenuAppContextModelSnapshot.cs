@@ -34,14 +34,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdDescuento");
 
                     b.ToTable("Descuento", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdDescuento = new Guid("b0975168-efaf-4ae1-b8e8-5481c335abf6"),
-                            FechaInicioVigencia = new DateTime(2023, 8, 31, 13, 25, 25, 777, DateTimeKind.Local).AddTicks(5414),
-                            Porcentaje = 50m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Menu", b =>
@@ -212,23 +204,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdPersonal");
 
                     b.ToTable("Personal", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdPersonal = new Guid("530e4ba3-9664-4375-bbcc-7c59094d25ae"),
-                            Apellido = "Aker",
-                            Dni = "administrador",
-                            FechaAlta = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaIngreso = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNac = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Mail = "sistemas@tecnaingenieria.com",
-                            Nombre = "Administrador",
-                            Password = "99c1fcf52fc18a9417f60d0e6e7119957fc5638f4ee80ff04fe91bdd5763715d",
-                            Privilegio = 1,
-                            Telefono = "1234567890",
-                            isAutomatico = false
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Platillo", b =>
@@ -250,64 +225,6 @@ namespace Infraestructure.Migrations
                     b.HasKey("IdPlatillo");
 
                     b.ToTable("Platillo", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IdPlatillo = 1,
-                            Activado = true,
-                            Descripcion = "Ravioli de ricotta y espinacas con salsa de tomate",
-                            Precio = 1000m
-                        },
-                        new
-                        {
-                            IdPlatillo = 2,
-                            Activado = true,
-                            Descripcion = "milanesa a la napolitana",
-                            Precio = 3000m
-                        },
-                        new
-                        {
-                            IdPlatillo = 3,
-                            Activado = true,
-                            Descripcion = "Ceviche de camarón y pescado",
-                            Precio = 2800m
-                        },
-                        new
-                        {
-                            IdPlatillo = 4,
-                            Activado = true,
-                            Descripcion = "Costillas de cerdo a la barbacoa con salsa ahumada",
-                            Precio = 357m
-                        },
-                        new
-                        {
-                            IdPlatillo = 5,
-                            Activado = true,
-                            Descripcion = "Paella mixta de mariscos y pollo",
-                            Precio = 1890m
-                        },
-                        new
-                        {
-                            IdPlatillo = 6,
-                            Activado = true,
-                            Descripcion = "Salmón con verduras salteadas y arroz jazmín",
-                            Precio = 100m
-                        },
-                        new
-                        {
-                            IdPlatillo = 7,
-                            Activado = true,
-                            Descripcion = "Lasaña de carne y verduras con capas de pasta",
-                            Precio = 1200m
-                        },
-                        new
-                        {
-                            IdPlatillo = 8,
-                            Activado = true,
-                            Descripcion = "Pechuga de pollo rellena de queso de cabra ",
-                            Precio = 1500m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Recibo", b =>
