@@ -31,7 +31,6 @@ namespace Application.Tools.Automation
         {
             _services = services;
             _menuService = menuService;
-            _ultimoMenu = _menuService.GetUltimoMenu();
             _personalQuery = personalQuery;
             _personasMenuAutomatico = _personalQuery.GetAll().Where(p => p.isAutomatico == true).ToList();
             _personalCommand = personalCommand;
@@ -44,7 +43,9 @@ namespace Application.Tools.Automation
             {
                 return false;
             }
- 
+
+            //obtener ultimo menu cargado
+            _ultimoMenu = _menuService.GetUltimoMenu();
 
             //cantidad de pedidos automaticos
             int cantPedidos = _personasMenuAutomatico.Count;

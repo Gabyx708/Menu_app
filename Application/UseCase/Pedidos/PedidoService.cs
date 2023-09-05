@@ -8,6 +8,7 @@ using Application.Interfaces.IRecibo;
 using Application.Request.MenuPlatilloRequests;
 using Application.Request.PedidoRequests;
 using Application.Response.MenuPlatilloResponses;
+using Application.Response.MenuResponses;
 using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
 using Domain.Entities;
@@ -107,9 +108,18 @@ namespace Application.UseCase.Pedidos
         {
             List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date,DateTime.Now.Date, 1);
             var fechaActual = DateTime.Now;
-            var fechaCierreMenu = _menuService.GetUltimoMenu().fecha_cierre;
+
+            MenuResponse ultimoMenu = _menuService.GetUltimoMenu();
+
+            var fechaCierreMenu = ultimoMenu.fecha_cierre;
+            var fechaCargaMenu = ultimoMenu.fecha_carga;
 
             if (existePedido.Count > 0) {
+                throw new InvalidOperationException();
+            }
+
+            if (fechaActual < fechaCargaMenu)
+            {
                 throw new InvalidOperationException();
             }
 
