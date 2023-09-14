@@ -34,6 +34,37 @@ namespace MenuApi.Controllers
             return Ok(usuarioLog);
         }
 
+        [HttpPost("password/{id}")]
+        [ProducesResponseType(typeof(NoContentResult),204)]
+        [ProducesResponseType(typeof(SystemResponse), 409)]
+        public IActionResult changePassword(Guid id,PersonalPasswordRequest request)
+        {
+            var result = _authService.changeUserPassword(id,request);
+
+            if(result == null)
+            {
+                return new JsonResult(new SystemResponse { Message = "invalidad password", StatusCode = 409 }) { StatusCode = 409 };
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("password/reset/{id}")]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(SystemResponse), 409)]
+        public IActionResult resetPassword(Guid id)
+        {
+            var result = _authService.resetPassword(id);
+
+            if (result == null)
+            {
+                return new JsonResult(new SystemResponse { Message = "invalidad password", StatusCode = 409 }) { StatusCode = 409 };
+            }
+
+            return NoContent();
+        }
+
+
         [HttpGet]
         [ProducesResponseType(typeof(List<PersonalResponse>), 200)]
         public IActionResult GetTodoElpersonal()

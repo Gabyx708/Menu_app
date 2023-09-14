@@ -2,6 +2,7 @@
   "profiles": {
     "MenuApi": {
       "commandName": "Project",
+      "commandLineArgs": "ASPNETCORE_ENVIROMENT=Development",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
