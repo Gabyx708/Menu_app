@@ -77,7 +77,16 @@ namespace MenuApi.Controllers
         [ProducesResponseType(typeof(PersonalResponse), 201)]
         public IActionResult CreatePersonal(PersonalRequest request)
         {
-            var personalNuevo = _services.createPersonal(request);
+            PersonalResponse personalNuevo;
+
+            try
+            {
+               personalNuevo = _services.createPersonal(request);
+            }catch(InvalidOperationException e) {
+
+                return new JsonResult(new SystemResponse { Message = "intenta con otro DNI", StatusCode = 409 }) { StatusCode = 409 };
+            }
+
             return new JsonResult(personalNuevo) { StatusCode = 201 };
         }
 

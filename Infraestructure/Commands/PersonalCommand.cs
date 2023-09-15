@@ -15,6 +15,13 @@ namespace Infraestructure.Commands
 
         public Personal createPersonal(Personal personal)
         {
+            var existPersonalDni = _context.Personales.FirstOrDefault(p => p.Dni == personal.Dni);
+
+            if (existPersonalDni != null)
+            {
+                throw new InvalidOperationException();
+            }
+
             _context.Add(personal);
             _context.SaveChanges();
             return personal;
