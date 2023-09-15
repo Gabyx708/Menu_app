@@ -81,7 +81,8 @@ namespace MenuApi.Controllers
 
             try
             {
-               personalNuevo = _services.createPersonal(request);
+              
+                personalNuevo = _services.createPersonal(request);
             }catch(InvalidOperationException e) {
 
                 return new JsonResult(new SystemResponse { Message = "intenta con otro DNI", StatusCode = 409 }) { StatusCode = 409 };
