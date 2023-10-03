@@ -37,7 +37,8 @@ namespace Application.UseCase.Personales
             var token = generateTokenAutentication(persona);
 
             return new UsuarioLoginResponse
-            {
+            {   
+                id = persona.IdPersonal,
                 Nombre = persona.Nombre,
                 Apellido = persona.Apellido,
                 Token = token
