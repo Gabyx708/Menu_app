@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/v1.2/[controller]")]
+    [Route("api/v1.3/[controller]")]
     [ApiController]
     public class PedidosController : ControllerBase
     {

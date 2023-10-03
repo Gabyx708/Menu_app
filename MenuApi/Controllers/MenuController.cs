@@ -4,11 +4,12 @@ using Application.Request.MenuRequests;
 using Application.Response.GenericResponses;
 using Application.Response.MenuResponses;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/v1.2/[controller]")]
+    [Route("api/v1.3/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace MenuApi.Controllers
             _automationService = automationService;
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult GetMenu(string? id)
@@ -37,6 +39,7 @@ namespace MenuApi.Controllers
             return new JsonResult(resultado) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpGet("fecha/{fechaConsumo}")]
         [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult GetMenuByFecha(string fechaConsumo)
@@ -45,6 +48,7 @@ namespace MenuApi.Controllers
             return new JsonResult(menu) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(MenuResponse), 201)]
         public IActionResult CreateMenu(MenuRequest request)
@@ -67,6 +71,7 @@ namespace MenuApi.Controllers
             return new JsonResult(nuevoMenu) { StatusCode = 201 };
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult DeleteMenu(Guid id)

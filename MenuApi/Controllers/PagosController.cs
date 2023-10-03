@@ -1,11 +1,12 @@
 ﻿using Application.Interfaces.IPagos;
 using Application.Response.PagoResponses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/v1.2/[controller]")]
+    [Route("api/v1.3/[controller]")]
     [ApiController]
     public class PagosController : ControllerBase
     {
@@ -16,6 +17,7 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<PagoResponse>),200)]
         public IActionResult AllPagos(DateTime? fechaDesde,DateTime? fechaHasta)

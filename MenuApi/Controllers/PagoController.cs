@@ -1,13 +1,14 @@
 ﻿using Application.Interfaces.IPagos;
 using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/v1.2/[controller]")]
+    [Route("api/v1.3/[controller]")]
     [ApiController]
     public class PagoController : ControllerBase
     {
@@ -18,6 +19,7 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(PagoResponse), 201)]
         public IActionResult RegistrarUnPago(PagoRequest request)
@@ -27,6 +29,7 @@ namespace MenuApi.Controllers
             return new JsonResult(result) { StatusCode = 201};
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PagoResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
@@ -42,6 +45,7 @@ namespace MenuApi.Controllers
             return new JsonResult(result);
         }
 
+        [Authorize]
         [HttpPatch("{id}")]
         [ProducesResponseType(typeof(NoContentResult),204)]
         public IActionResult AnularPago(long id, PagoAnularRequest request)

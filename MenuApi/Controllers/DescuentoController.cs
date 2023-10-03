@@ -1,11 +1,12 @@
 using Application.Interfaces.IDescuento;
 using Application.Request.DescuestoRequests;
 using Application.Response.DescuentoResponse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
 {
-    [Route("api/v1.2/[controller]")]
+    [Route("api/v1.3/[controller]")]
     [ApiController]
     public class DescuentoController : ControllerBase
     {
@@ -16,6 +17,7 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(DescuentoResponse), 200)]
         public IActionResult GetDescuento(Guid id)
@@ -24,6 +26,7 @@ namespace MenuApi.Controllers
             return new JsonResult(descuento) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(DescuentoResponse), 200)]
         public IActionResult GetVigente()
@@ -32,6 +35,7 @@ namespace MenuApi.Controllers
             return new JsonResult(vigente) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(DescuentoResponse), 201)]
         public IActionResult CreateDescuento(DescuentoRequest request)
