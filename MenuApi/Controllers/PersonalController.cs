@@ -6,6 +6,8 @@ using Application.Request.PersonalRequests;
 using Application.Request.UsuarioLoginRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PersonalResponses;
+using Application.Response.UsuarioLoginResponse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -26,7 +28,7 @@ namespace MenuApi.Controllers
         }
 
         [HttpPost("login")]
-        [ProducesResponseType(typeof(PersonalResponse), 200)]
+        [ProducesResponseType(typeof(UsuarioLoginResponse), 200)]
         public IActionResult loginUser(UsuarioLoginRequest request)
         {
             var usuarioLog = _authService.autenticarUsuario(request);
@@ -34,14 +36,15 @@ namespace MenuApi.Controllers
             return Ok(usuarioLog);
         }
 
+        [Authorize]
         [HttpPost("password/{id}")]
-        [ProducesResponseType(typeof(NoContentResult),204)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesResponseType(typeof(SystemResponse), 409)]
-        public IActionResult changePassword(Guid id,PersonalPasswordRequest request)
+        public IActionResult changePassword(Guid id, PersonalPasswordRequest request)
         {
-            var result = _authService.changeUserPassword(id,request);
+            var result = _authService.changeUserPassword(id, request);
 
-            if(result == null)
+            if (result == null)
             {
                 return new JsonResult(new SystemResponse { Message = "invalidad password", StatusCode = 409 }) { StatusCode = 409 };
             }
@@ -49,6 +52,7 @@ namespace MenuApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPost("password/reset/{id}")]
         [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesResponseType(typeof(SystemResponse), 409)]
@@ -64,7 +68,7 @@ namespace MenuApi.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<PersonalResponse>), 200)]
         public IActionResult GetTodoElpersonal()
@@ -73,6 +77,7 @@ namespace MenuApi.Controllers
             return new JsonResult(empleados) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(PersonalResponse), 201)]
         public IActionResult CreatePersonal(PersonalRequest request)
@@ -91,6 +96,7 @@ namespace MenuApi.Controllers
             return new JsonResult(personalNuevo) { StatusCode = 201 };
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PersonalResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
@@ -104,6 +110,7 @@ namespace MenuApi.Controllers
             return new JsonResult(personal) { StatusCode = 200 };
         }
 
+        [Authorize]
         [HttpPatch("{id}")]
         public IActionResult AlterarPersonal(Guid id,PersonalRequest request)
         {
@@ -112,6 +119,7 @@ namespace MenuApi.Controllers
             return Ok(personalAlterado);
         }
 
+        [Authorize]
         [HttpPatch("automation")]
         public IActionResult AutomatizarPedido(AutomationRequest request)
         {

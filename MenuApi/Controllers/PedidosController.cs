@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IPedido;
 using Application.Response.PedidoResponses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -15,6 +16,7 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<PedidoGetResponse>), 200)]
         public IActionResult ConsultarPedidos(Guid? idPersonal, DateTime? Desde, DateTime? Hasta, int? cantidad)

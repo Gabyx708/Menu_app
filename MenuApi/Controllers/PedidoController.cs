@@ -2,6 +2,7 @@
 using Application.Request.PedidoRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace MenuApi.Controllers
             _services = services;
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(PedidoResponse), 201)]
         public IActionResult HacerUnPedido(PedidoRequest request)
@@ -36,6 +38,7 @@ namespace MenuApi.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PedidoResponse),200)]
         public IActionResult ConsularPedido(Guid id)
@@ -44,6 +47,7 @@ namespace MenuApi.Controllers
             return Ok(pedidoConsultado);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeletePedido(Guid id)
         {
