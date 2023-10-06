@@ -100,6 +100,7 @@ namespace Application.UseCase.Personales
                 {"name", $"{usuario.Nombre} {usuario.Apellido}"},
                 {"id",$"{usuario.IdPersonal}"},
                 {"exp", new DateTimeOffset(expires).ToUnixTimeSeconds()}, // Agrega la fecha de expiración
+                {"rol",usuario.Privilegio },
                 {"aud","menu"},
                 {"iss","menuServ"}
             };
