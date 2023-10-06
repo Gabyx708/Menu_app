@@ -2,6 +2,7 @@
 using Application.Request.PedidoRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
+using Application.UseCase.Pedidos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +25,21 @@ namespace MenuApi.Controllers
         [ProducesResponseType(typeof(PedidoResponse), 201)]
         public IActionResult HacerUnPedido(PedidoRequest request)
         {
+            var usuarioActual = HttpContext.User;
+            var usuarioRol = usuarioActual.Claims.FirstOrDefault(c => c.Type == "rol").Value;
+
+            if(usuarioRol == null) { return null; };
+
             PedidoResponse result = new PedidoResponse();
 
             try {
+
+                if (usuarioRol == "1")
+                {
+                    _services.CambiarEstrategiaPedido(new HacerUnPedidoSinRestricciones());
+                    result = _services.HacerUnpedido(request);
+                }
+
                 result = _services.HacerUnpedido(request);
                 return new JsonResult(result) { StatusCode = 201};
             }

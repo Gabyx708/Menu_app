@@ -98,6 +98,7 @@ namespace MenuApi
             builder.Services.AddScoped<IPedidoCommand, PedidoCommand>();
             builder.Services.AddScoped<IPedidoQuery, PedidoQuery>();
             builder.Services.AddScoped<IPedidoService, PedidoService>();
+            builder.Services.AddScoped<IEstrategiaHacerPedido,HacerUnPedidoConRestricciones>();
 
             //PedidoPorMenuPlatillo
             builder.Services.AddScoped<IPedidoPorMenuPlatilloCommand, PedidoPorMenuPlatilloCommand>();

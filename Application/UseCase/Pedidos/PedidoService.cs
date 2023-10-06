@@ -1,18 +1,14 @@
-﻿using Application.Interfaces.IMenu;
-using Application.Interfaces.IMenuPlatillo;
+﻿using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
-using Application.Request.MenuPlatilloRequests;
 using Application.Request.PedidoRequests;
 using Application.Response.MenuPlatilloResponses;
-using Application.Response.MenuResponses;
 using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
 using Domain.Entities;
-using System.Linq.Expressions;
 
 namespace Application.UseCase.Pedidos
 {
@@ -26,8 +22,8 @@ namespace Application.UseCase.Pedidos
         private readonly IPlatilloService _platilloService;
         private readonly IReciboService _reciboService;
         private readonly IMenuPlatilloQuery _menuPlatilloQuery;
-        private readonly IMenuService _menuService;
-        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService)
+        private IEstrategiaHacerPedido _estrategiaHacerPedido;
+        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IEstrategiaHacerPedido estrategiaHacerPedido)
         {
             _command = command;
             _query = query;
@@ -37,9 +33,13 @@ namespace Application.UseCase.Pedidos
             _platilloService = platilloService;
             _reciboService = reciboService;
             _menuPlatilloQuery = menuPlatilloQuery;
-            _menuService = menuService;
+            _estrategiaHacerPedido = estrategiaHacerPedido;
         }
 
+        public void CambiarEstrategiaPedido(IEstrategiaHacerPedido estrategia)
+        {
+            _estrategiaHacerPedido = estrategia;
+        }
         public PedidoResponse GetPedidoById(Guid idPedido)
         {
             var pedido = _query.GetPedidoById(idPedido);
@@ -70,7 +70,7 @@ namespace Application.UseCase.Pedidos
                 return new PedidoResponse
                 {
                     idPedido = idPedido,
-                    Nombre = personal.nombre+" "+personal.apellido,
+                    Nombre = personal.nombre + " " + personal.apellido,
                     fecha = pedido.FechaDePedido,
                     platillos = platillosDelMenu,
                     recibo = _reciboService.GetReciboById(pedido.IdRecibo)
@@ -86,9 +86,9 @@ namespace Application.UseCase.Pedidos
 
             if (found != null)
             {
-               Guid idMenuPlatilloPrimero = found.PedidosPorMenuPlatillo[0].IdMenuPlatillo;
-               DateTime fechaCierreMenu = _menuPlatilloQuery.GetById(idMenuPlatilloPrimero).Menu.FechaCierre;
-               DateTime fechaActual = DateTime.Now;
+                Guid idMenuPlatilloPrimero = found.PedidosPorMenuPlatillo[0].IdMenuPlatillo;
+                DateTime fechaCierreMenu = _menuPlatilloQuery.GetById(idMenuPlatilloPrimero).Menu.FechaCierre;
+                DateTime fechaActual = DateTime.Now;
 
                 if (fechaActual > fechaCierreMenu)
                 {
@@ -102,91 +102,24 @@ namespace Application.UseCase.Pedidos
             return auxResponse;
         }
 
-
-
         public PedidoResponse HacerUnpedido(PedidoRequest request)
         {
-            List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date,DateTime.Now.Date, 1);
-            var fechaActual = DateTime.Now;
 
-            MenuResponse ultimoMenu = _menuService.GetUltimoMenu();
-
-            var fechaCierreMenu = ultimoMenu.fecha_cierre;
-            var fechaCargaMenu = ultimoMenu.fecha_carga;
-
-            if (existePedido.Count > 0) {
-                throw new InvalidOperationException();
-            }
-
-            if (fechaActual < fechaCargaMenu)
-            {
-                throw new InvalidOperationException();
-            }
-
-            if(fechaActual > fechaCierreMenu)
-            {
-                throw new InvalidOperationException();
-            }
-
-
-            decimal precioTotal = 0;
-
-            Pedido nuevoPedido = new Pedido
-            {
-                IdPersonal = request.idUsuario,
-                FechaDePedido = DateTime.Now,
-                IdRecibo = _reciboService.CrearRecibo().id
-            };
-
-            _command.createPedido(nuevoPedido);
-
-            foreach (var menuPlatilloId in request.MenuPlatillos)
-            {
-                var menuPlatilloEcontrado = _menuPlatilloService.GetMenuPlatilloById(menuPlatilloId);
-                decimal precioPlatillo = menuPlatilloEcontrado.precio;
-                precioTotal = precioTotal + precioPlatillo;
-
-                PedidoPorMenuPlatilloRequest requestPedidoPorMenuPlatillo = new PedidoPorMenuPlatilloRequest
-                {
-                    idPedido = nuevoPedido.IdPedido,
-                    idMenuPlatillo = menuPlatilloId,
-                };
-
-                if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
-                {
-                    return EliminarPedido(nuevoPedido.IdPedido);
-                }
-
-                MenuPlatilloRequest modificacion = new MenuPlatilloRequest
-                {
-                    stock = menuPlatilloEcontrado.stock,
-                    solicitados = _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados + 1
-                };
-
-                _menuPlatilloService.ModificarMenuPlatillo(menuPlatilloId, modificacion);
-                _pedidoPorMenuPlatilloService.CreatePedidoPorMenuPlatillo(requestPedidoPorMenuPlatillo);
-            }
-
-            _reciboService.CambiarPrecio(nuevoPedido.IdRecibo, precioTotal);
-
-            return GetPedidoById(nuevoPedido.IdPedido);
+            return _estrategiaHacerPedido.RealizarPedido(request);
         }
-
-
-
 
         public List<PedidoResponse> PedidosDelMenu(Guid idMenu)
         {
             throw new NotImplementedException();
         }
 
-        public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? Desde,DateTime? Hasta, int? cantidad)
-        {   
+        public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? Desde, DateTime? Hasta, int? cantidad)
+        {
 
-            List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde,Hasta,cantidad);
+            List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde, Hasta, cantidad);
             List<PedidoGetResponse> pedidosResponse = new List<PedidoGetResponse>();
 
-            
+
             foreach (var pedido in pedidos)
             {
                 PersonalResponse persona = _personalService.GetPersonalById(pedido.IdPersonal);
@@ -198,7 +131,7 @@ namespace Application.UseCase.Pedidos
                     Personal = pedido.IdPersonal,
                     Fecha = pedido.FechaDePedido,
                     Recibo = pedido.IdRecibo,
-                    Nombre = persona.nombre +" "+persona.apellido
+                    Nombre = persona.nombre + " " + persona.apellido
                 };
 
                 pedidosResponse.Add(nuevo);
