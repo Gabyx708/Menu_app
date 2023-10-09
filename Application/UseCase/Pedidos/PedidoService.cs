@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IMenu;
+﻿using Application.Exceptions;
+using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPedido;
 using Application.Interfaces.IPedidoPorMenuPlatillo;
@@ -79,6 +80,7 @@ namespace Application.UseCase.Pedidos
 
             return null;
         }
+
         public PedidoResponse EliminarPedido(Guid idPedido)
         {
             var found = _query.GetPedidoById(idPedido);
@@ -115,20 +117,65 @@ namespace Application.UseCase.Pedidos
             var fechaCargaMenu = ultimoMenu.fecha_carga;
 
             if (existePedido.Count > 0) {
-                throw new InvalidOperationException();
+                throw new SystemExceptionApp("pedido ya hecho",409);
             }
 
             if (fechaActual < fechaCargaMenu)
             {
-                throw new InvalidOperationException();
+                throw new SystemExceptionApp("fecha menor a fecha carga", 409);
             }
 
             if(fechaActual > fechaCierreMenu)
             {
-                throw new InvalidOperationException();
+                throw new SystemExceptionApp("fecha mayor a fecha cierre", 409);
             }
 
 
+            decimal precioTotal = 0;
+
+            Pedido nuevoPedido = new Pedido
+            {
+                IdPersonal = request.idUsuario,
+                FechaDePedido = DateTime.Now,
+                IdRecibo = _reciboService.CrearRecibo().id
+            };
+
+            _command.createPedido(nuevoPedido);
+
+            foreach (var menuPlatilloId in request.MenuPlatillos)
+            {
+                var menuPlatilloEcontrado = _menuPlatilloService.GetMenuPlatilloById(menuPlatilloId);
+                decimal precioPlatillo = menuPlatilloEcontrado.precio;
+                precioTotal = precioTotal + precioPlatillo;
+
+                PedidoPorMenuPlatilloRequest requestPedidoPorMenuPlatillo = new PedidoPorMenuPlatilloRequest
+                {
+                    idPedido = nuevoPedido.IdPedido,
+                    idMenuPlatillo = menuPlatilloId,
+                };
+
+                if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
+                {
+                    return EliminarPedido(nuevoPedido.IdPedido);
+                }
+
+                MenuPlatilloRequest modificacion = new MenuPlatilloRequest
+                {
+                    stock = menuPlatilloEcontrado.stock,
+                    solicitados = _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados + 1
+                };
+
+                _menuPlatilloService.ModificarMenuPlatillo(menuPlatilloId, modificacion);
+                _pedidoPorMenuPlatilloService.CreatePedidoPorMenuPlatillo(requestPedidoPorMenuPlatillo);
+            }
+
+            _reciboService.CambiarPrecio(nuevoPedido.IdRecibo, precioTotal);
+
+            return GetPedidoById(nuevoPedido.IdPedido);
+        }
+
+        public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request)
+        {
             decimal precioTotal = 0;
 
             Pedido nuevoPedido = new Pedido

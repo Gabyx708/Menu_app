@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IPedido;
+﻿using Application.Exceptions;
+using Application.Interfaces.IPedido;
 using Application.Request.PedidoRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
@@ -25,14 +26,25 @@ namespace MenuApi.Controllers
         public IActionResult HacerUnPedido(PedidoRequest request)
         {
             PedidoResponse result = new PedidoResponse();
+            var usuarioActual = HttpContext.User;
+            var usuarioRol = usuarioActual.Claims.FirstOrDefault(u => u.Type == "rol").Value;
+            var rolAdministrador = "1";
 
             try {
-                result = _services.HacerUnpedido(request);
+
+                if (usuarioRol == rolAdministrador && usuarioRol != null){
+                    result = _services.HacerUnpedidoSinRestricciones(request);
+                }
+                else
+                {
+                    result = _services.HacerUnpedido(request);
+                }
+                
                 return new JsonResult(result) { StatusCode = 201};
             }
-            catch(InvalidOperationException e)
+            catch(SystemExceptionApp e)
             {
-                return new JsonResult(new { message = "error"} ) { StatusCode = 409 };
+                return new JsonResult(e._response) { StatusCode = e._response.StatusCode };
             }
 
 
