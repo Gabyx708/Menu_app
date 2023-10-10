@@ -11,6 +11,7 @@ using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
 using Application.Tools.Automation;
+using Application.UseCase.Automation;
 using Application.UseCase.Costos;
 using Application.UseCase.Descuentos;
 using Application.UseCase.Menues;
@@ -26,6 +27,7 @@ using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using System.Text;
@@ -118,6 +120,7 @@ namespace MenuApi
             builder.Services.AddScoped<IPagoService, PagoService>();
 
             //Automatizacion de pedidos
+            builder.Services.Configure<OptionsDelivery>(builder.Configuration.GetSection("AppSettings"));
             builder.Services.AddScoped<IAutomation, AutomationDelivery>();
 
             //Autenticacion

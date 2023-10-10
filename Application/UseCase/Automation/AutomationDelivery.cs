@@ -7,12 +7,9 @@ using Application.Request.PedidoRequests;
 using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
 using Application.Response.PersonalResponses;
+using Application.UseCase.Automation;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Application.Tools.Automation
 {
@@ -25,9 +22,10 @@ namespace Application.Tools.Automation
         private readonly IPersonalCommand _personalCommand;
         private readonly IPersonalService _personalService;
         private Guid _menuPlatilloId;
+        private string idUsuarioBOT;
         private MenuResponse _ultimoMenu;
 
-        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService)
+        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService, IOptions<OptionsDelivery> options)
         {
             _services = services;
             _menuService = menuService;
@@ -35,6 +33,7 @@ namespace Application.Tools.Automation
             _personasMenuAutomatico = _personalQuery.GetAll().Where(p => p.isAutomatico == true).ToList();
             _personalCommand = personalCommand;
             _personalService = personalService;
+            this.idUsuarioBOT = options.Value.IdUsuarioBOT;
         }
 
         public bool HacerPedidosAutomatico()

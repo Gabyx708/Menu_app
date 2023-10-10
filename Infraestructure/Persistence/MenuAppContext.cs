@@ -37,11 +37,17 @@ namespace Infraestructure.Persistence
             modelBuilder.ApplyConfiguration(new PlatilloConfig());
             modelBuilder.ApplyConfiguration(new PagoConfig());
             modelBuilder.ApplyConfiguration(new DescuentoConfig());
+            modelBuilder.ApplyConfiguration(new AutorizacionPedidoConfig());
+
+            
+            modelBuilder.ApplyConfiguration(new AdministradorTest());
+            modelBuilder.ApplyConfiguration(new DescuentoTest());
 
             //test data
-            // modelBuilder.ApplyConfiguration(new AdministradorTest());
-            // modelBuilder.ApplyConfiguration(new DescuentoTest());
-            // modelBuilder.ApplyConfiguration(new PlatilloTest());
+            //TODO delete for production enviroment
+            modelBuilder.ApplyConfiguration(new PlatilloTest());     
+            modelBuilder.ApplyConfiguration(new PersonalConfig());
+            modelBuilder.ApplyConfiguration(new PersonalTest());
         }
     }
 }

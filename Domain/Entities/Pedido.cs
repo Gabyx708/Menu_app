@@ -9,6 +9,7 @@
 
         public Personal Personal { get; set; }
         public Recibo Recibo { get; set; }
+        public AutorizacionPedido? AutorizacionPedido { get; set; }
 
 
         public IList<PedidoPorMenuPlatillo> PedidosPorMenuPlatillo { get; set; }
