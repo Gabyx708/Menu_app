@@ -46,6 +46,10 @@ namespace MenuApi.Controllers
             {
                 return new JsonResult(e._response) { StatusCode = e._response.StatusCode };
             }
+            catch(Exception e)
+            {
+                return new JsonResult(new SystemResponse { Message = "falla interna",StatusCode = 500}) { StatusCode = 500 };
+            }
 
 
         }

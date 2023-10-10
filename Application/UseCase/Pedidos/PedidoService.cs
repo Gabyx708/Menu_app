@@ -26,9 +26,10 @@ namespace Application.UseCase.Pedidos
         private readonly IMenuPlatilloService _menuPlatilloService;
         private readonly IPlatilloService _platilloService;
         private readonly IReciboService _reciboService;
+        private readonly IReciboCommand _reciboCommand;
         private readonly IMenuPlatilloQuery _menuPlatilloQuery;
         private readonly IMenuService _menuService;
-        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService)
+        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService, IReciboCommand reciboCommand)
         {
             _command = command;
             _query = query;
@@ -39,6 +40,7 @@ namespace Application.UseCase.Pedidos
             _reciboService = reciboService;
             _menuPlatilloQuery = menuPlatilloQuery;
             _menuService = menuService;
+            _reciboCommand = reciboCommand;
         }
 
         public PedidoResponse GetPedidoById(Guid idPedido)
@@ -108,6 +110,11 @@ namespace Application.UseCase.Pedidos
 
         public PedidoResponse HacerUnpedido(PedidoRequest request)
         {
+            if (request.MenuPlatillos.Count < 1 || request.MenuPlatillos.Count == 0)
+            {
+                throw new SystemExceptionApp("pedido sin platillos", 400);
+            }
+
             List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date,DateTime.Now.Date, 1);
             var fechaActual = DateTime.Now;
 
@@ -176,6 +183,11 @@ namespace Application.UseCase.Pedidos
 
         public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request)
         {
+            if (request.MenuPlatillos.Count < 1 || request.MenuPlatillos.Count == 0)
+            {
+                throw new SystemExceptionApp("pedido sin platillos", 400);
+            }
+
             decimal precioTotal = 0;
 
             Pedido nuevoPedido = new Pedido
@@ -200,7 +212,7 @@ namespace Application.UseCase.Pedidos
                 };
 
                 if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
-                {
+                {  
                     return EliminarPedido(nuevoPedido.IdPedido);
                 }
 
