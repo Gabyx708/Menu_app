@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.IAutomation;
+using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IPedido;
 using Application.Interfaces.IPersonal;
@@ -6,6 +7,7 @@ using Application.Request.AutomationRequest;
 using Application.Request.PedidoRequests;
 using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
+using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
 using Application.UseCase.Automation;
 using Domain.Entities;
@@ -24,8 +26,9 @@ namespace Application.Tools.Automation
         private Guid _menuPlatilloId;
         private string idUsuarioBOT;
         private MenuResponse _ultimoMenu;
+        private IRepositoryAutorizacionPedido _repositoryAutorizacionPedido;
 
-        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService, IOptions<OptionsDelivery> options)
+        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService, IOptions<OptionsDelivery> options, IRepositoryAutorizacionPedido repositoryAutorizacionPedido)
         {
             _services = services;
             _menuService = menuService;
@@ -34,6 +37,7 @@ namespace Application.Tools.Automation
             _personalCommand = personalCommand;
             _personalService = personalService;
             this.idUsuarioBOT = options.Value.IdUsuarioBOT;
+            _repositoryAutorizacionPedido = repositoryAutorizacionPedido;
         }
 
         public bool HacerPedidosAutomatico()
@@ -74,7 +78,15 @@ namespace Application.Tools.Automation
 
                 try
                 {
-                    _services.HacerUnpedido(request);
+                    PedidoResponse pedidoPorBOT = _services.HacerUnpedido(request);
+
+                    var nuevaAutorizacion = new AutorizacionPedido
+                    {
+                        IdPedido = pedidoPorBOT.idPedido,
+                        IdPersonal = persona.IdPersonal
+                    };
+
+                    _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
                     contadorPedidos++;
                 }
                 catch (Exception e)

@@ -23,6 +23,7 @@ namespace Infraestructure.Persistence
         public DbSet<Platillo> Platillos { get; set; }
         public DbSet<Menu> Menues { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<AutorizacionPedido> AutorizacionPedidos { get; set; }
 
 
         //config

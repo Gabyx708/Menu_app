@@ -1,5 +1,6 @@
 using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IAutomation;
+using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.ICostos;
 using Application.Interfaces.IDescuento;
 using Application.Interfaces.IMenu;
@@ -25,6 +26,7 @@ using Application.UseCase.Recibos;
 using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
+using Infraestructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -110,6 +112,9 @@ namespace MenuApi
             builder.Services.AddScoped<IReciboCommand, ReciboCommand>();
             builder.Services.AddScoped<IReciboQuery, ReciboQuery>();
             builder.Services.AddScoped<IReciboService, ReciboService>();
+
+            //autorizaciones pedido
+            builder.Services.AddScoped<IRepositoryAutorizacionPedido, RepositoryAutorizacionPedido>();
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();
