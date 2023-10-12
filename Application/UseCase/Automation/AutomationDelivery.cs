@@ -83,15 +83,15 @@ namespace Application.Tools.Automation
                     var nuevaAutorizacion = new AutorizacionPedido
                     {
                         IdPedido = pedidoPorBOT.idPedido,
-                        IdPersonal = persona.IdPersonal
+                        IdPersonal = new Guid(idUsuarioBOT),
                     };
 
-                    _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
+                     _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
                     contadorPedidos++;
                 }
                 catch (Exception e)
                 {
-                    // Sin embargo, si no deseas hacer nada especial, puedes omitir este bloque catch.
+                    Console.WriteLine("falla critica...");
                 }
             }
 

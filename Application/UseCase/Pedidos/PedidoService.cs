@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPedido;
@@ -29,7 +30,8 @@ namespace Application.UseCase.Pedidos
         private readonly IReciboCommand _reciboCommand;
         private readonly IMenuPlatilloQuery _menuPlatilloQuery;
         private readonly IMenuService _menuService;
-        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService, IReciboCommand reciboCommand)
+        private readonly IRepositoryAutorizacionPedido _repositoryAuthPedido;
+        public PedidoService(IPedidoCommand command, IPedidoQuery query, IPersonalService personalService, IPedidoPorMenuPlatilloService pedidoPorMenuPlatilloService, IMenuPlatilloService menuPlatilloService, IPlatilloService platilloService, IReciboService reciboService, IMenuPlatilloQuery menuPlatilloQuery, IMenuService menuService, IReciboCommand reciboCommand, IRepositoryAutorizacionPedido repositoryAuthPedido)
         {
             _command = command;
             _query = query;
@@ -41,6 +43,7 @@ namespace Application.UseCase.Pedidos
             _menuPlatilloQuery = menuPlatilloQuery;
             _menuService = menuService;
             _reciboCommand = reciboCommand;
+            _repositoryAuthPedido = repositoryAuthPedido;
         }
 
         public PedidoResponse GetPedidoById(Guid idPedido)
@@ -181,7 +184,7 @@ namespace Application.UseCase.Pedidos
             return GetPedidoById(nuevoPedido.IdPedido);
         }
 
-        public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request)
+        public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request,Guid usuarioPedidor)
         {
             if (request.MenuPlatillos.Count < 1 || request.MenuPlatillos.Count == 0)
             {
@@ -227,6 +230,14 @@ namespace Application.UseCase.Pedidos
             }
 
             _reciboService.CambiarPrecio(nuevoPedido.IdRecibo, precioTotal);
+
+            var autorizacion = new AutorizacionPedido
+            {
+                IdPersonal = usuarioPedidor,
+                IdPedido = nuevoPedido.IdPedido
+            };
+
+            _repositoryAuthPedido.CreateAutorizacionPedido(autorizacion);
 
             return GetPedidoById(nuevoPedido.IdPedido);
         }

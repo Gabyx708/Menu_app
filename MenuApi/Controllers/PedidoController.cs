@@ -1,8 +1,10 @@
 ﻿using Application.Exceptions;
+using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.IPedido;
 using Application.Request.PedidoRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,14 +28,17 @@ namespace MenuApi.Controllers
         public IActionResult HacerUnPedido(PedidoRequest request)
         {
             PedidoResponse result = new PedidoResponse();
+            //TODO refactorizar 
             var usuarioActual = HttpContext.User;
             var usuarioRol = usuarioActual.Claims.FirstOrDefault(u => u.Type == "rol").Value;
+            var usuarioId = usuarioActual.Claims.FirstOrDefault(u => u.Type == "id").Value;
             var rolAdministrador = "1";
 
             try {
 
                 if (usuarioRol == rolAdministrador && usuarioRol != null){
-                    result = _services.HacerUnpedidoSinRestricciones(request);
+
+                    result = _services.HacerUnpedidoSinRestricciones(request,new Guid(usuarioId));         
                 }
                 else
                 {
@@ -50,7 +55,6 @@ namespace MenuApi.Controllers
             {
                 return new JsonResult(new SystemResponse { Message = "falla interna",StatusCode = 500}) { StatusCode = 500 };
             }
-
 
         }
 

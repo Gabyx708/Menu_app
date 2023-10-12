@@ -16,7 +16,7 @@ namespace Application.Interfaces.IPedido
         List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? fechaDesde,DateTime? fechaHasta, int? cantidad);
         List<PedidoResponse> PedidosDelMenu(Guid idMenu);
         List<PedidoResponse> PedidosPorFecha(DateTime fecha);
-        PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request);
+        PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request,Guid usuarioPedidor);
 
     }
 }

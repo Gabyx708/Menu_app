@@ -9,9 +9,9 @@ namespace Application.Interfaces.IAutorizacionPedido
 {
     public interface IRepositoryAutorizacionPedido
     {
-        Task<AutorizacionPedido> CreateAutorizacionPedido(AutorizacionPedido entity);
-        Task<AutorizacionPedido> DeleteAutorizacionPedido(Guid idPedido, Guid idPersonal);
-        Task<AutorizacionPedido> GetAutorizacionPedidoByidPedido(Guid idPedido);
-        Task<List<AutorizacionPedido>> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal);
+        AutorizacionPedido CreateAutorizacionPedido(AutorizacionPedido entity);
+        AutorizacionPedido DeleteAutorizacionPedido(Guid idPedido, Guid idPersonal);
+        AutorizacionPedido GetAutorizacionPedidoByidPedido(Guid idPedido);
+        List<AutorizacionPedido> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal);
     }
 }

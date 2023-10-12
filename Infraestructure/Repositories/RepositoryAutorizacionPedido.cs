@@ -20,17 +20,17 @@ namespace Infraestructure.Repositories
             _context = context;
         }
 
-        public async Task<AutorizacionPedido> CreateAutorizacionPedido(AutorizacionPedido entity)
+        public AutorizacionPedido CreateAutorizacionPedido(AutorizacionPedido entity)
         {
             _context.AutorizacionPedidos.Add(entity);
-            await _context.SaveChangesAsync(); // Guardar los cambios de manera asincrónica en la base de datos
+             _context.SaveChanges(); // Guardar los cambios de manera asincrónica en la base de datos
 
             return entity; // Devolver la entidad creada
         }
 
-        public async Task<AutorizacionPedido> DeleteAutorizacionPedido(Guid idPedido, Guid idPersonal)
+        public AutorizacionPedido DeleteAutorizacionPedido(Guid idPedido, Guid idPersonal)
         {
-            var found = await _context.AutorizacionPedidos.FirstOrDefaultAsync(ap => ap.IdPedido == idPedido  && ap.IdPersonal == idPersonal);
+            var found =  _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido  && ap.IdPersonal == idPersonal);
 
             if(found != null)
             {
@@ -42,9 +42,9 @@ namespace Infraestructure.Repositories
             throw new Exception();
         }
 
-        public async Task<AutorizacionPedido> GetAutorizacionPedidoByidPedido(Guid idPedido)
+        public AutorizacionPedido GetAutorizacionPedidoByidPedido(Guid idPedido)
         {
-            var found = await _context.AutorizacionPedidos.FirstOrDefaultAsync(ap => ap.IdPedido == idPedido);
+            var found =  _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido);
 
             if(found != null)
             {
@@ -54,9 +54,9 @@ namespace Infraestructure.Repositories
             throw new InvalidDataException();
         }
 
-        public async Task<List<AutorizacionPedido>> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal)
+        public List<AutorizacionPedido> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal)
         {
-            var autorizaciones = await _context.AutorizacionPedidos.Where(ap => ap.IdPersonal == idPersonal).ToListAsync();
+            var autorizaciones =  _context.AutorizacionPedidos.Where(ap => ap.IdPersonal == idPersonal).ToList();
             return autorizaciones;
         }
 
