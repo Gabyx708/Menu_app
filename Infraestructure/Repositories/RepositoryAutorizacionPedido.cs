@@ -51,7 +51,7 @@ namespace Infraestructure.Repositories
                 return found;
             }
 
-            throw new InvalidDataException();
+            return null;
         }
 
         public List<AutorizacionPedido> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal)

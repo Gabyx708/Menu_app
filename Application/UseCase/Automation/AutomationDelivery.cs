@@ -91,7 +91,7 @@ namespace Application.Tools.Automation
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("falla critica...");
+                    Console.WriteLine("falla critica... \n"+e.Message);
                 }
             }
 

@@ -9,12 +9,12 @@ using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
 using Application.Request.MenuPlatilloRequests;
 using Application.Request.PedidoRequests;
+using Application.Response.AutorizacionPedidoResponses;
 using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
 using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
 using Domain.Entities;
-using System.Linq.Expressions;
 
 namespace Application.UseCase.Pedidos
 {
@@ -72,14 +72,30 @@ namespace Application.UseCase.Pedidos
                 }
 
                 var personal = _personalService.GetPersonalById(pedido.IdPersonal);
+                var autorizaicion = _repositoryAuthPedido.GetAutorizacionPedidoByidPedido(pedido.IdPedido);
+                
+                AutorizacionPedidoResponse authResponse = null ;
+
+                if (autorizaicion != null)
+                {
+                    var personalAutorizador = _personalService.GetPersonalById(autorizaicion.IdPersonal);
+
+                    authResponse = new AutorizacionPedidoResponse
+                    {
+                        idPedido = autorizaicion.IdPedido,
+                        Autorizador = personalAutorizador.id,
+                        Nombre= personalAutorizador.nombre+" "+personalAutorizador.apellido
+                    };
+                }
 
                 return new PedidoResponse
                 {
                     idPedido = idPedido,
-                    Nombre = personal.nombre+" "+personal.apellido,
+                    Nombre = personal.nombre + " " + personal.apellido,
                     fecha = pedido.FechaDePedido,
                     platillos = platillosDelMenu,
-                    recibo = _reciboService.GetReciboById(pedido.IdRecibo)
+                    recibo = _reciboService.GetReciboById(pedido.IdRecibo),
+                    Autorizacion = authResponse
                 };
             }
 
@@ -93,9 +109,9 @@ namespace Application.UseCase.Pedidos
 
             if (found != null)
             {
-               Guid idMenuPlatilloPrimero = found.PedidosPorMenuPlatillo[0].IdMenuPlatillo;
-               DateTime fechaCierreMenu = _menuPlatilloQuery.GetById(idMenuPlatilloPrimero).Menu.FechaCierre;
-               DateTime fechaActual = DateTime.Now;
+                Guid idMenuPlatilloPrimero = found.PedidosPorMenuPlatillo[0].IdMenuPlatillo;
+                DateTime fechaCierreMenu = _menuPlatilloQuery.GetById(idMenuPlatilloPrimero).Menu.FechaCierre;
+                DateTime fechaActual = DateTime.Now;
 
                 if (fechaActual > fechaCierreMenu)
                 {
@@ -118,7 +134,7 @@ namespace Application.UseCase.Pedidos
                 throw new SystemExceptionApp("pedido sin platillos", 400);
             }
 
-            List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date,DateTime.Now.Date, 1);
+            List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date, DateTime.Now.Date, 1);
             var fechaActual = DateTime.Now;
 
             MenuResponse ultimoMenu = _menuService.GetUltimoMenu();
@@ -126,8 +142,9 @@ namespace Application.UseCase.Pedidos
             var fechaCierreMenu = ultimoMenu.fecha_cierre;
             var fechaCargaMenu = ultimoMenu.fecha_carga;
 
-            if (existePedido.Count > 0) {
-                throw new SystemExceptionApp("pedido ya hecho",409);
+            if (existePedido.Count > 0)
+            {
+                throw new SystemExceptionApp("pedido ya hecho", 409);
             }
 
             if (fechaActual < fechaCargaMenu)
@@ -135,7 +152,7 @@ namespace Application.UseCase.Pedidos
                 throw new SystemExceptionApp("fecha menor a fecha carga", 409);
             }
 
-            if(fechaActual > fechaCierreMenu)
+            if (fechaActual > fechaCierreMenu)
             {
                 throw new SystemExceptionApp("fecha mayor a fecha cierre", 409);
             }
@@ -184,7 +201,7 @@ namespace Application.UseCase.Pedidos
             return GetPedidoById(nuevoPedido.IdPedido);
         }
 
-        public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request,Guid usuarioPedidor)
+        public PedidoResponse HacerUnpedidoSinRestricciones(PedidoRequest request, Guid usuarioPedidor)
         {
             if (request.MenuPlatillos.Count < 1 || request.MenuPlatillos.Count == 0)
             {
@@ -215,7 +232,7 @@ namespace Application.UseCase.Pedidos
                 };
 
                 if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
-                {  
+                {
                     return EliminarPedido(nuevoPedido.IdPedido);
                 }
 
@@ -250,13 +267,13 @@ namespace Application.UseCase.Pedidos
             throw new NotImplementedException();
         }
 
-        public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? Desde,DateTime? Hasta, int? cantidad)
-        {   
+        public List<PedidoGetResponse> PedidoFiltrado(Guid? idPersonal, DateTime? Desde, DateTime? Hasta, int? cantidad)
+        {
 
-            List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde,Hasta,cantidad);
+            List<Pedido> pedidos = _query.GetPedidosFiltrado(idPersonal, Desde, Hasta, cantidad);
             List<PedidoGetResponse> pedidosResponse = new List<PedidoGetResponse>();
 
-            
+
             foreach (var pedido in pedidos)
             {
                 PersonalResponse persona = _personalService.GetPersonalById(pedido.IdPersonal);
@@ -268,7 +285,7 @@ namespace Application.UseCase.Pedidos
                     Personal = pedido.IdPersonal,
                     Fecha = pedido.FechaDePedido,
                     Recibo = pedido.IdRecibo,
-                    Nombre = persona.nombre +" "+persona.apellido
+                    Nombre = persona.nombre + " " + persona.apellido
                 };
 
                 pedidosResponse.Add(nuevo);
