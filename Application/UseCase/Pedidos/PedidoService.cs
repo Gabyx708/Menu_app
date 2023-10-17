@@ -208,6 +208,11 @@ namespace Application.UseCase.Pedidos
                 throw new SystemExceptionApp("pedido sin platillos", 400);
             }
 
+            if (request.MenuPlatillos.GroupBy(mp => mp).Any(g => g.Count() > 1))
+            {
+                throw new SystemExceptionApp("platillos repetidos", 400);
+            }
+
             decimal precioTotal = 0;
 
             Pedido nuevoPedido = new Pedido
