@@ -40,6 +40,7 @@ namespace MenuApi.Controllers
                 return Unauthorized(); 
             }
 
+            Logger.LogInformation("login success for user: {@user}", usuarioLog.id);
             return Ok(usuarioLog);
         }
 

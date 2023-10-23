@@ -2,6 +2,7 @@
 using Application.Interfaces.IMenuPlatillo;
 using Application.Request.MenuRequests;
 using Application.Response.MenuResponses;
+using Application.Tools.Log;
 using Domain.Entities;
 using System.Text;
 
@@ -35,6 +36,7 @@ namespace Application.UseCase.Menues
             }
 
             _command.CreateMenu(nuevoMenu);
+            Logger.LogInformation("create new menu: {@menu}", nuevoMenu);
 
             _serviceMenuPlatillo.AsignarPlatillosAMenu(nuevoMenu.IdMenu, request.platillosDelMenu);
 
@@ -82,6 +84,7 @@ namespace Application.UseCase.Menues
             if(found != null)
             {
                 _command.DeleteMenu(found);
+                Logger.LogInformation("delete menu: {@menu}", found.IdMenu);
                 return foundResponse;
             }
 

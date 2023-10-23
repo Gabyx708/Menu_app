@@ -51,7 +51,15 @@ namespace MenuApi
             //custom
 
             //log path file
-            string? logPath = builder.Configuration["AppSettings:logPath"];
+            string logPath = builder.Configuration["AppSettings:logPath"];
+
+            if (logPath == null)
+            {
+                Console.WriteLine("FAIL: LOG PATH FOR LOGS NULL...");
+                return;
+
+            }
+
             Logger.InitializeLogger(logPath);
 
             //secreto
@@ -62,8 +70,29 @@ namespace MenuApi
             //Database
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            if(connectionString != null)
-                builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
+            if(connectionString == null)
+            {
+                Logger.LogError(null,"connection string not detected");
+                return;
+            }
+            
+            builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
+
+            //test database
+            try
+            {
+                using (var dbContext = new MenuAppContext(new DbContextOptionsBuilder<MenuAppContext>().UseMySQL(connectionString).Options))
+                {
+                    dbContext.Database.OpenConnection();
+                    dbContext.Database.CloseConnection();
+                    Logger.LogInformation("connect database...");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex,"Error connection database: {Error}",ex.Message);
+                return;
+            }
 
             //Personal
             builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
@@ -162,15 +191,7 @@ namespace MenuApi
 
             var app = builder.Build();
 
-            //aplica migraciones automaticas
-            //using (var scope = app.Services.CreateScope())
-            //{ 
-            //    var dbContext = scope.ServiceProvider.GetRequiredService<MenuAppContext>();
-            //    dbContext.Database.Migrate();
-            //}
-
-
-
+           
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -188,7 +209,7 @@ namespace MenuApi
             app.MapControllers();
 
             Logger.LogInformation("app runing...", null);
-            app.Run();
+            app.Run();        
         }
     }
 }

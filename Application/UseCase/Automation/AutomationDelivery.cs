@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IAutomation;
+﻿using Application.Exceptions;
+using Application.Interfaces.IAutomation;
 using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.IMenu;
 using Application.Interfaces.IPedido;
@@ -9,6 +10,7 @@ using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
 using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
+using Application.Tools.Log;
 using Application.UseCase.Automation;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
@@ -79,6 +81,7 @@ namespace Application.Tools.Automation
                 try
                 {
                     PedidoResponse pedidoPorBOT = _services.HacerUnpedido(request);
+                    Logger.LogInformation("BOT make a order: ID: {@order} USER: {@user}", pedidoPorBOT.idPedido, pedidoPorBOT.Nombre);
 
                     var nuevaAutorizacion = new AutorizacionPedido
                     {
@@ -89,13 +92,22 @@ namespace Application.Tools.Automation
                      _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
                     contadorPedidos++;
                 }
+                catch (SystemExceptionApp e)
+                {
+                    Logger.LogInformation("order restrictions detected: {@msg}", e._message);
+                }
                 catch (Exception e)
                 {
-                    Console.WriteLine("falla critica... \n"+e.Message);
+                    Logger.LogError(e, "ERROR FAIL MAKE AUTO ORDER!!!");
                 }
             }
 
-            return cantPedidos == contadorPedidos ? true : false;
+            bool isCompleted = cantPedidos == contadorPedidos ? true : false;
+
+            if (!isCompleted)
+                Logger.LogWarning($"Failed to request all automatic orders  made:{contadorPedidos} of: {cantPedidos}", null);
+
+            return isCompleted;
         }
 
         public PersonalResponse SetPedidoAutomatico(AutomationRequest request)

@@ -14,6 +14,7 @@ using Application.Response.MenuPlatilloResponses;
 using Application.Response.MenuResponses;
 using Application.Response.PedidoResponses;
 using Application.Response.PersonalResponses;
+using Application.Tools.Log;
 using Domain.Entities;
 
 namespace Application.UseCase.Pedidos
@@ -114,7 +115,7 @@ namespace Application.UseCase.Pedidos
                 DateTime fechaActual = DateTime.Now;
 
                 if (fechaActual > fechaCierreMenu)
-                {
+                {   
                     throw new InvalidOperationException();
                 }
 
@@ -168,6 +169,8 @@ namespace Application.UseCase.Pedidos
             };
 
             _command.createPedido(nuevoPedido);
+            Logger.LogInformation("create new order: {@order} for user: {@user}", 
+                                  nuevoPedido.IdPedido,nuevoPedido.IdPersonal);
 
             foreach (var menuPlatilloId in request.MenuPlatillos)
             {
@@ -183,6 +186,7 @@ namespace Application.UseCase.Pedidos
 
                 if (menuPlatilloEcontrado.stock == _menuPlatilloQuery.GetById(menuPlatilloId).Solicitados)
                 {
+                    Logger.LogInformation("delete new orer: {@order}", nuevoPedido);
                     return EliminarPedido(nuevoPedido.IdPedido);
                 }
 
@@ -223,6 +227,8 @@ namespace Application.UseCase.Pedidos
             };
 
             _command.createPedido(nuevoPedido);
+            Logger.LogInformation("create new order without restrictions: order:{@order} user: {@user}"
+                                  , nuevoPedido.IdPedido,nuevoPedido.IdPersonal);
 
             foreach (var menuPlatilloId in request.MenuPlatillos)
             {
@@ -260,6 +266,8 @@ namespace Application.UseCase.Pedidos
             };
 
             _repositoryAuthPedido.CreateAutorizacionPedido(autorizacion);
+            Logger.LogInformation("create new authorization order:{@auth} by user {@user}", 
+                                   autorizacion.IdPedido,autorizacion.IdPersonal);
 
             return GetPedidoById(nuevoPedido.IdPedido);
         }
