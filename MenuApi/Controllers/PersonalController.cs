@@ -7,6 +7,7 @@ using Application.Request.UsuarioLoginRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PersonalResponses;
 using Application.Response.UsuarioLoginResponse;
+using Application.Tools.Log;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,13 @@ namespace MenuApi.Controllers
         public IActionResult loginUser(UsuarioLoginRequest request)
         {
             var usuarioLog = _authService.autenticarUsuario(request);
-            if (usuarioLog == null) { return Unauthorized(); }
+
+            if (usuarioLog == null) {
+
+                Logger.LogInformation("login attempt for user: {@user}", request.username);    
+                return Unauthorized(); 
+            }
+
             return Ok(usuarioLog);
         }
 
@@ -43,6 +50,8 @@ namespace MenuApi.Controllers
         public IActionResult changePassword(Guid id, PersonalPasswordRequest request)
         {
             var result = _authService.changeUserPassword(id, request);
+
+            Logger.LogInformation("change password attemp for user: {@userId}", id);
 
             if (result == null)
             {

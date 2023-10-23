@@ -29,9 +29,8 @@ using Infraestructure.Querys;
 using Infraestructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
+using Application.Tools.Log;
 using System.Text;
 
 namespace MenuApi
@@ -51,14 +50,20 @@ namespace MenuApi
 
             //custom
 
+            //log path file
+            string? logPath = builder.Configuration["AppSettings:logPath"];
+            Logger.InitializeLogger(logPath);
+
             //secreto
             string? secret = builder.Configuration.GetSection("AppSettings")["secreto"];
 
-            if(secret == null) { throw new ArgumentNullException(nameof(secret)); }
+            if (secret == null) { throw new ArgumentNullException(nameof(secret)); }
 
             //Database
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
+
+            if(connectionString != null)
+                builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             //Personal
             builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
@@ -125,24 +130,24 @@ namespace MenuApi
             builder.Services.AddScoped<IPagoService, PagoService>();
 
             //Automatizacion de pedidos
-            builder.Services.Configure<OptionsDelivery>(builder.Configuration.GetSection("AppSettings"));
+            builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
             builder.Services.AddScoped<IAutomation, AutomationDelivery>();
 
             //Autenticacion
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtBearerOptions =>
              {
-                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(secret)
-                ),
-                    ValidIssuer = "menuServ",
-                    ValidAudience ="menu",
-                    ClockSkew = TimeSpan.FromHours(1)
+                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                         Encoding.UTF8.GetBytes(secret)
+                 ),
+                     ValidIssuer = "menuServ",
+                     ValidAudience = "menu",
+                     ClockSkew = TimeSpan.FromHours(1)
 
-                };
-            });
+                 };
+             });
 
             //CORS deshabilitar
             builder.Services.AddCors(options =>
@@ -182,6 +187,7 @@ namespace MenuApi
 
             app.MapControllers();
 
+            Logger.LogInformation("app runing...", null);
             app.Run();
         }
     }

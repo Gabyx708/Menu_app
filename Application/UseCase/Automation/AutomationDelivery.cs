@@ -28,7 +28,7 @@ namespace Application.Tools.Automation
         private MenuResponse _ultimoMenu;
         private IRepositoryAutorizacionPedido _repositoryAutorizacionPedido;
 
-        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService, IOptions<OptionsDelivery> options, IRepositoryAutorizacionPedido repositoryAutorizacionPedido)
+        public AutomationDelivery(IPedidoService services, IMenuService menuService, IPersonalQuery personalQuery, IPersonalCommand personalCommand, IPersonalService personalService, IOptions<AppSettings> options, IRepositoryAutorizacionPedido repositoryAutorizacionPedido)
         {
             _services = services;
             _menuService = menuService;
