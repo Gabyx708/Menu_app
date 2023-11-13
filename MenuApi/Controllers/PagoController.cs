@@ -2,9 +2,7 @@
 using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MenuApi.Controllers
 {
@@ -26,7 +24,7 @@ namespace MenuApi.Controllers
         {
             var result = _services.HacerUnPago(request);
 
-            return new JsonResult(result) { StatusCode = 201};
+            return new JsonResult(result) { StatusCode = 201 };
         }
 
         [Authorize]
@@ -37,7 +35,7 @@ namespace MenuApi.Controllers
         {
             var result = _services.GetPagoResponseById(id);
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -47,12 +45,12 @@ namespace MenuApi.Controllers
 
         [Authorize]
         [HttpPatch("{id}")]
-        [ProducesResponseType(typeof(NoContentResult),204)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
         public IActionResult AnularPago(long id, PagoAnularRequest request)
         {
             var result = _services.ModificarAnulacion(id, request.IsAnulado);
 
-            if(result == null) { return NotFound(); }
+            if (result == null) { return NotFound(); }
 
             return NoContent();
         }

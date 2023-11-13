@@ -1,12 +1,9 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces.IAutorizacionPedido;
 using Application.Interfaces.IPedido;
 using Application.Request.PedidoRequests;
 using Application.Response.GenericResponses;
 using Application.Response.PedidoResponses;
-using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -34,33 +31,35 @@ namespace MenuApi.Controllers
             var usuarioId = usuarioActual.Claims.FirstOrDefault(u => u.Type == "id").Value;
             var rolAdministrador = "1";
 
-            try {
+            try
+            {
 
-                if (usuarioRol == rolAdministrador && usuarioRol != null){
+                if (usuarioRol == rolAdministrador && usuarioRol != null)
+                {
 
-                    result = _services.HacerUnpedidoSinRestricciones(request,new Guid(usuarioId));         
+                    result = _services.HacerUnpedidoSinRestricciones(request, new Guid(usuarioId));
                 }
                 else
                 {
                     result = _services.HacerUnpedido(request);
                 }
-                
-                return new JsonResult(result) { StatusCode = 201};
+
+                return new JsonResult(result) { StatusCode = 201 };
             }
-            catch(SystemExceptionApp e)
+            catch (SystemExceptionApp e)
             {
                 return new JsonResult(e._response) { StatusCode = e._response.StatusCode };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return new JsonResult(new SystemResponse { Message = "falla interna",StatusCode = 500}) { StatusCode = 500 };
+                return new JsonResult(new SystemResponse { Message = "falla interna", StatusCode = 500 }) { StatusCode = 500 };
             }
 
         }
 
         [Authorize]
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(PedidoResponse),200)]
+        [ProducesResponseType(typeof(PedidoResponse), 200)]
         public IActionResult ConsularPedido(Guid id)
         {
             var pedidoConsultado = _services.GetPedidoById(id);
@@ -80,7 +79,7 @@ namespace MenuApi.Controllers
             {
                 return new JsonResult(new SystemResponse { Message = "fecha excedida", StatusCode = 409 }) { StatusCode = 409 };
             }
-             
+
             return new JsonResult(pedidoEliminado);
         }
 

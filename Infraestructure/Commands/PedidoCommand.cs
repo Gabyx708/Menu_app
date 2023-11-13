@@ -33,7 +33,7 @@ namespace Infraestructure.Commands
 
                 foreach (var MenuPlatillo in pedidosPorMenuPlatillo)
                 {
-                   var menuPlatilloModificar = _context.MenuPlatillos.FirstOrDefault(mp => mp.IdMenuPlatillo == MenuPlatillo.IdMenuPlatillo);
+                    var menuPlatilloModificar = _context.MenuPlatillos.FirstOrDefault(mp => mp.IdMenuPlatillo == MenuPlatillo.IdMenuPlatillo);
                     menuPlatilloModificar.Solicitados = menuPlatilloModificar.Solicitados - 1;
                 }
 

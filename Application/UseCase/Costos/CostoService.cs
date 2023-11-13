@@ -5,11 +5,6 @@ using Application.Interfaces.IPersonal;
 using Application.Interfaces.IRecibo;
 using Application.Response.CostoResponses;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.Costos
 {
@@ -40,7 +35,7 @@ namespace Application.UseCase.Costos
             {
                 Recibo reciboDelPedido = _reciboQuery.GetById(pedido.IdRecibo);
                 decimal descuentoDelPedido = _descuentoQuery.GetById(reciboDelPedido.IdDescuento).Porcentaje;
-                CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal,descuentoDelPedido) + CostototalDescuento;
+                CostototalDescuento = CalcularDescuento(reciboDelPedido.precioTotal, descuentoDelPedido) + CostototalDescuento;
                 Costototal = reciboDelPedido.precioTotal + Costototal;
                 CantidadDePedidos++;
             }
@@ -80,13 +75,13 @@ namespace Application.UseCase.Costos
                 Inicio = fechaInicio,
                 Fin = fechaFin,
                 CostoTotal = Costototal,
-                TotalDescuentos =CostototalDescuento,
+                TotalDescuentos = CostototalDescuento,
                 CantPedidos = CantPedidos
             };
         }
 
-        public CostoPersonalResponse GetCostosPersonal(DateTime fechaInicio,DateTime fechaHasta, Guid idPersonal)
-        {   
+        public CostoPersonalResponse GetCostosPersonal(DateTime fechaInicio, DateTime fechaHasta, Guid idPersonal)
+        {
             Personal persona = _personalQuery.GetPersonalById(idPersonal);
             List<Pedido> pedidosDelDia = _pedidoQuery.GetPedidosFiltrado(idPersonal, fechaInicio, fechaHasta, null);
 
@@ -119,7 +114,7 @@ namespace Application.UseCase.Costos
                 CostoTotal = Costototal,
                 Descuento = CostototalDescuento,
                 CantidadPedidos = CantidadPedidos
-                
+
             };
         }
 
@@ -135,6 +130,6 @@ namespace Application.UseCase.Costos
 
             return resultado;
         }
-    }   
+    }
 
 }

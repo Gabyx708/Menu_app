@@ -104,7 +104,7 @@ namespace Application.UseCase.Personales
 
             };
 
-            _command.updatePersonal(personalId,personalCambiado);
+            _command.updatePersonal(personalId, personalCambiado);
 
             return GetPersonalById(personalId);
         }

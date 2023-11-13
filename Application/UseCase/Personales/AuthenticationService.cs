@@ -20,7 +20,7 @@ namespace Application.UseCase.Personales
         private readonly IPersonalCommand _personalCommand;
         private readonly IPersonalQuery _personalQuery;
         private readonly string _secret;
-        public AuthenticationService(string secret,IAuthenticacionQuery query, IPersonalService personalService, IPersonalQuery personalQuery, IPersonalCommand personalCommand)
+        public AuthenticationService(string secret, IAuthenticacionQuery query, IPersonalService personalService, IPersonalQuery personalQuery, IPersonalCommand personalCommand)
         {
             _secret = secret;
             _query = query;
@@ -37,7 +37,7 @@ namespace Application.UseCase.Personales
             var token = generateTokenAutentication(persona);
 
             return new UsuarioLoginResponse
-            {   
+            {
                 id = persona.IdPersonal,
                 Nombre = persona.Nombre,
                 Apellido = persona.Apellido,
@@ -67,7 +67,8 @@ namespace Application.UseCase.Personales
         {
             var personal = _personalQuery.GetPersonalById(idUser);
 
-            if (personal !=null) {
+            if (personal != null)
+            {
                 var passwordRest = Encrypt256.GetSHA256(personal.Dni);
                 personal.Password = passwordRest;
                 _personalCommand.updatePersonal(idUser, personal);

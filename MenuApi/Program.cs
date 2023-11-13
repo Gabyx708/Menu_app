@@ -12,6 +12,7 @@ using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
 using Application.Tools.Automation;
+using Application.Tools.Log;
 using Application.UseCase.Automation;
 using Application.UseCase.Costos;
 using Application.UseCase.Descuentos;
@@ -30,11 +31,7 @@ using Infraestructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Application.Tools.Log;
 using System.Text;
-using Application.Interfaces.ICoordinationServices;
-using Infraestructure.Services;
-using Automation_Service;
 
 namespace MenuApi
 {
@@ -73,12 +70,12 @@ namespace MenuApi
             //Database
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            if(connectionString == null)
+            if (connectionString == null)
             {
-                Logger.LogError(null,"connection string not detected");
+                Logger.LogError(null, "connection string not detected");
                 return;
             }
-            
+
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
             //test database
@@ -93,7 +90,7 @@ namespace MenuApi
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex,"Error connection database: {Error}",ex.Message);
+                Logger.LogError(ex, "Error connection database: {Error}", ex.Message);
                 return;
             }
 
@@ -152,10 +149,7 @@ namespace MenuApi
 
             //autorizaciones pedido
             builder.Services.AddScoped<IRepositoryAutorizacionPedido, RepositoryAutorizacionPedido>();
-            builder.Services.AddSingleton<ICoordinatingService, CoordinatingService>();
 
-            //worker para pedidos
-            builder.Services.AddHostedService<DeliveryWorker>();
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();
@@ -199,7 +193,7 @@ namespace MenuApi
 
             var app = builder.Build();
 
-           
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -217,7 +211,7 @@ namespace MenuApi
             app.MapControllers();
 
             Logger.LogInformation("app runing...", null);
-            app.Run();        
+            app.Run();
         }
     }
 }

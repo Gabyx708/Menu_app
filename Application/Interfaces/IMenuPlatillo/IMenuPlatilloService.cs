@@ -1,6 +1,5 @@
 ﻿using Application.Request.MenuPlatilloRequests;
 using Application.Response.MenuPlatilloResponses;
-using Domain.Entities;
 
 namespace Application.Interfaces.IMenuPlatillo
 {

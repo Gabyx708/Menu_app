@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces.IPagos;
 using Application.Response.PagoResponses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -19,14 +18,15 @@ namespace MenuApi.Controllers
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(List<PagoResponse>),200)]
-        public IActionResult AllPagos(DateTime? fechaDesde,DateTime? fechaHasta)
+        [ProducesResponseType(typeof(List<PagoResponse>), 200)]
+        public IActionResult AllPagos(DateTime? fechaDesde, DateTime? fechaHasta)
         {
             List<PagoResponse> result;
 
-            if(fechaDesde != null && fechaHasta != null) {
+            if (fechaDesde != null && fechaHasta != null)
+            {
 
-                result = _services.ObtenerPagosFiltrados((DateTime)fechaDesde,(DateTime) fechaHasta);
+                result = _services.ObtenerPagosFiltrados((DateTime)fechaDesde, (DateTime)fechaHasta);
             }
             else
             {
@@ -39,7 +39,7 @@ namespace MenuApi.Controllers
                 return NotFound();
             }
 
-            return new JsonResult(result) { StatusCode = 200};
+            return new JsonResult(result) { StatusCode = 200 };
         }
     }
 }

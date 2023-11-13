@@ -30,7 +30,7 @@ namespace Infraestructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PersonalConfig());
-            modelBuilder.ApplyConfiguration(new PedidosConfig());          
+            modelBuilder.ApplyConfiguration(new PedidosConfig());
             modelBuilder.ApplyConfiguration(new MenuPlatilloConfig());
             modelBuilder.ApplyConfiguration(new PedidoPorMenuPlatilloConfig());
             modelBuilder.ApplyConfiguration(new ReciboConfig());
@@ -40,13 +40,13 @@ namespace Infraestructure.Persistence
             modelBuilder.ApplyConfiguration(new DescuentoConfig());
             modelBuilder.ApplyConfiguration(new AutorizacionPedidoConfig());
 
-            
+
             modelBuilder.ApplyConfiguration(new AdministradorTest());
             modelBuilder.ApplyConfiguration(new DescuentoTest());
 
             //test data
             //TODO delete for production enviroment
-            modelBuilder.ApplyConfiguration(new PlatilloTest());     
+            modelBuilder.ApplyConfiguration(new PlatilloTest());
             modelBuilder.ApplyConfiguration(new PersonalConfig());
             modelBuilder.ApplyConfiguration(new PersonalTest());
         }

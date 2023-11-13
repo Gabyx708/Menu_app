@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces.IPlatillo;
-using Application.Response.DescuentoResponse;
 using Application.Response.PlatilloResponses;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuApi.Controllers
@@ -18,13 +16,13 @@ namespace MenuApi.Controllers
         }
 
         [HttpPatch]
-        [ProducesResponseType(typeof(NoContentResult),204)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
         public IActionResult AlterarPrecios(decimal nuevoPrecio)
         {
             var result = _services.AlterarPreciosMasivamente(nuevoPrecio);
 
 
-            if (result) { return NoContent();  }
+            if (result) { return NoContent(); }
 
             return new JsonResult("ocurrio un problema durante los cambios");
         }

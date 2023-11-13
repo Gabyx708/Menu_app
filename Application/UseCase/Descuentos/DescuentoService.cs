@@ -66,7 +66,7 @@ namespace Application.UseCase.Descuentos
         {
             var vigente = _query.GetVigente();
 
-            if(vigente == null)
+            if (vigente == null)
             {
                 return null;
             }

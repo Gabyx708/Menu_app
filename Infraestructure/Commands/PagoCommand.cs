@@ -44,7 +44,7 @@ namespace Infraestructure.Commands
 
             pagoOriginal.IsAnulado = estadoAnulado;
 
-            if(estadoAnulado == true) 
+            if (estadoAnulado == true)
             {
                 var recibosDeEsePago = _context.Recibos.Where(r => r.NumeroPago == NPago).ToList();
 

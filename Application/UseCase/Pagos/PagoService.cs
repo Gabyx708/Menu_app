@@ -3,16 +3,11 @@ using Application.Interfaces.IPersonal;
 using Application.Request.PagoRequests;
 using Application.Response.PagoResponses;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.Pagos
 {
     public class PagoService : IPagoService
-    {   
+    {
         private readonly IPagoCommand _command;
         private readonly IPagoQuery _query;
         private readonly IPersonalQuery _personalQuery;
@@ -29,10 +24,10 @@ namespace Application.UseCase.Pagos
         {
             var pagoRecuperado = _query.GetPagoById(id);
 
-            if(pagoRecuperado == null) { return null; }
+            if (pagoRecuperado == null) { return null; }
 
             Personal personalDelPago = _personalQuery.GetPersonalById(pagoRecuperado.idPersonal);
-            string nombrePersonal = personalDelPago.Nombre +" "+personalDelPago.Apellido;
+            string nombrePersonal = personalDelPago.Nombre + " " + personalDelPago.Apellido;
             string dniPersonal = personalDelPago.Dni;
 
             List<Guid> idRecibos = new List<Guid>();
@@ -60,16 +55,16 @@ namespace Application.UseCase.Pagos
             nuevoPago.FechaPago = DateTime.Now;
 
 
-            _command.InsertPago(nuevoPago,request.Recibos);
+            _command.InsertPago(nuevoPago, request.Recibos);
 
             return GetPagoResponseById(nuevoPago.NumeroPago);
         }
 
         public PagoResponse ModificarAnulacion(long NumeroPago, bool IsAnulado)
         {
-          var pagoModificado =  _command.ModificarEstadoAnulado(NumeroPago, IsAnulado);
+            var pagoModificado = _command.ModificarEstadoAnulado(NumeroPago, IsAnulado);
 
-            if(pagoModificado == null) { return null; }
+            if (pagoModificado == null) { return null; }
 
             return GetPagoResponseById(pagoModificado.NumeroPago);
         }
@@ -77,8 +72,8 @@ namespace Application.UseCase.Pagos
         public List<PagoResponse> ObtenerPagosFiltrados(DateTime fechaDesde, DateTime fechaHasta)
         {
             List<Pago> pagosRecuperados = _query.GetPagoFiltrado(fechaDesde, fechaHasta);
-            
-            if(pagosRecuperados.Count == 0) { return null; }
+
+            if (pagosRecuperados.Count == 0) { return null; }
 
             List<PagoResponse> pagosMapeados = new List<PagoResponse>();
 

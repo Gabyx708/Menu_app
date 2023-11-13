@@ -62,8 +62,8 @@ namespace Application.Tools.Automation
 
                 MenuPlatilloGetResponse opcionElegida = _ultimoMenu.platillos[opcion];
 
-              
-                while(opcionElegida.stock <= opcionElegida.pedido)
+
+                while (opcionElegida.stock <= opcionElegida.pedido)
                 {
                     opcion = randomMenuOpcion();
                     opcionElegida = _ultimoMenu.platillos[opcion];
@@ -89,7 +89,7 @@ namespace Application.Tools.Automation
                         IdPersonal = new Guid(idUsuarioBOT),
                     };
 
-                     _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
+                    _repositoryAutorizacionPedido.CreateAutorizacionPedido(nuevaAutorizacion);
                     contadorPedidos++;
                 }
                 catch (SystemExceptionApp e)
@@ -127,7 +127,7 @@ namespace Application.Tools.Automation
             {
                 return null;
             }
-           
+
         }
 
         private int randomMenuOpcion()

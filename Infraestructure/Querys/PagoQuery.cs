@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.IPagos;
 using Domain.Entities;
 using Infraestructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
@@ -27,7 +22,7 @@ namespace Infraestructure.Querys
         {
             var pago = _context.Pagos.FirstOrDefault(p => p.NumeroPago == NPago);
 
-            if(pago == null) { return null; }
+            if (pago == null) { return null; }
 
             pago.Recibos = _context.Recibos.Where(r => r.NumeroPago == NPago).ToList();
 

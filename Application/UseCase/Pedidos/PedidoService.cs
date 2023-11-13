@@ -74,8 +74,8 @@ namespace Application.UseCase.Pedidos
 
                 var personal = _personalService.GetPersonalById(pedido.IdPersonal);
                 var autorizaicion = _repositoryAuthPedido.GetAutorizacionPedidoByidPedido(pedido.IdPedido);
-                
-                AutorizacionPedidoResponse authResponse = null ;
+
+                AutorizacionPedidoResponse authResponse = null;
 
                 if (autorizaicion != null)
                 {
@@ -85,7 +85,7 @@ namespace Application.UseCase.Pedidos
                     {
                         idPedido = autorizaicion.IdPedido,
                         Autorizador = personalAutorizador.id,
-                        Nombre= personalAutorizador.nombre+" "+personalAutorizador.apellido
+                        Nombre = personalAutorizador.nombre + " " + personalAutorizador.apellido
                     };
                 }
 
@@ -115,7 +115,7 @@ namespace Application.UseCase.Pedidos
                 DateTime fechaActual = DateTime.Now;
 
                 if (fechaActual > fechaCierreMenu)
-                {   
+                {
                     throw new InvalidOperationException();
                 }
 
@@ -169,8 +169,8 @@ namespace Application.UseCase.Pedidos
             };
 
             _command.createPedido(nuevoPedido);
-            Logger.LogInformation("create new order: {@order} for user: {@user}", 
-                                  nuevoPedido.IdPedido,nuevoPedido.IdPersonal);
+            Logger.LogInformation("create new order: {@order} for user: {@user}",
+                                  nuevoPedido.IdPedido, nuevoPedido.IdPersonal);
 
             foreach (var menuPlatilloId in request.MenuPlatillos)
             {
@@ -228,7 +228,7 @@ namespace Application.UseCase.Pedidos
 
             _command.createPedido(nuevoPedido);
             Logger.LogInformation("create new order without restrictions: order:{@order} user: {@user}"
-                                  , nuevoPedido.IdPedido,nuevoPedido.IdPersonal);
+                                  , nuevoPedido.IdPedido, nuevoPedido.IdPersonal);
 
             foreach (var menuPlatilloId in request.MenuPlatillos)
             {
@@ -266,8 +266,8 @@ namespace Application.UseCase.Pedidos
             };
 
             _repositoryAuthPedido.CreateAutorizacionPedido(autorizacion);
-            Logger.LogInformation("create new authorization order:{@auth} by user {@user}", 
-                                   autorizacion.IdPedido,autorizacion.IdPersonal);
+            Logger.LogInformation("create new authorization order:{@auth} by user {@user}",
+                                   autorizacion.IdPedido, autorizacion.IdPersonal);
 
             return GetPedidoById(nuevoPedido.IdPedido);
         }

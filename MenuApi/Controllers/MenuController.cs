@@ -1,10 +1,8 @@
 ﻿using Application.Interfaces.IAutomation;
-using Application.Interfaces.ICoordinationServices;
 using Application.Interfaces.IMenu;
 using Application.Request.MenuRequests;
 using Application.Response.GenericResponses;
 using Application.Response.MenuResponses;
-using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +14,11 @@ namespace MenuApi.Controllers
     {
         private readonly IMenuService _services;
         private readonly IAutomation _automationService;
-        private readonly ICoordinatingService _coordinatingService;
 
-        public MenuController(IMenuService services, IAutomation automationService, ICoordinatingService coordinatingService)
+        public MenuController(IMenuService services, IAutomation automationService)
         {
             _services = services;
             _automationService = automationService;
-            _coordinatingService = coordinatingService;
         }
 
         [Authorize]
@@ -46,7 +42,7 @@ namespace MenuApi.Controllers
         [HttpGet("fecha/{fechaConsumo}")]
         [ProducesResponseType(typeof(MenuResponse), 200)]
         public IActionResult GetMenuByFecha(string fechaConsumo)
-        {   
+        {
             var menu = _services.GetUltimoMenu();
             return new JsonResult(menu) { StatusCode = 200 };
         }
@@ -60,19 +56,17 @@ namespace MenuApi.Controllers
 
             try
             {
-               nuevoMenu = _services.CreateMenu(request);
+                nuevoMenu = _services.CreateMenu(request);
 
                 //Hacer pedidos automaticos
-                //_automationService.HacerPedidosAutomatico();
-                _coordinatingService.IniciarAutomatizacion();
-                
+                _automationService.HacerPedidosAutomatico();
 
             }
             catch (Exception ex)
             {
                 return new JsonResult(new SystemResponse { Message = "error en fechas de menu", StatusCode = 400 }) { StatusCode = 400 };
             }
-             
+
             return new JsonResult(nuevoMenu) { StatusCode = 201 };
         }
 

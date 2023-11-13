@@ -24,7 +24,7 @@ namespace Infraestructure.Querys
             var found = _context.Pedidos.FirstOrDefault(p => p.IdPedido == idPedido);
 
             if (found != null)
-            {   
+            {
                 found.PedidosPorMenuPlatillo = _context.PedidosPorMenuPlatillo
                         .Where(pmp => pmp.IdPedido == found.IdPedido).ToList();
 

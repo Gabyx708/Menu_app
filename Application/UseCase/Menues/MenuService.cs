@@ -4,7 +4,6 @@ using Application.Request.MenuRequests;
 using Application.Response.MenuResponses;
 using Application.Tools.Log;
 using Domain.Entities;
-using System.Text;
 
 namespace Application.UseCase.Menues
 {
@@ -68,7 +67,7 @@ namespace Application.UseCase.Menues
         {
             var menuFechaConsumo = _query.GetUltimoMenu();
 
-            if(menuFechaConsumo != null)
+            if (menuFechaConsumo != null)
             {
                 return GetMenuById(menuFechaConsumo.IdMenu);
             }
@@ -81,7 +80,7 @@ namespace Application.UseCase.Menues
             var found = _query.GetMenuById(idMenu);
             var foundResponse = GetMenuById(idMenu);
 
-            if(found != null)
+            if (found != null)
             {
                 _command.DeleteMenu(found);
                 Logger.LogInformation("delete menu: {@menu}", found.IdMenu);

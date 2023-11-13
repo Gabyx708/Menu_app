@@ -81,7 +81,7 @@ namespace Application.UseCase.MenuPlatillos
             return menuPlatillos;
         }
 
-        public MenuPlatilloResponse ModificarMenuPlatillo(Guid idMenuPlatillo,MenuPlatilloRequest menuPlatillo)
+        public MenuPlatilloResponse ModificarMenuPlatillo(Guid idMenuPlatillo, MenuPlatilloRequest menuPlatillo)
         {
             var menuPlato = new MenuPlatillo
             {
@@ -89,7 +89,7 @@ namespace Application.UseCase.MenuPlatillos
                 Solicitados = menuPlatillo.solicitados
             };
 
-            var found =  _command.UpdateMenuPlatillo(idMenuPlatillo,menuPlato);
+            var found = _command.UpdateMenuPlatillo(idMenuPlatillo, menuPlato);
             return GetMenuPlatilloById(idMenuPlatillo);
         }
     }

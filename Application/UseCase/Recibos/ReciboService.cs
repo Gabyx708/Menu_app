@@ -79,7 +79,7 @@ namespace Application.UseCase.Recibos
             return recibosResponses;
         }
 
-        public ReciboResponse CambiarPrecio(Guid idRecibo , decimal precioTotal)
+        public ReciboResponse CambiarPrecio(Guid idRecibo, decimal precioTotal)
         {
             var recibo = _command.CambiarPrecioTotal(idRecibo, precioTotal);
             return GetReciboById(recibo.IdRecibo);

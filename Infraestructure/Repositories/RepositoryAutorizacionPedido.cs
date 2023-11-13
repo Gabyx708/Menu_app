@@ -1,12 +1,6 @@
 ﻿using Application.Interfaces.IAutorizacionPedido;
 using Domain.Entities;
 using Infraestructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Repositories
 {
@@ -23,16 +17,16 @@ namespace Infraestructure.Repositories
         public AutorizacionPedido CreateAutorizacionPedido(AutorizacionPedido entity)
         {
             _context.AutorizacionPedidos.Add(entity);
-             _context.SaveChanges(); // Guardar los cambios de manera asincrónica en la base de datos
+            _context.SaveChanges(); // Guardar los cambios de manera asincrónica en la base de datos
 
             return entity; // Devolver la entidad creada
         }
 
         public AutorizacionPedido DeleteAutorizacionPedido(Guid idPedido, Guid idPersonal)
         {
-            var found =  _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido  && ap.IdPersonal == idPersonal);
+            var found = _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido && ap.IdPersonal == idPersonal);
 
-            if(found != null)
+            if (found != null)
             {
                 _context.AutorizacionPedidos.Remove(found);
                 _context.SaveChanges();
@@ -44,9 +38,9 @@ namespace Infraestructure.Repositories
 
         public AutorizacionPedido GetAutorizacionPedidoByidPedido(Guid idPedido)
         {
-            var found =  _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido);
+            var found = _context.AutorizacionPedidos.FirstOrDefault(ap => ap.IdPedido == idPedido);
 
-            if(found != null)
+            if (found != null)
             {
                 return found;
             }
@@ -56,7 +50,7 @@ namespace Infraestructure.Repositories
 
         public List<AutorizacionPedido> GetAutorizacionesPedidoByIdPersonal(Guid idPersonal)
         {
-            var autorizaciones =  _context.AutorizacionPedidos.Where(ap => ap.IdPersonal == idPersonal).ToList();
+            var autorizaciones = _context.AutorizacionPedidos.Where(ap => ap.IdPersonal == idPersonal).ToList();
             return autorizaciones;
         }
 

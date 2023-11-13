@@ -2,11 +2,6 @@
 using Application.Request.PedidoRequests;
 using Application.Response.PedidoPorMenuPlatilloResponses;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCase.PedidoPorMenuPlatillos
 {
@@ -38,7 +33,7 @@ namespace Application.UseCase.PedidoPorMenuPlatillos
             throw new NotImplementedException();
         }
 
-        public PedidoPorMenuPlatilloResponse GetPedidoPorMenuPlatillo(Guid idPedido , Guid idMenuPlatillo)
+        public PedidoPorMenuPlatilloResponse GetPedidoPorMenuPlatillo(Guid idPedido, Guid idMenuPlatillo)
         {
             var found = _query.GetPedidoPorMenuPlatillo(idPedido, idMenuPlatillo);
 
@@ -58,7 +53,7 @@ namespace Application.UseCase.PedidoPorMenuPlatillos
         {
             List<PedidoPorMenuPlatillo> pedidoPorMenuPlatillos = _query.GetPedidoMenuPlatilloByMenu(idMenu);
             List<PedidoPorMenuPlatilloResponse> pedidoPorMenuPlatilloResponses = new List<PedidoPorMenuPlatilloResponse>();
-            
+
             foreach (var pedidoPorMenuPlatillo in pedidoPorMenuPlatillos)
             {
                 var pedidoPorMenu = GetPedidoPorMenuPlatillo(pedidoPorMenuPlatillo.IdPedido, pedidoPorMenuPlatillo.IdMenuPlatillo);

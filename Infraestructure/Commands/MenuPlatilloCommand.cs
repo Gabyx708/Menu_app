@@ -36,11 +36,11 @@ namespace Infraestructure.Commands
             return menuPlatillo;
         }
 
-        public MenuPlatillo UpdateMenuPlatillo(Guid idMenuPlatillo,MenuPlatillo menuPlatillo)
+        public MenuPlatillo UpdateMenuPlatillo(Guid idMenuPlatillo, MenuPlatillo menuPlatillo)
         {
             var found = _context.MenuPlatillos.FirstOrDefault(mp => mp.IdMenuPlatillo == idMenuPlatillo);
 
-            if(found != null)
+            if (found != null)
             {
                 found.IdMenuPlatillo = found.IdMenuPlatillo;
                 found.IdPlatillo = found.IdPlatillo;

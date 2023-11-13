@@ -28,7 +28,7 @@ namespace Infraestructure.Querys
         {
             var found = _context.Menues.FirstOrDefault(m => m.FechaConsumo.Date == fechaConsumo);
 
-            if(found != null)
+            if (found != null)
             {
                 return found;
             }

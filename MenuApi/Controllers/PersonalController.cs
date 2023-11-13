@@ -34,10 +34,11 @@ namespace MenuApi.Controllers
         {
             var usuarioLog = _authService.autenticarUsuario(request);
 
-            if (usuarioLog == null) {
+            if (usuarioLog == null)
+            {
 
-                Logger.LogInformation("login attempt for user: {@user}", request.username);    
-                return Unauthorized(); 
+                Logger.LogInformation("login attempt for user: {@user}", request.username);
+                return Unauthorized();
             }
 
             Logger.LogInformation("login success for user: {@user}", usuarioLog.id);
@@ -96,9 +97,11 @@ namespace MenuApi.Controllers
 
             try
             {
-              
+
                 personalNuevo = _services.createPersonal(request);
-            }catch(InvalidOperationException e) {
+            }
+            catch (InvalidOperationException e)
+            {
 
                 return new JsonResult(new SystemResponse { Message = "intenta con otro DNI", StatusCode = 409 }) { StatusCode = 409 };
             }
@@ -122,7 +125,7 @@ namespace MenuApi.Controllers
 
         [Authorize]
         [HttpPatch("{id}")]
-        public IActionResult AlterarPersonal(Guid id,PersonalRequest request)
+        public IActionResult AlterarPersonal(Guid id, PersonalRequest request)
         {
             var personalAlterado = _services.UpdatePersonal(id, request);
 
@@ -137,15 +140,15 @@ namespace MenuApi.Controllers
             {
                 var result = _automationServices.SetPedidoAutomatico(request);
 
-                if (result ==null) { return NotFound(); };
+                if (result == null) { return NotFound(); };
 
-                return new JsonResult(result) { StatusCode = 204};
+                return new JsonResult(result) { StatusCode = 204 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new JsonResult(new SystemResponse { Message = "ocurrio un problema", StatusCode = 500 }) { StatusCode = 500 };
             }
-            
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Infraestructure.Config.TestData
             builder.HasData
                 (
                     new Personal
-                    {   
+                    {
                         IdPersonal = Guid.NewGuid(),
                         Nombre = "Juan",
                         Apellido = "Pérez",
