@@ -32,6 +32,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Application.Tools.Log;
 using System.Text;
+using Application.Interfaces.ICoordinationServices;
+using Infraestructure.Services;
+using Automation_Service;
 
 namespace MenuApi
 {
@@ -149,6 +152,10 @@ namespace MenuApi
 
             //autorizaciones pedido
             builder.Services.AddScoped<IRepositoryAutorizacionPedido, RepositoryAutorizacionPedido>();
+            builder.Services.AddSingleton<ICoordinatingService, CoordinatingService>();
+
+            //worker
+            builder.Services.AddHostedService<Worker>();
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();

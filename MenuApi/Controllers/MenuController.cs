@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.IAutomation;
+using Application.Interfaces.ICoordinationServices;
 using Application.Interfaces.IMenu;
 using Application.Request.MenuRequests;
 using Application.Response.GenericResponses;
@@ -15,11 +16,13 @@ namespace MenuApi.Controllers
     {
         private readonly IMenuService _services;
         private readonly IAutomation _automationService;
+        private readonly ICoordinatingService _coordinatingService;
 
-        public MenuController(IMenuService services, IAutomation automationService)
+        public MenuController(IMenuService services, IAutomation automationService, ICoordinatingService coordinatingService)
         {
             _services = services;
             _automationService = automationService;
+            _coordinatingService = coordinatingService;
         }
 
         [Authorize]
@@ -60,7 +63,9 @@ namespace MenuApi.Controllers
                nuevoMenu = _services.CreateMenu(request);
 
                 //Hacer pedidos automaticos
-                _automationService.HacerPedidosAutomatico();
+                //_automationService.HacerPedidosAutomatico();
+                _coordinatingService.IniciarAutomatizacion();
+                
 
             }
             catch (Exception ex)
