@@ -17,8 +17,13 @@ namespace Automation_Service
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                Console.WriteLine("hi");
+                if (_coordinatingService.DebeAutomatizar())
+                {
+                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                    _logger.LogInformation("estoy despierto...");
+                    Console.WriteLine("hi");
+                }
+                
                 await Task.Delay(1000, stoppingToken);
             }
         }

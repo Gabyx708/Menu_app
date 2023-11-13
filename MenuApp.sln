@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructure", "Infraestructure\Infraestructure.csproj", "{3C499FF0-9E17-4182-89AA-186B3ABD589E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation_Service", "Automation_Service\Automation_Service.csproj", "{51B7A2B2-C3AA-4273-A7F7-1C336C6864FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomationWorker", "Automation_Service\AutomationWorker.csproj", "{51B7A2B2-C3AA-4273-A7F7-1C336C6864FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

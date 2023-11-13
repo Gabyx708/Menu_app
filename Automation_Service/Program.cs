@@ -3,7 +3,7 @@ using Automation_Service;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddHostedService<Worker>();
+        services.AddHostedService<DeliveryWorker>();
     })
     .Build();
 

@@ -154,8 +154,8 @@ namespace MenuApi
             builder.Services.AddScoped<IRepositoryAutorizacionPedido, RepositoryAutorizacionPedido>();
             builder.Services.AddSingleton<ICoordinatingService, CoordinatingService>();
 
-            //worker
-            builder.Services.AddHostedService<Worker>();
+            //worker para pedidos
+            builder.Services.AddHostedService<DeliveryWorker>();
 
             //Costos
             builder.Services.AddScoped<ICostoService, CostoService>();
@@ -168,6 +168,7 @@ namespace MenuApi
             //Automatizacion de pedidos
             builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
             builder.Services.AddScoped<IAutomation, AutomationDelivery>();
+
 
             //Autenticacion
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

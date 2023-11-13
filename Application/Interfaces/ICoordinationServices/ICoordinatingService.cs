@@ -9,5 +9,7 @@ namespace Application.Interfaces.ICoordinationServices
     public interface ICoordinatingService
     {
         void IniciarAutomatizacion();
+        bool DebeAutomatizar();
+        void Reiniciar();
     }
 }
