@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.IPlatillo;
+using Application.Interfaces.IServices.IAutomationService;
 using Application.Request.PlatilloRequests;
 using Application.Response.PlatilloResponses;
+using Application.Tools.Log;
 using Domain.Entities;
 
 namespace Application.UseCase.Platillos
@@ -9,15 +11,24 @@ namespace Application.UseCase.Platillos
     {
         private readonly IPlatilloQuery _query;
         private readonly IPlatilloCommand _command;
+        private readonly IAdapterAutomationService _adapterAutomationService;
 
-        public PlatilloService(IPlatilloQuery query, IPlatilloCommand command)
+        public PlatilloService(IPlatilloQuery query, IPlatilloCommand command, IAdapterAutomationService adapterAutomationService)
         {
             _query = query;
             _command = command;
+            _adapterAutomationService = adapterAutomationService;
         }
 
         public PlatilloResponse CreatePlatillo(PlatilloRequest request)
         {
+            var categoria = request.categoria;
+
+            if (categoria == null)
+            {
+                throw new InvalidDataException();
+            }
+
             var nuevoPlatillo = new Platillo
             {
                 Descripcion = request.descripcion,
@@ -57,12 +68,31 @@ namespace Application.UseCase.Platillos
 
             if (platilloRecuperado == null) { return null; };
 
+
+            var categoriaNombre = "el servicio de categoria no esta disponible";
+            var categoriaColor = "0000";
+
+            try
+            {
+                var platoInAutomation = _adapterAutomationService.GetPlatilloResponseAutomation(idPlatillo);
+                
+                categoriaNombre = platoInAutomation.categoria;
+                categoriaColor = platoInAutomation.color;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "A problem occurred when trying to recover the category", ex.Message);
+
+            }
+
             return new PlatilloResponse
             {
                 id = platilloRecuperado.IdPlatillo,
                 descripcion = platilloRecuperado.Descripcion,
                 precio = platilloRecuperado.Precio,
-                activado = platilloRecuperado.Activado
+                activado = platilloRecuperado.Activado,
+                categoria = categoriaNombre.ToUpper(),
+                categoriaColor =  categoriaColor
             };
         }
 

@@ -11,6 +11,7 @@ using Application.Interfaces.IPedidoPorMenuPlatillo;
 using Application.Interfaces.IPersonal;
 using Application.Interfaces.IPlatillo;
 using Application.Interfaces.IRecibo;
+using Application.Interfaces.IServices.IAutomationService;
 using Application.Tools.Automation;
 using Application.Tools.Log;
 using Application.UseCase.Automation;
@@ -28,6 +29,7 @@ using Infraestructure.Commands;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Infraestructure.Repositories;
+using Infraestructure.Services.Automation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -163,6 +165,13 @@ namespace MenuApi
             builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
             builder.Services.AddScoped<IAutomation, AutomationDelivery>();
 
+            //microservicio de automatizacion
+            builder.Services.AddScoped<IAdapterAutomationService, AdapterAutomationService>(provider =>
+            {
+                var urlService = "https://localhost:7177/api/v1";
+                return new AdapterAutomationService(urlService);
+            });
+
 
             //Autenticacion
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -195,14 +204,14 @@ namespace MenuApi
 
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (true)
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
             app.UseCors("AllowAll");
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();

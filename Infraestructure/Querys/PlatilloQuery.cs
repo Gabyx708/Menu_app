@@ -15,7 +15,7 @@ namespace Infraestructure.Querys
 
         public Platillo GetPlatilloById(int id)
         {
-            var platilloEncontrado = _context.Platillos.Single(p => p.IdPlatillo == id);
+            var platilloEncontrado = _context.Platillos.Find(id);
 
             if (platilloEncontrado != null) { return platilloEncontrado; }
 

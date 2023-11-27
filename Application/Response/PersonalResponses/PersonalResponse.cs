@@ -1,4 +1,6 @@
-﻿namespace Application.Response.PersonalResponses
+﻿using Application.Models;
+
+namespace Application.Response.PersonalResponses
 {
     public class PersonalResponse
     {
@@ -14,5 +16,6 @@
         public string mail { get; set; }
         public string telefono { get; set; }
         public bool isAutomatico { get; set; }
+        public PreferenciaResponse? Preferencias { get; set; }
     }
 }
