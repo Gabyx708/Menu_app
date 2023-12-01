@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.IAuthentication;
 using Application.Interfaces.IAutomation;
 using Application.Interfaces.IPersonal;
+using Application.Interfaces.IServices.IAutomationService;
+using Application.Models;
 using Application.Request.AutomationRequest;
 using Application.Request.PersonalRequests;
 using Application.Request.UsuarioLoginRequests;
@@ -20,12 +22,14 @@ namespace MenuApi.Controllers
         private readonly IPersonalService _services;
         private readonly IAuthenticationService _authService;
         private readonly IAutomation _automationServices;
+        private readonly IAdapterAutomationUsuario _adapterAutomationService;
 
-        public PersonalController(IPersonalService services, IAuthenticationService authService, IAutomation automationServices)
+        public PersonalController(IPersonalService services, IAuthenticationService authService, IAutomation automationServices, IAdapterAutomationUsuario adapterAutomationService)
         {
             _services = services;
             _authService = authService;
             _automationServices = automationServices;
+            _adapterAutomationService = adapterAutomationService;
         }
 
         [HttpPost("login")]
@@ -116,9 +120,23 @@ namespace MenuApi.Controllers
         public IActionResult GetPersonal(Guid id)
         {
             var personal = _services.GetPersonalById(id);
+            List<CategoriaPrioridad> preferencias;
+
             string message = $"no se encontro un usuario con el id: {id}";
 
+            try
+            {
+                preferencias = _adapterAutomationService.obtenerPrefenciasUsuario(id);
+                personal.Preferencias = preferencias;
+            }
+            catch (Exception)
+            {
+                Logger.LogInformation("could not get preferences");
+            }
+
             if (personal == null) { return NotFound(message); };
+
+           
 
             return new JsonResult(personal) { StatusCode = 200 };
         }

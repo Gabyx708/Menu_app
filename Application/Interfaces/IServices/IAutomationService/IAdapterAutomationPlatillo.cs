@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IServices.IAutomationService
 {
-    public interface IAdapterAutomationService
+    public interface IAdapterAutomationPlatillo
     {
         PlatilloResponseAutomation inserPlatoInAutomation(PlatilloRequestAutomation request);
         PlatilloResponseAutomation GetPlatilloResponseAutomation(int idPlato);
-        List<CategoriaResponse> listaCategorias();
-        CategoriaResponse insertNuevaCategoria(CategoriaRequest request);
-
     }
 }

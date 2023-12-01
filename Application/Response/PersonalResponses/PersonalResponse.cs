@@ -16,6 +16,6 @@ namespace Application.Response.PersonalResponses
         public string mail { get; set; }
         public string telefono { get; set; }
         public bool isAutomatico { get; set; }
-        public PreferenciaResponse? Preferencias { get; set; }
+        public List<CategoriaPrioridad>? Preferencias { get; set; }
     }
 }

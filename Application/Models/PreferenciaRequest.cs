@@ -3,19 +3,19 @@
     public class PreferenciaRequest
     {
         public Guid idUsuario { get; set; }
-        public List<CategoriaPrioridad>? Categorias { get; set; }
+        public List<CategoriaPrioridad>? categorias { get; set; }
     }
 
     public class PreferenciaResponse : PreferenciaRequest
     {
-        public  string? Nombre { get; set; }
-        public string? Apellido { get; set; }
+        public  string? nombre { get; set; }
+        public string? apellido { get; set; }
     }
 
 
     public class CategoriaPrioridad
     {
-        public  string? Categoria { get; set; }
+        public  string? categoria { get; set; }
         public byte prioridad { get; set; }
     }
 }

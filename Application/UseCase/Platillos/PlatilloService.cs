@@ -11,13 +11,13 @@ namespace Application.UseCase.Platillos
     {
         private readonly IPlatilloQuery _query;
         private readonly IPlatilloCommand _command;
-        private readonly IAdapterAutomationService _adapterAutomationService;
+        private readonly IAdapterAutomationPlatillo _adapterAutomationPlatillo;
 
-        public PlatilloService(IPlatilloQuery query, IPlatilloCommand command, IAdapterAutomationService adapterAutomationService)
+        public PlatilloService(IPlatilloQuery query, IPlatilloCommand command, IAdapterAutomationPlatillo adapterAutomationPlatillo)
         {
             _query = query;
             _command = command;
-            _adapterAutomationService = adapterAutomationService;
+            _adapterAutomationPlatillo = adapterAutomationPlatillo;
         }
 
         public PlatilloResponse CreatePlatillo(PlatilloRequest request)
@@ -74,7 +74,7 @@ namespace Application.UseCase.Platillos
 
             try
             {
-                var platoInAutomation = _adapterAutomationService.GetPlatilloResponseAutomation(idPlatillo);
+                var platoInAutomation = _adapterAutomationPlatillo.GetPlatilloResponseAutomation(idPlatillo);
                 
                 categoriaNombre = platoInAutomation.categoria;
                 categoriaColor = platoInAutomation.color;

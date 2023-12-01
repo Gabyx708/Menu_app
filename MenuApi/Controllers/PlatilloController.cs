@@ -13,11 +13,13 @@ namespace MenuApi.Controllers
     public class PlatilloController : ControllerBase
     {
         private readonly IPlatilloService _services;
-        private readonly IAdapterAutomationService _adapterAutomationService;
-        public PlatilloController(IPlatilloService services, IAdapterAutomationService adapterAutomationService)
+        private readonly IAdapterAutomationPlatillo _adapterAutomationPlatillo;
+        private readonly IAdapterAutomationCategoria _adapterAutomationCategoria;
+        public PlatilloController(IPlatilloService services, IAdapterAutomationPlatillo adapterAutomationPlatillo, IAdapterAutomationCategoria adapterAutomationCategoria)
         {
             _services = services;
-            _adapterAutomationService = adapterAutomationService;
+            _adapterAutomationPlatillo = adapterAutomationPlatillo;
+            _adapterAutomationCategoria = adapterAutomationCategoria;
         }
 
 
@@ -45,7 +47,7 @@ namespace MenuApi.Controllers
 
             try
             {
-                _adapterAutomationService.inserPlatoInAutomation(requestPlatoCategoria);
+                _adapterAutomationPlatillo.inserPlatoInAutomation(requestPlatoCategoria);
 
             }
             catch (IOException)
@@ -70,7 +72,7 @@ namespace MenuApi.Controllers
         {
             try { 
 
-                var categoriaNueva = _adapterAutomationService.insertNuevaCategoria(request);
+                var categoriaNueva = _adapterAutomationCategoria.insertNuevaCategoria(request);
                 return new JsonResult(categoriaNueva) { StatusCode = 201 };
 
              }
@@ -91,7 +93,7 @@ namespace MenuApi.Controllers
         {
             try
             {
-                var categorias = _adapterAutomationService.listaCategorias();
+                var categorias = _adapterAutomationCategoria.listaCategorias();
                 return new JsonResult(categorias) { StatusCode = 200 };
             }
             catch (Exception)

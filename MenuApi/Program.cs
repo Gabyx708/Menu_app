@@ -74,7 +74,7 @@ namespace MenuApi
 
             if (connectionString == null)
             {
-                Logger.LogError(null, "connection string not detected");
+                Logger.LogError(new NullReferenceException(),"connection string not detected");
                 return;
             }
 
@@ -95,6 +95,8 @@ namespace MenuApi
                 Logger.LogError(ex, "Error connection database: {Error}", ex.Message);
                 return;
             }
+
+            Logger.LogInformation("connect database...[OK]");
 
             //Personal
             builder.Services.AddScoped<IPersonalCommand, PersonalCommand>();
@@ -166,10 +168,22 @@ namespace MenuApi
             builder.Services.AddScoped<IAutomation, AutomationDelivery>();
 
             //microservicio de automatizacion
-            builder.Services.AddScoped<IAdapterAutomationService, AdapterAutomationService>(provider =>
+            var urlService = "https://localhost:7177/api/v1";
+
+            builder.Services.AddScoped<IAdapterAutomationUsuario, AdapterAutomationUsuario>(provider =>
             {
-                var urlService = "https://localhost:7177/api/v1";
-                return new AdapterAutomationService(urlService);
+                return new AdapterAutomationUsuario(urlService);
+            });
+
+
+            builder.Services.AddScoped<IAdapterAutomationPlatillo, AdapterAutomationPlatillo>(provider =>
+            {
+                return new AdapterAutomationPlatillo(urlService);
+            });
+
+            builder.Services.AddScoped<IAdapterAutomationCategoria, AdapterAutomationCategorias>(provider =>
+            {
+                return new AdapterAutomationCategorias(urlService);
             });
 
 
@@ -219,7 +233,7 @@ namespace MenuApi
 
             app.MapControllers();
 
-            Logger.LogInformation("app runing...", null);
+            Logger.LogInformation("app runing...");
             app.Run();
         }
     }
