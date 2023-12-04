@@ -87,25 +87,5 @@ namespace MenuApi.Controllers
             }
         }
 
-        [HttpGet("categoria")]
-        [ProducesResponseType(typeof(List<CategoriaResponse>), 200)]
-        public IActionResult ConseguirCategorias()
-        {
-            try
-            {
-                var categorias = _adapterAutomationCategoria.listaCategorias();
-                return new JsonResult(categorias) { StatusCode = 200 };
-            }
-            catch (Exception)
-            {
-                return new JsonResult(new SystemResponse
-                {
-                    Message = "es posible que el servicio de automatizacion no funcione",
-                    StatusCode = 500
-                })
-                { StatusCode = 500 };
-            }
-           
-        }
     }
 }

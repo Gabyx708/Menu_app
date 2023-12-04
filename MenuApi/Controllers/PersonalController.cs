@@ -22,14 +22,14 @@ namespace MenuApi.Controllers
         private readonly IPersonalService _services;
         private readonly IAuthenticationService _authService;
         private readonly IAutomation _automationServices;
-        private readonly IAdapterAutomationUsuario _adapterAutomationService;
+        private readonly IAdapterAutomationUsuario _adapterAutomationUsuario;
 
-        public PersonalController(IPersonalService services, IAuthenticationService authService, IAutomation automationServices, IAdapterAutomationUsuario adapterAutomationService)
+        public PersonalController(IPersonalService services, IAuthenticationService authService, IAutomation automationServices, IAdapterAutomationUsuario adapterAutomationUsuario)
         {
             _services = services;
             _authService = authService;
             _automationServices = automationServices;
-            _adapterAutomationService = adapterAutomationService;
+            _adapterAutomationUsuario = adapterAutomationUsuario;
         }
 
         [HttpPost("login")]
@@ -126,7 +126,7 @@ namespace MenuApi.Controllers
 
             try
             {
-                preferencias = _adapterAutomationService.obtenerPrefenciasUsuario(id);
+                preferencias = _adapterAutomationUsuario.obtenerPrefenciasUsuario(id);
                 personal.Preferencias = preferencias;
             }
             catch (Exception)
@@ -156,11 +156,18 @@ namespace MenuApi.Controllers
         {
             try
             {
-                var result = _automationServices.SetPedidoAutomatico(request);
+                var resultAutomation = _adapterAutomationUsuario.desactivarAutomatizacion(request.personalId);
 
-                if (result == null) { return NotFound(); };
+                if(resultAutomation != null)
+                {
+                    request.isAutomatico = resultAutomation.activado;
+                    var result = _automationServices.SetPedidoAutomatico(request);
 
-                return new JsonResult(result) { StatusCode = 204 };
+                    if (result == null) { return NotFound(); };
+
+                    return new JsonResult(result) { StatusCode = 200 };
+                }
+                return new JsonResult(new SystemResponse { Message = "ocurrio un problema", StatusCode = 500 }) { StatusCode = 500 };
             }
             catch (Exception e)
             {

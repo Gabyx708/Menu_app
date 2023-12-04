@@ -1,4 +1,7 @@
 ﻿using Application.Interfaces.IPlatillo;
+using Application.Interfaces.IServices.IAutomationService;
+using Application.Models;
+using Application.Response.GenericResponses;
 using Application.Response.PlatilloResponses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +12,13 @@ namespace MenuApi.Controllers
     public class PlatillosController : ControllerBase
     {
         private readonly IPlatilloService _services;
+        private readonly IAdapterAutomationCategoria _adapterAutomationCategoria;
 
-        public PlatillosController(IPlatilloService services)
+
+        public PlatillosController(IPlatilloService services, IAdapterAutomationCategoria adapterAutomationCategoria)
         {
             _services = services;
+            _adapterAutomationCategoria = adapterAutomationCategoria;
         }
 
         [HttpPatch]
@@ -33,6 +39,27 @@ namespace MenuApi.Controllers
         {
             var platillos = _services.GetAll();
             return new JsonResult(platillos) { StatusCode = 200 };
+        }
+
+        [HttpGet("categoria")]
+        [ProducesResponseType(typeof(List<CategoriaResponse>), 200)]
+        public IActionResult ConseguirCategorias()
+        {
+            try
+            {
+                var categorias = _adapterAutomationCategoria.listaCategorias();
+                return new JsonResult(categorias) { StatusCode = 200 };
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new SystemResponse
+                {
+                    Message = "es posible que el servicio de automatizacion no funcione",
+                    StatusCode = 500
+                })
+                { StatusCode = 500 };
+            }
+
         }
     }
 }

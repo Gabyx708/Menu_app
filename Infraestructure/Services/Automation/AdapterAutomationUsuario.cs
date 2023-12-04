@@ -51,6 +51,11 @@ namespace Infraestructure.Services.Automation
                 return prefrenciasResponse.categorias;
             }
 
+            if(statusCode == 404)
+            {
+                throw new KeyNotFoundException();
+            }
+
             throw new InvalidCastException();
         }
 
@@ -161,7 +166,7 @@ namespace Infraestructure.Services.Automation
 
         public UsuarioResponse desactivarAutomatizacion(Guid idUsuario)
         {
-            var urlPreferenciaEstado = $"api/v1/preferencia/{idUsuario}";
+            var urlPreferenciaEstado = $"api/v1/preferencia/automation/{idUsuario}";
 
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {

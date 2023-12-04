@@ -74,7 +74,7 @@ namespace MenuApi
 
             if (connectionString == null)
             {
-                Logger.LogError(new NullReferenceException(),"connection string not detected");
+                Logger.LogError(new NullReferenceException(), "connection string not detected");
                 return;
             }
 
@@ -83,7 +83,8 @@ namespace MenuApi
             //test database
             try
             {
-                using (var dbContext = new MenuAppContext(new DbContextOptionsBuilder<MenuAppContext>().UseMySQL(connectionString).Options))
+                using (var dbContext = new MenuAppContext(new DbContextOptionsBuilder<MenuAppContext>
+                      ().UseMySQL(connectionString).Options))
                 {
                     dbContext.Database.OpenConnection();
                     dbContext.Database.CloseConnection();

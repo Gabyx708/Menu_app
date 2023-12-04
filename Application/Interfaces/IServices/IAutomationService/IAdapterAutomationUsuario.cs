@@ -9,7 +9,7 @@ namespace Application.Interfaces.IServices.IAutomationService
 {
     public interface IAdapterAutomationUsuario
     {
-            
+        UsuarioResponse crearUsuario(UsuarioRequest request);
         List<CategoriaPrioridad> obtenerPrefenciasUsuario(Guid idUsuario);
         PreferenciaResponse setearPreferenciasUsuario(PreferenciaRequest request);
         PreferenciaResponse eliminarPreferenciasUsuario(Guid idUsuario);
