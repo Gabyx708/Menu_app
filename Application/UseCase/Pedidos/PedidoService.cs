@@ -136,6 +136,15 @@ namespace Application.UseCase.Pedidos
             }
 
             List<PedidoGetResponse> existePedido = PedidoFiltrado(request.idUsuario, DateTime.Now.Date, DateTime.Now.Date, 1);
+            var listaMenuPlatillos = request.MenuPlatillos;
+
+            foreach (var menuPlatoId in listaMenuPlatillos)
+            {
+                var existe = _menuPlatilloQuery.GetById(menuPlatoId);
+
+                if(existe == null)
+                    throw new SystemExceptionApp("no existe ese menu platillo", 404);
+            }
             var fechaActual = DateTime.Now;
 
             MenuResponse ultimoMenu = _menuService.GetUltimoMenu();
@@ -215,6 +224,16 @@ namespace Application.UseCase.Pedidos
             if (request.MenuPlatillos.GroupBy(mp => mp).Any(g => g.Count() > 1))
             {
                 throw new SystemExceptionApp("platillos repetidos", 400);
+            }
+
+            var listaMenuPlatillos = request.MenuPlatillos;
+
+            foreach (var menuPlatoId in listaMenuPlatillos)
+            {
+                var existe = _menuPlatilloQuery.GetById(menuPlatoId);
+
+                if (existe == null)
+                    throw new SystemExceptionApp("no existe ese menu platillo", 404);
             }
 
             decimal precioTotal = 0;

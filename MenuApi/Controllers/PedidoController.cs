@@ -37,7 +37,7 @@ namespace MenuApi.Controllers
                 if (usuarioRol == rolAdministrador && usuarioRol != null)
                 {
 
-                    result = _services.HacerUnpedidoSinRestricciones(request, new Guid(usuarioId));
+                     result = _services.HacerUnpedidoSinRestricciones(request, new Guid(usuarioId));
                 }
                 else
                 {
