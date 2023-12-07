@@ -4,7 +4,7 @@
     {
         public Guid IdMenuPlatillo { get; set; }
         public Guid IdMenu { get; set; }
-        public Menu Menu { get; set; }
+        public Menu? Menu { get; set; }
         public int IdPlatillo { get; set; }
         public Platillo Platillo { get; set; }
         public decimal PrecioActual { get; set; }

@@ -59,7 +59,7 @@ namespace MenuApi.Controllers
                 nuevoMenu = _services.CreateMenu(request);
 
                 //Hacer pedidos automaticos
-                _automationService.HacerPedidosAutomatico();
+               // _automationService.HacerPedidosAutomatico();
 
             }
             catch (Exception ex)

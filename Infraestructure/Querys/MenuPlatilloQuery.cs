@@ -13,7 +13,7 @@ namespace Infraestructure.Querys
             _context = context;
         }
 
-        public MenuPlatillo GetById(Guid idMenuPlatillo)
+        public MenuPlatillo? GetById(Guid idMenuPlatillo)
         {
             var menuPlatilloRecuperado = _context.MenuPlatillos.Find(idMenuPlatillo);
 
@@ -21,6 +21,7 @@ namespace Infraestructure.Querys
             {
                 menuPlatilloRecuperado.Menu = _context.Menues.FirstOrDefault(m => m.IdMenu == menuPlatilloRecuperado.IdMenu);
             }
+
             return menuPlatilloRecuperado;
         }
 
