@@ -6,6 +6,5 @@ namespace Application.Interfaces.IAutomation
     public interface IAutomation
     {
         bool HacerPedidosAutomatico();
-        PersonalResponse SetPedidoAutomatico(AutomationRequest request);
     }
 }
