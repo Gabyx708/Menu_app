@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IMenuPlatillo;
 using Application.Interfaces.IPlatillo;
+using Application.Interfaces.IServices.IAutomationService;
 using Application.Request.MenuPlatilloRequests;
 using Application.Response.MenuPlatilloResponses;
 using Domain.Entities;
@@ -11,12 +12,15 @@ namespace Application.UseCase.MenuPlatillos
         private readonly IMenuPlatilloQuery _query;
         private readonly IMenuPlatilloCommand _command;
         private readonly IPlatilloService _platilloService;
+        private readonly IAdapterAutomationPlatillo _adapterAutomationPlatillo;
 
-        public MenuPlatilloService(IMenuPlatilloQuery query, IMenuPlatilloCommand command, IPlatilloService platilloService)
+        public MenuPlatilloService(IMenuPlatilloQuery query, IMenuPlatilloCommand command, IPlatilloService platilloService, 
+                                   IAdapterAutomationPlatillo adapterAutomationPlatillo)
         {
             _query = query;
             _command = command;
             _platilloService = platilloService;
+            _adapterAutomationPlatillo = adapterAutomationPlatillo;
         }
 
         public List<MenuPlatilloResponse> AsignarPlatillosAMenu(Guid idMenu, List<MenuPlatilloRequest> platillos)
@@ -65,6 +69,27 @@ namespace Application.UseCase.MenuPlatillos
 
             foreach (var plato in platillosDelMenu)
             {
+                CategoriaPlato categoria = new CategoriaPlato();
+
+                try
+                {
+                    var data = _adapterAutomationPlatillo.GetPlatilloResponseAutomation(plato.IdPlatillo);
+
+                    if (data != null)
+                    {
+                        categoria = new CategoriaPlato
+                        {
+                            descripcion = data.categoria,
+                            color = data.color
+                        };
+                    }
+                }
+                catch (Exception)
+                {
+                    categoria = new CategoriaPlato();
+                }
+                
+
                 var response = new MenuPlatilloGetResponse
                 {
                     id = plato.IdPlatillo,
@@ -72,7 +97,8 @@ namespace Application.UseCase.MenuPlatillos
                     descripcion = _platilloService.GetPlatilloById(plato.IdPlatillo).descripcion,
                     precio = plato.PrecioActual,
                     stock = plato.Stock,
-                    pedido = plato.Solicitados
+                    pedido = plato.Solicitados,
+                    categoria = categoria
                 };
 
                 menuPlatillos.Add(response);

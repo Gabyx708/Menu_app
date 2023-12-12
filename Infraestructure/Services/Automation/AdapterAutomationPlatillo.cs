@@ -70,11 +70,13 @@ namespace Infraestructure.Services.Automation
                 Query = $"id={idPlato}"
             };
 
+            _httpClient.Timeout = TimeSpan.FromMilliseconds(300);
+
             Logger.LogInformation("Sending request to external service. URL: [{@url}]", uriBuilder.Uri);
             HttpResponseMessage response = _httpClient.GetAsync(uriBuilder.Uri).Result;
 
             var statusCode = (int)response.StatusCode;
-            Logger.LogInformation("status code from external service: [{@code}]", statusCode);
+            Logger.LogInformation("status code from external service: >>>>[{@code}]", statusCode);
 
             if (response.IsSuccessStatusCode)
             {

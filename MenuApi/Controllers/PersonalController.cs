@@ -120,22 +120,11 @@ namespace MenuApi.Controllers
         public IActionResult GetPersonal(Guid id)
         {
             var personal = _services.GetPersonalById(id);
-            List<CategoriaPrioridad> preferencias;
 
             string message = $"no se encontro un usuario con el id: {id}";
 
-            try
-            {
-                preferencias = _adapterAutomationUsuario.obtenerPrefenciasUsuario(id);
-                personal.Preferencias = preferencias;
-            }
-            catch (Exception)
-            {
-                Logger.LogInformation("could not get preferences");
-            }
 
             if (personal == null) { return NotFound(message); };
-
            
 
             return new JsonResult(personal) { StatusCode = 200 };
@@ -161,7 +150,7 @@ namespace MenuApi.Controllers
                 if(resultAutomation != null)
                 {
                     request.isAutomatico = resultAutomation.activado;
-                    var result = _automationServices.SetPedidoAutomatico(request);
+                    int result = 0;
 
                     if (result == null) { return NotFound(); };
 
