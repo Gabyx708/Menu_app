@@ -70,7 +70,7 @@ namespace Infraestructure.Services.Automation
                 Query = $"id={idPlato}"
             };
 
-            _httpClient.Timeout = TimeSpan.FromMilliseconds(300);
+            //_httpClient.Timeout = TimeSpan.FromMilliseconds(300);
 
             Logger.LogInformation("Sending request to external service. URL: [{@url}]", uriBuilder.Uri);
             HttpResponseMessage response = _httpClient.GetAsync(uriBuilder.Uri).Result;
