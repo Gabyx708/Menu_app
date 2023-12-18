@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IAutomation;
 using Application.Interfaces.IMenu;
+using Application.Interfaces.IServices.IAutomationService;
 using Application.Request.MenuRequests;
 using Application.Response.GenericResponses;
 using Application.Response.MenuResponses;
@@ -14,11 +15,13 @@ namespace MenuApi.Controllers
     {
         private readonly IMenuService _services;
         private readonly IAutomation _automationService;
+        private readonly IAdapterAutomationJob _adapterAutomationJob;
 
-        public MenuController(IMenuService services, IAutomation automationService)
+        public MenuController(IMenuService services, IAutomation automationService, IAdapterAutomationJob adapterAutomationJob)
         {
             _services = services;
             _automationService = automationService;
+            _adapterAutomationJob = adapterAutomationJob;
         }
 
         [Authorize]
@@ -59,10 +62,10 @@ namespace MenuApi.Controllers
                 nuevoMenu = _services.CreateMenu(request);
 
                 //Hacer pedidos automaticos
-               // _automationService.HacerPedidosAutomatico();
+                _adapterAutomationJob.initJob();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new JsonResult(new SystemResponse { Message = "error en fechas de menu", StatusCode = 400 }) { StatusCode = 400 };
             }

@@ -187,6 +187,11 @@ namespace MenuApi
                 return new AdapterAutomationCategorias(urlService);
             });
 
+            builder.Services.AddScoped<IAdapterAutomationJob, AdapterAutomationJob>(provider =>
+            {
+                return new AdapterAutomationJob(urlService);
+            });
+
 
             //Autenticacion
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
