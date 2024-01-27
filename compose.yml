@@ -1,0 +1,25 @@
+version: '1.0'
+
+services:
+  db:
+      image: mysql
+      restart: always
+      environment:
+        - MYSQL_ROOT_PASSWORD=4275
+      volumes:
+        - mysqldata1:/var/lib/mysql
+      ports:
+        - 3306:3306
+  api:
+    image: menu_api
+    depends_on:
+      - db
+    environment:
+       - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=menues;Uid=root;Pwd=4275;
+       - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 80:7008
+volumes:
+    mysqldata1:
+
+    

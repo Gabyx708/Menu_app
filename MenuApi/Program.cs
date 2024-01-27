@@ -69,14 +69,18 @@ namespace MenuApi
 
             if (secret == null) { throw new ArgumentNullException(nameof(secret)); }
 
-            //Database
-            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            // Database
+            string? connectionString = Environment.GetEnvironmentVariable("ConnectionStrings:DefaultConnection")
+                                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             if (connectionString == null)
             {
                 Logger.LogError(new NullReferenceException(), "connection string not detected");
                 return;
             }
+
+            Logger.LogInformation("Connection string used by the application: {ConnectionString}", connectionString);
+
 
             builder.Services.AddDbContext<MenuAppContext>(options => options.UseMySQL(connectionString));
 
@@ -94,6 +98,7 @@ namespace MenuApi
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error connection database: {Error}", ex.Message);
+                Logger.LogInformation("connection string ---> {conexion}", connectionString);
                 return;
             }
 
@@ -221,6 +226,13 @@ namespace MenuApi
             });
 
             var app = builder.Build();
+
+            //apply migrations
+            using(var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<MenuAppContext>();
+                dbContext.Database.Migrate();
+            }
 
 
             // Configure the HTTP request pipeline.
